@@ -50,7 +50,7 @@ export const Route = createFileRoute("/tools")({
             "@type": "ListItem",
             position: index + 1,
             name: tool.name,
-            url: getAbsoluteUrl(tool.slug),
+            url: getAbsoluteUrl(`/${tool.slug}`),
           })),
         }),
       },

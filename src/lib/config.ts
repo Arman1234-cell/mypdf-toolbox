@@ -12,7 +12,7 @@ export const SITE_URL = (
 
 export const SITE_NAME = "MyPDF4U";
 export const SITE_TAGLINE = "Simple PDF tools, fast results";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/favicon.ico`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export function getAbsoluteUrl(path: string): string {
   const cleanPath = path.startsWith("/") ? path : `/${path}`;

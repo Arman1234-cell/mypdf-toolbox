@@ -45,11 +45,6 @@ export const Route = createFileRoute("/")({
           name: SITE_NAME,
           url: fullUrl,
           description,
-          potentialAction: {
-            "@type": "SearchAction",
-            target: `${getAbsoluteUrl("/tools")}?q={search_term_string}`,
-            "query-input": "required name=search_term_string",
-          },
         }),
       },
       {

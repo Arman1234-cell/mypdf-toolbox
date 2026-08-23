@@ -52,6 +52,7 @@ export const Route = createFileRoute("/$slug")({
       meta: [
         { title: tool.metaTitle },
         { name: "description", content: tool.metaDescription },
+        { name: "robots", content: tool.status === "soon" ? "noindex, nofollow" : "index, follow" },
         { property: "og:title", content: tool.metaTitle },
         { property: "og:description", content: tool.metaDescription },
         { property: "og:type", content: "website" },

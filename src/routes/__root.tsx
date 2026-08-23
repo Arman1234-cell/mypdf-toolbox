@@ -99,6 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: DEFAULT_OG_IMAGE },
       { name: "theme-color", content: "#2E8B57" },
+      { name: "robots", content: "max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -118,7 +119,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: SITE_NAME,
-          description: "Simple browser-based PDF tools.",
+          description: "Free browser-based PDF tools: convert, compress, merge, split, OCR and organize PDF files without signing up.",
           url: SITE_URL,
         }),
       },
