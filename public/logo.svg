@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-label="MyPDF4U logo">
+  <!-- Background rounded rect -->
+  <rect x="3" y="2" width="34" height="36" rx="10" fill="#2E8B57" opacity="0.12" />
+  <!-- Document body -->
+  <path
+    d="M12 8h11l7 7v17a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z"
+    fill="#2E8B57"
+    opacity="0.9"
+  />
+  <!-- Folded corner -->
+  <path d="M23 8l7 7h-5a2 2 0 0 1-2-2V8Z" fill="#2E8B57" opacity="0.55" />
+  <!-- Leaf accent -->
+  <path
+    d="M20.5 27c-3.6 0-5.5-2.1-5.5-5.2 3.9-.5 6.4 1 7 3.7.9-2.9 3-4.9 6-5.2.2 4.1-2.7 6.7-7.5 6.7Z"
+    fill="#3EB489"
+  />
+</svg>
