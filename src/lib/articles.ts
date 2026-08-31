@@ -57,13 +57,13 @@ const heroDims = {
 export const articles: Article[] = [
   {
     slug: "how-to-convert-jpg-to-pdf",
-    title: "How to Convert JPG Images to PDF Without Losing Quality",
-    metaTitle: "How to Convert JPG to PDF (Free, No Quality Loss) | MyPDF4U",
+    title: "How to Convert JPG to PDF on Any Device (Free, No Quality Loss)",
+    metaTitle: "How to Convert JPG to PDF Free — Windows, Phone & Browser",
     description:
-      "Convert one or many JPG images into a single PDF without losing quality. A clear step-by-step guide plus a free browser tool that keeps your photos private.",
+      "Convert JPG to PDF on Windows, iPhone, Android or any browser — free, no upload, no quality loss. Step-by-step guide covering built-in tools, Adobe, Foxit & Google Drive.",
     date: "2025-01-15",
-    updated: "2026-08-29",
-    readTime: "5 min read",
+    updated: "2026-08-31",
+    readTime: "8 min read",
     toolSlug: "jpg-to-pdf",
     toolName: "JPG to PDF Converter",
     hero: {
@@ -74,9 +74,9 @@ export const articles: Article[] = [
       ...heroDims,
     },
     intro: [
-      "If you have a folder of phone photos, scanned receipts or exam pages, sending them one by one is painful for whoever receives them. A PDF fixes that: the pages stay in order, the orientation is locked in, and the file opens the same way on every device.",
-      "The fastest way to do it is the free [JPG to PDF converter](/jpg-to-pdf) on MyPDF4U. You add your images, drag them into the right order, rotate anything sideways, and download a single PDF. Everything runs inside your browser, so the photos never leave your device.",
-      "Quality matters here. Each JPG is embedded at its original resolution rather than re-encoded, so a 12-megapixel photo stays as sharp in the PDF as it was in your gallery.",
+      "If you're asking yourself how do I turn a JPEG into a PDF file without losing a single pixel of quality — you're in the right place. Whether you snapped a photo on your phone, scanned a document, or have a folder of images that need to become one shareable file, this guide covers every route: browser-based, Windows built-in, mobile, and common software alternatives like Adobe and Foxit.",
+      "The fastest, most private way is the free [JPG to PDF converter](/jpg-to-pdf) on MyPDF4U. Add your images, drag them into the right order, rotate anything sideways, and download a single PDF — everything runs inside your browser, so your photos never leave your device.",
+      "Quality matters here. Each JPG is embedded at its original resolution rather than re-encoded, so a 12-megapixel photo stays as sharp inside the PDF as it was in your gallery.",
     ],
     blocks: [
       {
@@ -95,7 +95,7 @@ export const articles: Article[] = [
           "Print-friendly output, because each image is placed on a proper page instead of being scaled by a photo viewer.",
         ],
       },
-      { type: "h2", text: "How to convert JPG to PDF: step by step" },
+      { type: "h2", text: "How to convert JPG to PDF: step by step (browser, any device)" },
       {
         type: "steps",
         items: [
@@ -110,27 +110,134 @@ export const articles: Article[] = [
         type: "note",
         text: "Working with screenshots rather than photos? Use the [PNG to PDF converter](/png-to-pdf) instead — the workflow is identical, and PNG keeps text and UI edges perfectly crisp.",
       },
-      { type: "h2", text: "How to convert multiple JPG images into one PDF" },
+      { type: "h2", text: "How to convert JPG to PDF on Windows (built-in, no software)" },
       {
         type: "p",
-        text: "Multi-image conversion is the normal case, not a special mode. Select every photo in one go — the tool creates one PDF page per image, in the order shown in the grid. Because the order is set visually, you can fix a mis-sorted scan in a second instead of renaming files.",
+        text: "Windows 10 and Windows 11 both include a built-in PDF printer, so you can save a JPG as PDF without installing anything extra. There are two quick methods.",
+      },
+      { type: "h3", text: "Method 1 — Print to PDF (Windows 10 & 11)" },
+      {
+        type: "steps",
+        items: [
+          "Open the JPG in the Windows Photos app or any image viewer.",
+          "Press Ctrl + P to open the Print dialog.",
+          "Under Printer, select Microsoft Print to PDF.",
+          "Choose paper size (A4 is standard) and orientation, then click Print.",
+          "Pick a save location and filename, then click Save — the PDF appears instantly.",
+        ],
+      },
+      { type: "h3", text: "Method 2 — Right-click 'Print' from File Explorer" },
+      {
+        type: "steps",
+        items: [
+          "In File Explorer, right-click your JPG file and select Print.",
+          "In the Print Pictures dialog, choose Microsoft Print to PDF from the printer list.",
+          "Select a paper size, then click Print and save.",
+        ],
+      },
+      {
+        type: "note",
+        text: "The Windows Print-to-PDF method creates one page per print job. To convert multiple JPG images into one PDF on Windows — with a custom page order — use the [JPG to PDF tool](/jpg-to-pdf) instead. It handles batch conversion entirely in your browser.",
+      },
+      { type: "h2", text: "How to convert a JPG to PDF on your phone (iOS & Android)" },
+      {
+        type: "p",
+        text: "Both iPhone and Android have built-in ways to change a photo to PDF without downloading any app. If you need to combine several images into one document, the browser-based tool is the quickest route on mobile.",
+      },
+      { type: "h3", text: "iPhone / iPad (iOS 16+)" },
+      {
+        type: "steps",
+        items: [
+          "Open the Photos app and tap the image you want to convert.",
+          "Tap the Share button (the box with an arrow pointing up).",
+          "Scroll down and tap Print.",
+          "In the Printer Options screen, pinch outward on the preview thumbnail — iOS silently converts it to a PDF.",
+          "Tap the Share icon that appears, then save to Files or share directly.",
+        ],
+      },
+      { type: "h3", text: "Android (Google Files / Chrome)" },
+      {
+        type: "steps",
+        items: [
+          "Open your photo in the Gallery or Files app.",
+          "Tap Share, then choose Print.",
+          "In the printer list, select Save as PDF.",
+          "Tap the PDF icon in the top-right corner and save the file.",
+        ],
       },
       {
         type: "p",
-        text: "A practical tip for scanned documents: photograph every page in the same orientation and lighting before you convert. Consistent pages make the finished PDF far easier to read, and they also compress better if you later need to [reduce the PDF file size](/compress-pdf).",
+        text: "For multi-image conversion on a phone — for example, several photos of a scanned form — visit [MyPDF4U's JPG to PDF tool](/jpg-to-pdf) in your mobile browser. Upload all images at once, drag to reorder, and download one PDF. No app installation needed.",
+      },
+      { type: "h2", text: "Software alternatives: Adobe, Foxit, and Google Drive" },
+      {
+        type: "p",
+        text: "You may be wondering how to convert JPG to PDF using Adobe, Foxit, or Google Drive. All three work — but each has trade-offs worth knowing before you choose.",
+      },
+      { type: "h3", text: "Adobe Acrobat" },
+      {
+        type: "p",
+        text: "Adobe Acrobat Pro (paid, ~£17/month) and Acrobat Online (free tier, with limits) both support JPG to PDF. In Acrobat: File → Create → PDF from File, then select your image. The quality is excellent, but the subscription cost is hard to justify for occasional conversions. A free browser-based tool delivers identical output at zero cost.",
+      },
+      { type: "h3", text: "Foxit PDF Editor" },
+      {
+        type: "p",
+        text: "Foxit PDF Editor offers a similar 'Create from Image' workflow. The free Foxit Reader tier is limited; advanced conversion requires a paid licence. If you already have Foxit installed it's a solid option, but if you're downloading it purely to convert a JPG, a browser tool is faster and free.",
+      },
+      { type: "h3", text: "Google Drive" },
+      {
+        type: "p",
+        text: "To convert JPG to PDF on Google Drive: upload the image → right-click → Open with Google Docs → File → Download → PDF Document. This is handy if you live in the Google ecosystem, but it routes your file through Google's servers and can slightly shift the image layout. For privacy-conscious users or high-volume conversions, a local browser tool is faster and safer.",
+      },
+      {
+        type: "note",
+        text: "MyPDF4U's [JPG to PDF converter](/jpg-to-pdf) is free, has no file-size cap, and processes everything locally — no files ever reach Google, Adobe or any third-party server.",
+      },
+      { type: "h2", text: "How to convert multiple JPG images into one PDF" },
+      {
+        type: "p",
+        text: "Multi-image conversion is the normal use-case, not a special mode. Select every photo in one go — the tool creates one PDF page per image in the order shown in the grid. Because the order is set visually, you can fix a mis-sorted scan in a second instead of renaming files.",
+      },
+      {
+        type: "p",
+        text: "A practical tip for scanned documents: photograph every page in the same orientation before converting. Consistent pages make the finished PDF easier to read and compress better if you later need to [reduce the PDF file size](/compress-pdf).",
       },
       { type: "h2", text: "Keeping image quality intact" },
       {
         type: "p",
-        text: "The MyPDF4U converter embeds each JPEG at its native resolution inside the PDF — no re-compression, no quality loss. The only time file size grows is if you add many high-resolution photos. If the resulting PDF is too large for an email, run it through the [PDF compressor](/compress-pdf) afterwards.",
+        text: "The MyPDF4U converter embeds each JPEG at its native resolution inside the PDF — no re-compression, no quality loss. If the resulting PDF is too large for email, run it through the [PDF compressor](/compress-pdf) afterwards.",
       },
       { type: "h2", text: "JPG vs JPEG: is there a difference?" },
       {
         type: "p",
-        text: "No. JPG and JPEG refer to the same image format. The shorter extension became common because early Windows versions required three-character extensions. Both work identically in the converter.",
+        text: "No. JPG and JPEG refer to the same image format. The shorter extension became common because early Windows versions required three-character file extensions. Both work identically in the converter.",
       },
     ],
     faqs: [
+      {
+        q: "How do I convert my JPG to PDF for free?",
+        a: "Open the JPG to PDF tool on MyPDF4U, drag in your images, arrange them, and click Convert to PDF. It is completely free — no account, no watermark, and nothing is uploaded to any server.",
+      },
+      {
+        q: "How do I turn a JPEG into a PDF file on Windows?",
+        a: "On Windows 10 or 11, open the image in Photos, press Ctrl+P, select 'Microsoft Print to PDF' as the printer, and click Print. To batch-convert multiple images into one ordered PDF on Windows, use the MyPDF4U browser tool — the built-in method only handles one image per job.",
+      },
+      {
+        q: "How can I convert a JPG file to PDF on my phone?",
+        a: "On iPhone, open the photo, tap Share → Print, then pinch outward on the print preview to reveal a PDF you can save to Files. On Android, tap Share → Print → Save as PDF. For multiple images, visit the MyPDF4U JPG to PDF tool in your mobile browser.",
+      },
+      {
+        q: "How do I convert JPG to PDF using Adobe?",
+        a: "In Adobe Acrobat, go to File → Create → PDF from File and select your JPG. The free Acrobat Online tier also supports this with usage limits. For no-cost, no-login conversion, the MyPDF4U browser tool produces equivalent quality.",
+      },
+      {
+        q: "How do I convert JPG to PDF using Foxit?",
+        a: "In Foxit PDF Editor, use File → Create → From File, select your JPG, and save as PDF. If you don't already have Foxit installed, the MyPDF4U browser tool is faster and requires no download.",
+      },
+      {
+        q: "How do I convert JPG to PDF on Google Drive?",
+        a: "Upload the JPG to Google Drive, right-click → Open with Google Docs, then File → Download → PDF Document. This routes the file through Google's servers. For privacy, use a local browser tool like MyPDF4U instead.",
+      },
       {
         q: "Does converting JPG to PDF reduce image quality?",
         a: "No. The tool embeds each image at its original resolution. No re-encoding takes place, so the quality in the PDF matches the original file exactly.",
