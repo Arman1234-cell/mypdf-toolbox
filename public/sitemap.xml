@@ -138,17 +138,26 @@
   <!-- Blog Articles -->
   <url>
     <loc>https://mypdf4u.com/blog/how-to-convert-jpg-to-pdf</loc>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mypdf4u.com/blog/how-to-convert-png-to-pdf</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://mypdf4u.com/blog/how-to-compress-pdf-for-email</loc>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://mypdf4u.com/blog/how-to-merge-pdf-files</loc>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
 </urlset>

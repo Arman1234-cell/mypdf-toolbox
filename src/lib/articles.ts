@@ -60,7 +60,7 @@ export const articles: Article[] = [
     title: "How to Convert JPG to PDF on Any Device (Free, No Quality Loss)",
     metaTitle: "How to Convert JPG to PDF Free — Windows, Phone & Browser",
     description:
-      "Convert JPG to PDF on Windows, iPhone, Android or any browser — free, no upload, no quality loss. Step-by-step guide covering built-in tools, Adobe, Foxit & Google Drive.",
+      "Convert JPG to PDF on Windows, iPhone or Android — free, no upload, no quality loss. Covers built-in tools, Adobe, Foxit & Google Drive.",
     date: "2025-01-15",
     updated: "2026-08-31",
     readTime: "8 min read",
@@ -353,7 +353,7 @@ export const articles: Article[] = [
   {
     slug: "how-to-compress-pdf-for-email",
     title: "How to Compress Large PDF Files for Email Attachments",
-    metaTitle: "How to Compress a PDF for Email (Reduce File Size Fast) | MyPDF4U",
+    metaTitle: "How to Compress a PDF for Email (Free, Fast) | MyPDF4U",
     description:
       "Learn how to reduce PDF file size below 10 MB or 25 MB email limits while keeping text and diagrams crisp. Free browser tool, no upload.",
     date: "2025-01-20",
@@ -451,7 +451,7 @@ export const articles: Article[] = [
   {
     slug: "how-to-merge-pdf-files",
     title: "How to Merge Multiple PDF Documents into One",
-    metaTitle: "How to Merge PDF Files Online Free — Combine in Seconds | MyPDF4U",
+    metaTitle: "How to Merge PDF Files Online Free — Fast | MyPDF4U",
     description:
       "Combine separate invoices, reports and contracts into a unified PDF in the exact sequence you choose. Free, browser-based, no upload.",
     date: "2025-01-28",

@@ -69,6 +69,22 @@ export const Route = createFileRoute("/blog/$slug")({
             ],
           }),
         },
+        ...(article.faqs.length > 0
+          ? [
+              {
+                type: "application/ld+json" as const,
+                children: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: article.faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.q,
+                    acceptedAnswer: { "@type": "Answer", text: faq.a },
+                  })),
+                }),
+              },
+            ]
+          : []),
       ],
     };
   },
