@@ -15,6 +15,7 @@ export type ArticleBlock =
   | { type: "list"; items: string[] }
   | { type: "steps"; items: string[] }
   | { type: "note"; text: string }
+  | { type: "code"; lang: string; text: string }
   | { type: "cta"; toolSlug: string; toolName: string; text: string };
 
 export interface ArticleImage {
@@ -450,13 +451,13 @@ export const articles: Article[] = [
   },
   {
     slug: "how-to-merge-pdf-files",
-    title: "How to Merge Multiple PDF Documents into One",
-    metaTitle: "How to Merge PDF Files Online Free — Fast | MyPDF4U",
+    title: "How to Merge PDF Files on Any Device — Free, No Upload",
+    metaTitle: "How to Merge PDF Files Free — Windows, Mac, Phone",
     description:
-      "Combine separate invoices, reports and contracts into a unified PDF in the exact sequence you choose. Free, browser-based, no upload.",
+      "Merge PDF files on Windows, Mac, iPhone, Android or Linux — free, private, no upload. Covers browser tool, CLI, Python, and Adobe alternatives.",
     date: "2025-01-28",
-    updated: "2026-08-29",
-    readTime: "4 min read",
+    updated: "2026-08-31",
+    readTime: "10 min read",
     toolSlug: "merge-pdf",
     toolName: "Merge PDF Tool",
     hero: {
@@ -467,16 +468,16 @@ export const articles: Article[] = [
       ...heroDims,
     },
     intro: [
-      "When you need to submit a single document packet — a CV with cover letter, an invoice with receipts, or a report with appendices — juggling separate PDFs is frustrating. Merging them into one file fixes that immediately.",
-      "The [Merge PDF tool](/merge-pdf) on MyPDF4U lets you drag in as many files as you need, reorder them visually, and download one combined PDF. The whole process runs in your browser, so nothing is uploaded.",
-      "Page order is crucial when merging. The tool shows a visual thumbnail for each document so you can verify the sequence before combining.",
+      "Whether you need to merge PDF files on Windows, combine files on iPhone, or join documents from the command line on Linux — you shouldn't have to pay for Adobe Acrobat or upload sensitive files to an unknown server.",
+      "The free [Merge PDF tool](/merge-pdf) on MyPDF4U runs entirely in your browser. Drag in as many files as you need, set the page order visually, and download one clean combined PDF in seconds — on any device, no account required.",
+      "This guide covers every method: browser-based (fastest for all devices), device-native options, command-line and Python workflows for developers, plus honest comparisons with Adobe Acrobat, PDFtk, PDF-XChange, Smallpdf, and other popular tools.",
     ],
     blocks: [
       {
         type: "cta",
         toolSlug: "merge-pdf",
         toolName: "Merge PDF Tool",
-        text: "Drop your PDFs in, drag them into order, and download one combined file — free, no account.",
+        text: "Drop your PDFs in, drag them into order, and download one combined file — free, no account, nothing uploaded.",
       },
       { type: "h2", text: "Common uses for merging PDFs" },
       {
@@ -487,53 +488,235 @@ export const articles: Article[] = [
           "Legal documents — contract, amendment and schedule merged for a client.",
           "Academic submissions — report, data appendix and ethical approval in one file.",
           "Property records — survey, floor plan and title deed combined for a solicitor.",
+          "Multi-page documents — turning a scanned multi-image set into a single ordered PDF.",
         ],
       },
-      { type: "h2", text: "How to merge PDF files: step by step" },
+      { type: "h2", text: "How to merge PDF files: step by step (any browser, any device)" },
       {
         type: "steps",
         items: [
-          "Open the [Merge PDF tool](/merge-pdf) on MyPDF4U.",
-          "Drag all your PDF files onto the upload area, or click to browse.",
-          "Drag the document thumbnails to set the correct order.",
-          "Click Merge PDFs and download the combined file.",
+          "Open the [Merge PDF tool](/merge-pdf) on MyPDF4U — no install, no account needed.",
+          "Drag all your PDF files onto the upload area, or tap to browse your device storage.",
+          "Drag the document thumbnails to set the exact page order you want.",
+          "Click Merge PDFs — the combined file downloads instantly to your device.",
         ],
+      },
+      { type: "h2", text: "How to merge PDF files on Windows" },
+      {
+        type: "p",
+        text: "Windows does not include a built-in PDF merger. The fastest way to merge PDF files on Windows without installing anything is to open the [MyPDF4U Merge PDF tool](/merge-pdf) in any browser — Chrome, Edge, or Firefox. Drag your files in, reorder them, and download the result in seconds.",
+      },
+      {
+        type: "p",
+        text: "If you prefer a desktop app, Microsoft Print to PDF can consolidate content from multiple open files into one print job — but this re-rasterises images and loses bookmarks. The browser tool is faster, free, and preserves full quality.",
+      },
+      { type: "h3", text: "Merge PDF files on Windows with Microsoft Edge" },
+      {
+        type: "steps",
+        items: [
+          "Open Edge and navigate to mypdf4u.com/merge-pdf.",
+          "Drag your PDFs from File Explorer directly into the browser window.",
+          "Reorder the thumbnails, then click Merge PDFs.",
+          "Edge will prompt you to save — choose a folder and click Save.",
+        ],
+      },
+      { type: "h2", text: "How to merge PDFs on Mac, iPad, and iPhone" },
+      { type: "h3", text: "Mac — Preview (built-in, completely free)" },
+      {
+        type: "steps",
+        items: [
+          "Open the first PDF in Preview.",
+          "Go to View → Thumbnails to reveal the sidebar.",
+          "Drag additional PDFs from Finder into the thumbnail sidebar in your desired order.",
+          "Go to File → Export as PDF to save the merged document.",
+        ],
+      },
+      { type: "h3", text: "Merge PDF on iPad and combine files on iPhone" },
+      {
+        type: "p",
+        text: "iOS has no native PDF merger. The easiest way to combine files on iPhone or merge PDF on iPad is to open mypdf4u.com/merge-pdf in Safari or Chrome. Upload your files from Files or iCloud Drive, reorder them with a drag, and download the combined PDF directly to Files.",
+      },
+      {
+        type: "steps",
+        items: [
+          "Open Safari or Chrome on your iPhone or iPad.",
+          "Go to mypdf4u.com/merge-pdf.",
+          "Tap the upload area and select your PDFs from Files or iCloud Drive.",
+          "Drag thumbnails to reorder, then tap Merge PDFs.",
+          "Tap the downloaded file to save it to your Files app.",
+        ],
+      },
+      { type: "h2", text: "How to combine PDF files on Android" },
+      {
+        type: "p",
+        text: "Android lacks a system-level PDF merger. Open Chrome on your Android device, navigate to mypdf4u.com/merge-pdf, and upload your PDFs from internal storage or Google Drive. The merged file downloads to your Downloads folder instantly. No app installation needed.",
+      },
+      { type: "h2", text: "How to merge PDF files on Linux (command line)" },
+      {
+        type: "p",
+        text: "Linux users have two great options: a browser tool for simplicity, or command-line tools for automation. To combine PDF files on Linux with a GUI, open Firefox or Chromium and use the MyPDF4U tool. For terminal power users, Ghostscript or PDFtk are the standard choices.",
+      },
+      { type: "h3", text: "Linux merge PDF files with Ghostscript" },
+      {
+        type: "code",
+        lang: "bash",
+        text: "# Install Ghostscript (Debian/Ubuntu)\nsudo apt install ghostscript\n\n# Merge PDF files on the command line\ngs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite \\\n   -sOutputFile=merged.pdf file1.pdf file2.pdf file3.pdf",
+      },
+      { type: "h3", text: "Combine PDFs with PDFtk on Linux" },
+      {
+        type: "code",
+        lang: "bash",
+        text: "# Install PDFtk (Ubuntu/Debian)\nsudo apt install pdftk\n\n# pdftk merge — combine PDFs into one\npdftk file1.pdf file2.pdf file3.pdf cat output merged.pdf",
+      },
+      { type: "h2", text: "How to merge PDF files using Python" },
+      {
+        type: "p",
+        text: "For developers who need to merge PDF files programmatically, the pypdf library is the simplest Python solution. Install it with pip and use the PdfMerger class:",
+      },
+      {
+        type: "code",
+        lang: "python",
+        text: "# Install pypdf\npip install pypdf\n\nfrom pypdf import PdfMerger\n\nmerger = PdfMerger()\nfiles = ['file1.pdf', 'file2.pdf', 'file3.pdf']\n\nfor pdf in files:\n    merger.append(pdf)\n\nmerger.write('merged.pdf')\nmerger.close()\nprint('Done — merged.pdf created')",
+      },
+      {
+        type: "note",
+        text: "For large-scale server-side automation, Ghostscript or pypdf are reliable choices. For one-off tasks without writing code, the [MyPDF4U Merge PDF tool](/merge-pdf) is the fastest option.",
+      },
+      { type: "h2", text: "Free alternatives to Adobe Acrobat for merging PDFs" },
+      {
+        type: "p",
+        text: "Adobe Acrobat Pro costs around £17/month — expensive for occasional use. Critically, Adobe Acrobat Reader (the free version) cannot merge PDFs at all. Only the paid Pro tier includes Combine Files. Here's how the main free alternatives compare:",
+      },
+      {
+        type: "list",
+        items: [
+          "MyPDF4U — 100% free, browser-based, no upload, no file-size limit. Fastest for privacy-sensitive documents.",
+          "Mac Preview — built into every Mac, completely free. Excellent for occasional use.",
+          "PDFtk — free, open-source CLI tool (pdftk merge). Ideal for scripting and batch jobs on Linux/Mac/Windows.",
+          "PDF-XChange Editor — freemium Windows desktop app. Combine PDFs via File → New Document → Combine Files. Some features need a licence.",
+          "Smallpdf merge tool — polished web tool with a free daily limit and file-size cap. Files are uploaded to their servers.",
+          "PDF Candy merge — free online tool, no usage limits claimed, but files are processed server-side.",
+          "Sejda — clean web UI, free for files under 50 MB or 200 pages. Also has a desktop version.",
+          "PDFMergy / pdfmergy Google Drive — simple Google Drive integration; convenient for Drive-stored files.",
+        ],
+      },
+      {
+        type: "note",
+        text: "If privacy matters — tax documents, medical records, legal contracts — use MyPDF4U. Files processed by Smallpdf, Sejda, Adobe online, and PDF Candy pass through their servers. MyPDF4U never receives your file.",
+      },
+      { type: "h2", text: "Merging mixed file types: HEIC, images, PNG, and Word" },
+      {
+        type: "p",
+        text: "The Merge PDF tool only accepts PDF files directly. But it's quick to convert other formats to PDF first, then combine everything into one document.",
+      },
+      { type: "h3", text: "HEIC to PDF merge (iPhone camera roll)" },
+      {
+        type: "steps",
+        items: [
+          "On your iPhone, open the HEIC photo in Photos and tap Share → Print.",
+          "Pinch outward on the print preview — this exports it as a PDF to Files.",
+          "Repeat for each photo, then open mypdf4u.com/merge-pdf and combine all the PDFs.",
+        ],
+      },
+      { type: "h3", text: "Combine PDF and PNG (or JPG) images" },
+      {
+        type: "steps",
+        items: [
+          "Convert your PNG images to PDF using the [PNG to PDF converter](/png-to-pdf).",
+          "Convert any JPG photos using the [JPG to PDF converter](/jpg-to-pdf).",
+          "Add all resulting PDFs (images + documents) to the [Merge PDF tool](/merge-pdf).",
+          "Set the order and click Merge PDFs.",
+        ],
+      },
+      { type: "h3", text: "Combine PDF with Word documents" },
+      {
+        type: "steps",
+        items: [
+          "In Microsoft Word, open your .docx file and go to File → Save As → PDF.",
+          "Repeat for each Word document you want to include.",
+          "Add all PDFs to the [Merge PDF tool](/merge-pdf) and combine them in order.",
+        ],
+      },
+      { type: "h2", text: "Multiple pages into one PDF — what this means" },
+      {
+        type: "p",
+        text: "'Multiple pages to a single PDF' usually means one of two things: (1) combining separate documents into one multi-page PDF — which the MyPDF4U tool handles perfectly — or (2) placing several pages on a single printed sheet (N-up layout, e.g. 4 pages on one A4 sheet).",
+      },
+      {
+        type: "p",
+        text: "For N-up printing, use your PDF reader's print dialog: File → Print → Pages per sheet → 4. This affects only the printout, not the PDF file itself.",
       },
       { type: "h2", text: "Merging PDFs with different page sizes" },
       {
         type: "p",
-        text: "The tool preserves each document's original page size. If you merge an A4 report with a landscape presentation, each section will retain its original dimensions inside the combined PDF. Most PDF readers handle mixed page sizes correctly.",
-      },
-      {
-        type: "note",
-        text: "Need to combine images with PDFs? Convert your images first using the [JPG to PDF converter](/jpg-to-pdf) or [PNG to PDF converter](/png-to-pdf), then merge all the resulting PDFs together.",
+        text: "The MyPDF4U tool preserves each document's original page dimensions. If you merge an A4 report with a landscape presentation, each section retains its original size inside the combined PDF. Nearly all PDF readers handle mixed page sizes correctly.",
       },
       { type: "h2", text: "Reducing the size of a merged PDF" },
       {
         type: "p",
-        text: "Merging does not compress the content — the combined file is roughly the sum of the input files. If the result is too large for email, run it through the [PDF compressor](/compress-pdf) afterwards. Balanced compression typically cuts image-heavy merged PDFs by 40–70%.",
+        text: "Merging does not compress content — the output is roughly the sum of the input file sizes. If the result is too large for email, run it through the [PDF compressor](/compress-pdf) afterwards. Balanced compression typically cuts image-heavy merged PDFs by 40–70%.",
       },
     ],
     faqs: [
       {
+        q: "How do I merge PDF files on Windows for free?",
+        a: "Open mypdf4u.com/merge-pdf in any browser on Windows — Chrome, Edge, or Firefox. Drag in your PDFs, set the order, and click Merge PDFs. No software to install and nothing is ever uploaded; everything runs in the browser.",
+      },
+      {
+        q: "How do I merge PDF files on Linux from the command line?",
+        a: "Install Ghostscript (sudo apt install ghostscript) then run: gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=merged.pdf file1.pdf file2.pdf. Alternatively, use pdftk: pdftk file1.pdf file2.pdf cat output merged.pdf.",
+      },
+      {
+        q: "How do I merge PDF files using Python?",
+        a: "Install pypdf with pip install pypdf. Create a PdfMerger instance, call merger.append() for each file, then merger.write('merged.pdf'). Full code is shown in the Python section above.",
+      },
+      {
+        q: "Can I merge PDFs on my iPhone or iPad?",
+        a: "Yes. Open Safari or Chrome, go to mypdf4u.com/merge-pdf, upload your PDFs from Files or iCloud Drive, reorder them, and download the merged result directly to your device.",
+      },
+      {
+        q: "How do I combine PDF files on Android?",
+        a: "Open Chrome on Android, visit mypdf4u.com/merge-pdf, and upload your PDFs from storage or Google Drive. The merged file downloads to your Downloads folder automatically — no app needed.",
+      },
+      {
+        q: "Can I merge PDFs without Adobe Acrobat?",
+        a: "Yes. Adobe Acrobat Reader (the free app) cannot merge files at all — only the paid Pro tier can. Free alternatives include MyPDF4U (browser-based, no upload), PDFtk (CLI), Ghostscript (terminal), and Mac Preview (built-in).",
+      },
+      {
+        q: "Does Adobe Reader merge PDFs?",
+        a: "No. Adobe Acrobat Reader is a viewer only. To combine PDFs without a subscription, use MyPDF4U — it's completely free and nothing leaves your device.",
+      },
+      {
+        q: "How do I merge HEIC photos into a PDF?",
+        a: "On iPhone, share each HEIC photo via Print and pinch the preview to export it as a PDF to Files. Then open mypdf4u.com/merge-pdf and combine all the exported PDFs into one document.",
+      },
+      {
+        q: "How do I combine PDF and PNG or image files?",
+        a: "Convert your images to PDF first: use the PNG to PDF or JPG to PDF converters on MyPDF4U. Then merge all resulting PDFs together with the Merge PDF tool.",
+      },
+      {
+        q: "How do I combine a PDF with a Word document?",
+        a: "In Microsoft Word, save each .docx as a PDF (File → Save As → PDF). Then add all the PDFs to the MyPDF4U Merge PDF tool and combine them in the correct order.",
+      },
+      {
         q: "Is the Merge PDF tool free?",
-        a: "Yes. Completely free — no account, no watermark and no file-size limit.",
+        a: "Yes. Completely free — no account, no watermark, no file-size limit, and nothing is ever uploaded to a server.",
       },
       {
         q: "How many PDFs can I merge at once?",
-        a: "There is no hard limit. Add as many files as you need. Performance depends on the total size and your device.",
+        a: "There is no hard limit. Add as many files as you need. Performance depends on the total file size and your device's available memory.",
       },
       {
         q: "Does merging reduce PDF quality?",
-        a: "No. The tool combines the files without re-encoding any content. Text, images and vector graphics are preserved exactly.",
+        a: "No. The tool combines files without re-encoding any content. Text, images and vector graphics are preserved exactly as in the originals.",
       },
       {
         q: "Can I merge password-protected PDFs?",
-        a: "No. Remove the password from each file before merging.",
+        a: "No. Remove the password from each file before merging. MyPDF4U does not process encrypted PDFs.",
       },
       {
         q: "Does my file get uploaded to a server?",
-        a: "No. Everything runs in your browser. Your files never leave your device.",
+        a: "No. Everything runs inside your browser using JavaScript. Your files never leave your device.",
       },
     ],
     related: ["how-to-compress-pdf-for-email", "how-to-convert-jpg-to-pdf"],

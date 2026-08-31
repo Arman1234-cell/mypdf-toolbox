@@ -162,6 +162,12 @@ function Block({ block }: { block: ArticleBlock }) {
           <RichText text={block.text} />
         </div>
       );
+    case "code":
+      return (
+        <pre className="overflow-x-auto rounded-xl border border-border bg-foreground/5 px-4 py-4 text-xs leading-relaxed text-foreground/90 sm:text-sm">
+          <code>{block.text}</code>
+        </pre>
+      );
     case "cta":
       return (
         <div className="card-soft flex flex-col items-start justify-between gap-4 border-2 border-primary/30 bg-mint/50 p-5 sm:flex-row sm:items-center">
