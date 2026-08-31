@@ -9,11 +9,11 @@ type ServerEntry = {
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
+import * as serverEntryModule from "@tanstack/react-start/server-entry";
+
 async function getServerEntry(): Promise<ServerEntry> {
   if (!serverEntryPromise) {
-    serverEntryPromise = import("@tanstack/react-start/server-entry").then(
-      (m) => (m.default ?? m) as ServerEntry,
-    );
+    serverEntryPromise = Promise.resolve((serverEntryModule.default ?? serverEntryModule) as ServerEntry);
   }
   return serverEntryPromise;
 }
