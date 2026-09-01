@@ -8,10 +8,7 @@ const description =
   "Accounts are optional at MyPDF4U: every PDF tool works without signing in. Join the waiting list for saved history and larger files.";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({
-    ...meta("/login", title, description),
-    meta: [...meta("/login", title, description).meta, { name: "robots", content: "noindex" }],
-  }),
+  head: () => meta("/login", title, description),
   component: LoginPage,
 });
 

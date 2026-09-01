@@ -58,6 +58,18 @@ export const Route = createFileRoute("/")({
           description: "Online browser-based PDF conversion and optimization tools.",
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: homeFaqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.q,
+            acceptedAnswer: { "@type": "Answer", text: faq.a },
+          })),
+        }),
+      },
     ],
   }),
   component: Home,

@@ -35,3 +35,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary and preview files
+preview_*.html
+dev_*.html
+blog.html

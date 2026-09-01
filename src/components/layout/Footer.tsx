@@ -2,12 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { LogoMark } from "@/components/brand/Logo";
 import { tools } from "@/lib/tools";
 
-const popular = ["jpg-to-pdf", "compress-pdf", "merge-pdf", "split-pdf", "pdf-to-jpg"];
-const convert = ["pdf-to-png", "png-to-pdf", "image-to-pdf", "pdf-to-word", "word-to-pdf"];
+const popular = ["jpg-to-pdf", "compress-pdf", "merge-pdf", "split-pdf", "pdf-to-word"];
+const convert = ["pdf-to-jpg", "pdf-to-png", "png-to-pdf", "image-to-pdf", "word-to-pdf"];
+const organize = ["rotate-pdf", "organize-pdf", "watermark-pdf", "ocr-pdf", "unlock-pdf", "protect-pdf"];
 
 function ToolLinks({ slugs }: { slugs: string[] }) {
   return (
-    <ul className="mt-4 space-y-2.5">
+    <ul className="mt-3 space-y-2 text-sm">
       {slugs.map((slug) => {
         const tool = tools.find((item) => item.slug === slug);
         if (!tool) return null;
@@ -16,7 +17,7 @@ function ToolLinks({ slugs }: { slugs: string[] }) {
             <Link
               to="/$slug"
               params={{ slug }}
-              className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              className="text-muted-foreground transition-colors hover:text-primary"
             >
               {tool.name}
               {tool.status === "soon" && " (soon)"}
@@ -31,22 +32,29 @@ function ToolLinks({ slugs }: { slugs: string[] }) {
 export function Footer() {
   return (
     <footer className="mt-20 border-t border-border bg-card">
-      <div className="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
+      <div className="container-page grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="lg:col-span-1">
           <div className="flex items-center gap-2 text-primary">
             <LogoMark className="h-8 w-8" />
             <span className="text-base font-bold text-foreground">
               MyPDF<span className="text-primary">4U</span>
             </span>
           </div>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Simple PDF tools for everyday work. Convert, compress and organize documents right in
-            your browser.
+          <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+            Simple PDF tools for everyday work. Convert, compress, merge, and edit documents privately inside your browser.
           </p>
+          <div className="mt-4">
+            <Link
+              to="/tools"
+              className="text-xs font-semibold text-primary underline hover:text-primary-dark"
+            >
+              Browse all 17 PDF tools →
+            </Link>
+          </div>
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Popular tools</h2>
+          <h2 className="text-sm font-semibold text-foreground">Most Popular</h2>
           <ToolLinks slugs={popular} />
         </div>
 
@@ -56,41 +64,51 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Company</h2>
-          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+          <h2 className="text-sm font-semibold text-foreground">Edit & Security</h2>
+          <ToolLinks slugs={organize} />
+        </div>
+
+        <div>
+          <h2 className="text-sm font-semibold text-foreground">Guides & Company</h2>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
-              <Link to="/about" className="transition-colors hover:text-primary">
-                About
+              <Link to="/blog/$slug" params={{ slug: "how-to-convert-jpg-to-pdf" }} className="hover:text-primary">
+                JPG to PDF Guide
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="transition-colors hover:text-primary">
+              <Link to="/blog/$slug" params={{ slug: "how-to-merge-pdf-files" }} className="hover:text-primary">
+                Merge PDF Guide
+              </Link>
+            </li>
+            <li>
+              <Link to="/blog/$slug" params={{ slug: "how-to-compress-pdf-for-email" }} className="hover:text-primary">
+                Compress PDF Guide
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-primary">
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link to="/security" className="hover:text-primary">
+                Security & Privacy
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-primary">
                 Contact
               </Link>
             </li>
             <li>
-              <Link to="/blog" className="transition-colors hover:text-primary">
-                Blog
+              <Link to="/privacy" className="hover:text-primary">
+                Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to="/security" className="transition-colors hover:text-primary">
-                Security
-              </Link>
-            </li>
-            <li>
-              <Link to="/privacy" className="transition-colors hover:text-primary">
-                Privacy
-              </Link>
-            </li>
-            <li>
-              <Link to="/terms" className="transition-colors hover:text-primary">
-                Terms
-              </Link>
-            </li>
-            <li>
-              <Link to="/cookies" className="transition-colors hover:text-primary">
-                Cookies
+              <Link to="/terms" className="hover:text-primary">
+                Terms of Service
               </Link>
             </li>
           </ul>

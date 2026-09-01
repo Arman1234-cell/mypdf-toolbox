@@ -48,11 +48,33 @@ export const Route = createFileRoute("/$slug")({
           ]
         : [];
 
+    const howToSchema =
+      tool.steps && tool.steps.length > 0
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "HowTo",
+                name: tool.h1,
+                description: tool.metaDescription,
+                step: tool.steps.map((stepText, index) => ({
+                  "@type": "HowToStep",
+                  position: index + 1,
+                  name: `Step ${index + 1}`,
+                  text: stepText,
+                  url: fullUrl,
+                })),
+              }),
+            },
+          ]
+        : [];
+
     return {
       meta: [
         { title: tool.metaTitle },
         { name: "description", content: tool.metaDescription },
-        { name: "robots", content: tool.status === "soon" ? "noindex, nofollow" : "index, follow" },
+        { name: "robots", content: "index, follow" },
         { property: "og:title", content: tool.metaTitle },
         { property: "og:description", content: tool.metaDescription },
         { property: "og:type", content: "website" },
@@ -73,7 +95,7 @@ export const Route = createFileRoute("/$slug")({
             "@type": "WebApplication",
             name: `${tool.name} — ${SITE_NAME}`,
             applicationCategory: "UtilitiesApplication",
-            operatingSystem: "All (Modern Web Browser)",
+            operatingSystem: "All (Windows, macOS, Linux, iOS, Android)",
             browserRequirements: "Requires JavaScript. Requires HTML5 Canvas.",
             description: tool.metaDescription,
             url: fullUrl,
@@ -101,6 +123,7 @@ export const Route = createFileRoute("/$slug")({
             ],
           }),
         },
+        ...howToSchema,
         ...faqSchema,
       ],
     };
