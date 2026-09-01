@@ -1,6 +1,6 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, BookOpen, Laptop, Smartphone, CheckCircle2, Lock } from "lucide-react";
 import { getTool } from "@/lib/tools";
 import { ToolWorkspace } from "@/components/tools/ToolWorkspace";
 import {
@@ -12,6 +12,19 @@ import {
 } from "@/components/tools/ToolSections";
 import { track } from "@/lib/analytics";
 import { getAbsoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/config";
+
+const toolGuideMap: Record<string, { slug: string; title: string }> = {
+  "jpg-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Convert JPG to PDF (Free, No Quality Loss)" },
+  "pdf-to-jpg": { slug: "how-to-convert-jpg-to-pdf", title: "How to Extract JPG Images from PDF" },
+  "image-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Combine Images into a PDF on Any Device" },
+  "heic-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Convert iPhone HEIC Photos to PDF" },
+  "png-to-pdf": { slug: "how-to-convert-png-to-pdf", title: "How to Convert PNG to PDF Online for Free" },
+  "pdf-to-png": { slug: "how-to-convert-png-to-pdf", title: "How to Render Lossless PNGs from PDF" },
+  "compress-pdf": { slug: "how-to-compress-pdf-for-email", title: "How to Compress Large PDF Files for Email" },
+  "merge-pdf": { slug: "how-to-merge-pdf-files", title: "How to Merge PDF Files on Windows, Mac, iPhone & Android" },
+  "split-pdf": { slug: "how-to-merge-pdf-files", title: "How to Split and Organize PDF Pages Free" },
+  "organize-pdf": { slug: "how-to-merge-pdf-files", title: "How to Reorder and Delete PDF Pages" },
+};
 
 export const Route = createFileRoute("/$slug")({
   loader: ({ params }) => {
@@ -133,6 +146,7 @@ export const Route = createFileRoute("/$slug")({
 
 function ToolPage() {
   const { tool } = Route.useLoaderData();
+  const relatedGuide = toolGuideMap[tool.slug];
 
   useEffect(() => {
     track("tool_page_view", { tool: tool.slug });
@@ -168,16 +182,62 @@ function ToolPage() {
       <div className="mx-auto mt-14 max-w-4xl space-y-14">
         <HowToUse tool={tool} />
 
+        {/* Step-by-Step Tutorial Banner for Long-tail Searchers */}
+        {relatedGuide && (
+          <aside aria-label="Step-by-step guide" className="card-soft flex flex-col items-start justify-between gap-4 p-5 sm:flex-row sm:items-center sm:p-6 bg-mint/50 border-primary/20">
+            <div className="flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <BookOpen className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <div>
+                <h3 className="text-sm font-bold text-foreground">Detailed Step-by-Step Tutorial</h3>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Learn how to use {tool.name} with tips for Windows 11, Mac, iPhone, and Android.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/blog/$slug"
+              params={{ slug: relatedGuide.slug }}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-soft transition-colors hover:bg-primary-dark"
+            >
+              Read guide
+            </Link>
+          </aside>
+        )}
+
         <section aria-labelledby="why">
           <h2 id="why" className="text-xl font-bold text-foreground sm:text-2xl">
-            Why use MyPDF4U?
+            Why use MyPDF4U for {tool.name}?
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-            No account, no installation and no queue. Every tool opens straight onto the upload
-            area, so the task you came for is the first thing on the page. Supported tools run
-            inside your browser, which means your files stay on your device and results appear as
-            soon as your computer finishes the work.
+            No account, no installation, and no queue. Every tool opens directly to the upload area
+            with zero watermarks and no file count restrictions. Your files are converted and processed
+            locally in client memory, keeping your documents confidential while delivering instant results.
           </p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <div className="flex items-start gap-2.5">
+              <Laptop className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
+              <div>
+                <p className="text-xs font-bold text-foreground">Windows, Mac & Linux</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Works in Chrome, Edge, Safari, and Firefox with no software download.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <Smartphone className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
+              <div>
+                <p className="text-xs font-bold text-foreground">iPhone, iPad & Android</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Mobile-first design lets you process files directly from photo galleries and Files.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <Lock className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
+              <div>
+                <p className="text-xs font-bold text-foreground">100% Private & Free</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Zero server uploads, no subscription walls, and no watermarks.</p>
+              </div>
+            </div>
+          </div>
         </section>
 
         <KeyFeatures tool={tool} />
@@ -197,3 +257,4 @@ function ToolPage() {
     </div>
   );
 }
+
