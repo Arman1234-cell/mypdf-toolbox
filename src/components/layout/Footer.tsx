@@ -72,6 +72,11 @@ export function Footer() {
           <h2 className="text-sm font-semibold text-foreground">Guides & Company</h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
+              <Link to="/blog" className="hover:text-primary">
+                Blog
+              </Link>
+            </li>
+            <li>
               <Link to="/blog/$slug" params={{ slug: "how-to-convert-jpg-to-pdf" }} className="hover:text-primary">
                 JPG to PDF Guide
               </Link>
@@ -109,6 +114,11 @@ export function Footer() {
             <li>
               <Link to="/terms" className="hover:text-primary">
                 Terms of Service
+              </Link>
+            </li>
+            <li>
+              <Link to="/cookies" className="hover:text-primary">
+                Cookie Policy
               </Link>
             </li>
           </ul>
