@@ -177,7 +177,7 @@ function Block({ block }: { block: ArticleBlock }) {
             params={{ slug: block.toolSlug }}
             className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-lift transition-colors hover:bg-primary-dark"
           >
-            Open {block.toolName} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            {block.buttonText ?? `Open ${block.toolName}`} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
       );
