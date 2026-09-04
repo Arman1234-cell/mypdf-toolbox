@@ -148,6 +148,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           description: "Free browser-based online PDF utility tools for documents, images, compression, and conversion.",
         }),
       },
+      {
+        src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012965179926685",
+        async: true,
+        crossOrigin: "anonymous",
+      },
     ],
   }),
   shellComponent: RootShell,
