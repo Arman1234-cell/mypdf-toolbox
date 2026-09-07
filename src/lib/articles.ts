@@ -568,7 +568,7 @@ export const articles: Article[] = [
       { type: "h3", text: "Method 1: MyPDF4U in Microsoft Edge / Chrome / Firefox (Recommended)" },
       {
         type: "p",
-        text: "Open [mypdf4u.com/merge-pdf](/merge-pdf) in Microsoft Edge or Chrome, drag your PDF files directly from File Explorer into the window, set the order, and download your consolidated file. It runs locally in your browser with no upload delay.",
+        text: "Open [www.mypdf4u.com/merge-pdf](/merge-pdf) in Microsoft Edge or Chrome, drag your PDF files directly from File Explorer into the window, set the order, and download your consolidated file. It runs locally in your browser with no upload delay.",
       },
       { type: "h3", text: "Method 2: Open-Source PDFtk CLI on Windows" },
       {
@@ -611,7 +611,7 @@ export const articles: Article[] = [
       { type: "h2", text: "How to merge PDF files on Android phones" },
       {
         type: "p",
-        text: "Android does not provide a native multi-file PDF merger in stock settings. Open Chrome on your Android device, go to [mypdf4u.com/merge-pdf](/merge-pdf), select your files from Google Drive or Downloads, reorder them with your thumb, and download the combined document in seconds.",
+        text: "Android does not provide a native multi-file PDF merger in stock settings. Open Chrome on your Android device, go to [www.mypdf4u.com/merge-pdf](/merge-pdf), select your files from Google Drive or Downloads, reorder them with your thumb, and download the combined document in seconds.",
       },
       { type: "h2", text: "How to merge PDF files on Linux (Ghostscript & PDFtk command line)" },
       {
@@ -649,7 +649,7 @@ export const articles: Article[] = [
       },
       {
         q: "How do I merge PDF files on Windows 10 / 11?",
-        a: "Open mypdf4u.com/merge-pdf in Edge or Chrome, drag in your PDF files from File Explorer, arrange their order, and click Merge PDFs.",
+        a: "Open www.mypdf4u.com/merge-pdf in Edge or Chrome, drag in your PDF files from File Explorer, arrange their order, and click Merge PDFs.",
       },
       {
         q: "How do I combine PDF files on Mac for free?",
