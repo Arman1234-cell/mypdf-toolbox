@@ -26,10 +26,9 @@ export const SUPPORTED_LOCALES: LocaleConfig[] = [
 
 export const DEFAULT_LOCALE = "en";
 
-/**
- * Returns hreflang link tags for SEO metadata.
- */
-export function getHrefLangLinks(basePath: string, domain = "https://mypdf4u.com") {
+import { SITE_URL } from "./config";
+
+export function getHrefLangLinks(basePath: string, domain = SITE_URL) {
   const cleanPath = basePath.startsWith("/") ? basePath : `/${basePath}`;
   return [
     { rel: "alternate", hrefLang: "x-default", href: `${domain}${cleanPath}` },

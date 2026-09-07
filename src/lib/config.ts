@@ -7,7 +7,7 @@
 
 export const SITE_URL = (
   (typeof import.meta !== "undefined" && import.meta.env?.["VITE_SITE_URL"]) ||
-  "https://mypdf4u.com"
+  "https://www.mypdf4u.com"
 ).replace(/\/+$/, "");
 
 export const SITE_NAME = "MyPDF4U";
