@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect, Link } from "@tanstack/react-router";
 import { ArrowRight, Clock, ShieldCheck } from "lucide-react";
 import { Breadcrumbs } from "@/components/tools/ToolSections";
 import { articles, getArticle, type ArticleBlock } from "@/lib/articles";
@@ -6,6 +6,12 @@ import { getAbsoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/config";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
+    if (params.slug === "$slug" || params.slug === "%24slug" || params.slug.startsWith("$")) {
+      throw redirect({
+        to: "/blog",
+        statusCode: 301,
+      });
+    }
     const article = getArticle(params.slug);
     if (!article) throw notFound();
     return { article };
@@ -99,7 +105,7 @@ function RichText({ text }: { text: string }) {
       {parts.map((part, i) => {
         const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
         if (match) {
-          const [, label, href] = match;
+          const [, label = "", href = ""] = match;
           const isInternal = href.startsWith("/");
           if (isInternal) {
             return (

@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { ShieldCheck, BookOpen, Laptop, Smartphone, CheckCircle2, Lock } from "lucide-react";
 import { getTool } from "@/lib/tools";
@@ -28,6 +28,12 @@ const toolGuideMap: Record<string, { slug: string; title: string }> = {
 
 export const Route = createFileRoute("/$slug")({
   loader: ({ params }) => {
+    if (params.slug === "$slug" || params.slug === "%24slug" || params.slug.startsWith("$")) {
+      throw redirect({
+        to: "/tools",
+        statusCode: 301,
+      });
+    }
     const tool = getTool(params.slug);
     if (!tool) throw notFound();
     return { tool };
