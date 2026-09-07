@@ -5,10 +5,12 @@
  * structured data (JSON-LD), and sitemaps.
  */
 
-export const SITE_URL = (
+const rawSiteUrl = (
   (typeof import.meta !== "undefined" && import.meta.env?.["VITE_SITE_URL"]) ||
   "https://www.mypdf4u.com"
 ).replace(/\/+$/, "");
+
+export const SITE_URL = rawSiteUrl.replace("https://mypdf4u.com", "https://www.mypdf4u.com");
 
 export const SITE_NAME = "MyPDF4U";
 export const SITE_TAGLINE = "Simple PDF tools, fast results";
