@@ -44,8 +44,29 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+/** Redirect non-canonical URLs (http, no-www) → https://www.mypdf4u.com */
+function getCanonicalRedirect(request: Request): Response | null {
+  const url = new URL(request.url);
+
+  const isHttp = url.protocol === "http:";
+  const isNoWww =
+    url.hostname === "mypdf4u.com" || url.hostname === "mypdf4u.com.";
+
+  if (!isHttp && !isNoWww) return null; // already canonical
+
+  const canonical = new URL(request.url);
+  canonical.protocol = "https:";
+  canonical.hostname = "www.mypdf4u.com";
+
+  return Response.redirect(canonical.toString(), 301);
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    // 301-redirect http:// and bare mypdf4u.com to https://www.mypdf4u.com
+    const redirect = getCanonicalRedirect(request);
+    if (redirect) return redirect;
+
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
