@@ -137,11 +137,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  <url>
-    <loc>https://www.mypdf4u.com/login</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
+
 
   <!-- Blog Hub -->
   <url>
@@ -153,25 +149,91 @@
   <!-- Blog Articles -->
   <url>
     <loc>https://www.mypdf4u.com/blog/how-to-convert-jpg-to-pdf</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mypdf4u.com/blog/how-to-convert-png-to-pdf</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mypdf4u.com/blog/how-to-compress-pdf-for-email</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mypdf4u.com/blog/how-to-merge-pdf-files</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-convert-pdf-to-jpg</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-convert-pdf-to-png</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-convert-images-to-pdf</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-convert-pdf-to-word</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-convert-word-to-pdf</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-ocr-scanned-pdf</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-split-pdf-pages</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-rotate-pdf-pages</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-organize-pdf-pages</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-add-watermark-to-pdf</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mypdf4u.com/blog/how-to-remove-pdf-password</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

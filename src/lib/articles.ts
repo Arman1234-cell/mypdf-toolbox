@@ -1,3 +1,6 @@
+import { convertGuides } from "./guides/convert-guides";
+import { organizeGuides } from "./guides/organize-guides";
+
 /**
  * Blog content model.
  *
@@ -55,7 +58,7 @@ const heroDims = {
   mobileHeight: 576,
 };
 
-export const articles: Article[] = [
+const coreArticles: Article[] = [
   {
     slug: "how-to-convert-jpg-to-pdf",
     title: "How to Convert JPG to PDF on iPhone, Mobile and Computer",
@@ -675,6 +678,8 @@ export const articles: Article[] = [
     related: ["how-to-compress-pdf-for-email", "how-to-convert-jpg-to-pdf", "how-to-convert-png-to-pdf"],
   },
 ];
+
+export const articles: Article[] = [...coreArticles, ...convertGuides, ...organizeGuides];
 
 export function getArticle(slug: string): Article | undefined {
   return articles.find((a) => a.slug === slug);

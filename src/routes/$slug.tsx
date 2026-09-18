@@ -15,15 +15,22 @@ import { getAbsoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/config";
 
 const toolGuideMap: Record<string, { slug: string; title: string }> = {
   "jpg-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Convert JPG to PDF (Free, No Quality Loss)" },
-  "pdf-to-jpg": { slug: "how-to-convert-jpg-to-pdf", title: "How to Extract JPG Images from PDF" },
-  "image-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Combine Images into a PDF on Any Device" },
+  "pdf-to-jpg": { slug: "how-to-convert-pdf-to-jpg", title: "How to Convert PDF Pages to JPG Images" },
+  "image-to-pdf": { slug: "how-to-convert-images-to-pdf", title: "How to Convert Images to PDF in One Document" },
   "heic-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Convert iPhone HEIC Photos to PDF" },
   "png-to-pdf": { slug: "how-to-convert-png-to-pdf", title: "How to Convert PNG to PDF Online for Free" },
-  "pdf-to-png": { slug: "how-to-convert-png-to-pdf", title: "How to Render Lossless PNGs from PDF" },
+  "pdf-to-png": { slug: "how-to-convert-pdf-to-png", title: "How to Convert PDF to PNG Without Losing Sharpness" },
+  "pdf-to-word": { slug: "how-to-convert-pdf-to-word", title: "How to Convert a PDF into an Editable Word Document" },
+  "word-to-pdf": { slug: "how-to-convert-word-to-pdf", title: "How to Convert a Word Document to PDF" },
+  "ocr-pdf": { slug: "how-to-ocr-scanned-pdf", title: "How to Make a Scanned PDF Searchable with OCR" },
   "compress-pdf": { slug: "how-to-compress-pdf-for-email", title: "How to Compress Large PDF Files for Email" },
   "merge-pdf": { slug: "how-to-merge-pdf-files", title: "How to Merge PDF Files on Windows, Mac, iPhone & Android" },
-  "split-pdf": { slug: "how-to-merge-pdf-files", title: "How to Split and Organize PDF Pages Free" },
-  "organize-pdf": { slug: "how-to-merge-pdf-files", title: "How to Reorder and Delete PDF Pages" },
+  "split-pdf": { slug: "how-to-split-pdf-pages", title: "How to Split a PDF and Extract the Pages You Need" },
+  "rotate-pdf": { slug: "how-to-rotate-pdf-pages", title: "How to Rotate PDF Pages and Save the Change" },
+  "organize-pdf": { slug: "how-to-organize-pdf-pages", title: "How to Reorder and Delete Pages in a PDF" },
+  "watermark-pdf": { slug: "how-to-add-watermark-to-pdf", title: "How to Add a Watermark to a PDF" },
+  "unlock-pdf": { slug: "how-to-remove-pdf-password", title: "How to Remove a Password from a PDF You Own" },
+  "protect-pdf": { slug: "how-to-remove-pdf-password", title: "How to Remove or Add a Password on a PDF" },
 };
 
 export const Route = createFileRoute("/$slug")({

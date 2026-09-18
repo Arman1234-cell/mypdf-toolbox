@@ -1,6 +1,8 @@
 User-agent: *
-Disallow: /*$*
 Allow: /
+Disallow: /api/
+Disallow: /_server/
+Disallow: /login
 
 Sitemap: https://www.mypdf4u.com/sitemap.xml
 
