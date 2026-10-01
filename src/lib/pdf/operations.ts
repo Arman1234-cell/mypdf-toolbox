@@ -131,6 +131,22 @@ async function zipOutputs(name: string, outputs: ProcessedOutput[]): Promise<Pro
   return { name, blob: await zip.generateAsync({ type: "blob" }) };
 }
 
+export async function generatePdfThumbnail(file: File): Promise<Blob> {
+  const pdfjs = await loadPdfJs();
+  const doc = await pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+  const page = await doc.getPage(1);
+  const viewport = page.getViewport({ scale: 1.0 });
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.floor(viewport.width));
+  canvas.height = Math.max(1, Math.floor(viewport.height));
+  const context = canvas.getContext("2d");
+  if (!context) throw new ProcessingError("Your browser blocked the canvas used for rendering.");
+  context.fillStyle = "#ffffff";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  await page.render({ canvas, canvasContext: context, viewport }).promise;
+  return canvasToBlob(canvas, "image/jpeg", 0.8);
+}
+
 /**
  * Images (JPG/PNG) -> a single PDF, one image per page.
  * `rotations[i]` is a clockwise angle in degrees (0/90/180/270) that is baked
@@ -329,21 +345,23 @@ export const pdfToJpg = pdfToImages("jpeg");
 export const pdfToPng = pdfToImages("png");
 
 /** Rotate all pages, or only the pages listed in the "pages" option. */
-export const rotatePdf: Operation = async (files, { onProgress, onStage, options }) => {
-  const angle = Number(options?.["angle"] ?? 90);
+export const rotatePdf: Operation = async (files, { onProgress, onStage, options, rotations }) => {
+  const angle = rotations ? (rotations[0] ?? 0) : Number(options?.["angle"] ?? 90);
   const { degrees } = await loadPdfLib();
   const file = files[0]!;
   onStage?.("Reading PDF pages...");
   const doc = await readPdf(file);
   const pages = doc.getPages();
-  const raw = String(options?.["pages"] ?? "").trim();
+  const raw = (options?.["pages"] || "").trim();
   const selected = raw
     ? new Set(raw.split(",").flatMap((chunk) => parseRanges(chunk, pages.length).flat()))
     : null;
 
   pages.forEach((page, index) => {
     if (!selected || selected.has(index)) {
-      page.setRotation(degrees((page.getRotation().angle + angle) % 360));
+      if (angle !== 0) {
+        page.setRotation(degrees((page.getRotation().angle + angle) % 360));
+      }
     }
     onProgress?.((index + 1) / pages.length);
   });

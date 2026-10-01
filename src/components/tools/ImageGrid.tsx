@@ -21,6 +21,7 @@ type Props = {
   onClearAll?: () => void;
   onReorder: (fromIndex: number, toIndex: number) => void;
   onPreview: (item: ImageItem) => void;
+  hideBadge?: boolean;
 };
 
 export function ImageGrid({
@@ -32,6 +33,7 @@ export function ImageGrid({
   onClearAll,
   onReorder,
   onPreview,
+  hideBadge,
 }: Props) {
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [overIndex, setOverIndex] = useState<number | null>(null);
@@ -128,9 +130,11 @@ export function ImageGrid({
             } ${disabled ? "opacity-60" : "cursor-grab active:cursor-grabbing"}`}
           >
             {/* Page number badge */}
-            <span className="absolute left-2 top-2 z-10 rounded-lg bg-card/95 px-2 py-0.5 text-xs font-bold text-foreground shadow-soft backdrop-blur-xs">
-              Page {index + 1}
-            </span>
+            {!hideBadge && (
+              <span className="absolute left-2 top-2 z-10 rounded-lg bg-card/95 px-2 py-0.5 text-xs font-bold text-foreground shadow-soft backdrop-blur-xs">
+                Page {index + 1}
+              </span>
+            )}
 
             {/* Top action buttons */}
             <div className="absolute right-2 top-2 z-10 flex gap-1">

@@ -342,12 +342,18 @@ export const tools: ToolDefinition[] = [
       "Split and download the resulting PDF files.",
     ],
     features: [
-      { title: "Custom page range extraction", body: "Extract single pages and ranges like 1-4, 7, 10-12." },
+      {
+        title: "Custom page range extraction",
+        body: "Extract single pages and ranges like 1-4, 7, 10-12.",
+      },
       {
         title: "Burst all pages into separate files",
         body: "Leave the field blank to create an individual PDF for every single page.",
       },
-      { title: "Original document fidelity", body: "Pages are extracted with exact fonts and images." },
+      {
+        title: "Original document fidelity",
+        body: "Pages are extracted with exact fonts and images.",
+      },
     ],
     faqs: [
       {
@@ -405,7 +411,10 @@ export const tools: ToolDefinition[] = [
         title: "Lossless vector clarity",
         body: "PNG retains sharp edges and readable typography on charts and diagrams.",
       },
-      { title: "Adjustable DPI scale", body: "Render at Screen, High (200 DPI), or Print (300 DPI)." },
+      {
+        title: "Adjustable DPI scale",
+        body: "Render at Screen, High (200 DPI), or Print (300 DPI).",
+      },
       { title: "Batch download", body: "All exported PNG pages arrive together in one ZIP." },
     ],
     faqs: [
@@ -444,9 +453,18 @@ export const tools: ToolDefinition[] = [
     outputHint: "One PDF page per image, in the order you arrange them.",
     steps: ["Add your PNG images.", "Arrange the page order.", "Convert and download the PDF."],
     features: [
-      { title: "Sharp screenshot rendering", body: "Screenshots stay pixel-accurate with zero blurry artifacts." },
-      { title: "Mix PNG and JPG formats", body: "Combine different image types in the same document." },
-      { title: "Instant local download", body: "Generated directly on your device with no upload delay." },
+      {
+        title: "Sharp screenshot rendering",
+        body: "Screenshots stay pixel-accurate with zero blurry artifacts.",
+      },
+      {
+        title: "Mix PNG and JPG formats",
+        body: "Combine different image types in the same document.",
+      },
+      {
+        title: "Instant local download",
+        body: "Generated directly on your device with no upload delay.",
+      },
     ],
     faqs: [
       {
@@ -484,9 +502,15 @@ export const tools: ToolDefinition[] = [
     outputHint: "One PDF page per image, in the order you arrange them.",
     steps: ["Add your images.", "Set the page order.", "Convert and download."],
     features: [
-      { title: "Unified document output", body: "Every picture becomes a distinct page in one PDF." },
+      {
+        title: "Unified document output",
+        body: "Every picture becomes a distinct page in one PDF.",
+      },
       { title: "Zero quality loss", body: "Photos are embedded at 100% full original resolution." },
-      { title: "Private and offline-capable", body: "Processes client-side with no remote server upload." },
+      {
+        title: "Private and offline-capable",
+        body: "Processes client-side with no remote server upload.",
+      },
     ],
     faqs: [
       {
@@ -520,27 +544,6 @@ export const tools: ToolDefinition[] = [
     ctaLabel: "Select PDF file",
     actionLabel: "Rotate PDF",
     outputHint: "Rotation is applied to every page and saved into the file.",
-    options: [
-      {
-        key: "angle",
-        label: "Rotation",
-        type: "select",
-        defaultValue: "90",
-        choices: [
-          { value: "90", label: "90° clockwise" },
-          { value: "180", label: "180°" },
-          { value: "270", label: "90° counter-clockwise" },
-        ],
-      },
-      {
-        key: "pages",
-        label: "Pages to rotate",
-        type: "text",
-        placeholder: "e.g. 1, 3-5",
-        defaultValue: "",
-        help: "Leave empty to rotate every page.",
-      },
-    ],
     steps: [
       "Upload the PDF.",
       "Choose the angle (90°, 180°, 270°) and target page numbers.",
@@ -620,8 +623,14 @@ export const tools: ToolDefinition[] = [
       "Rebuild and download your restructured PDF.",
     ],
     features: [
-      { title: "Reorder & delete in one step", body: "A single page string controls order, removal, and duplication." },
-      { title: "Full range syntax support", body: "Combine ranges and single pages (e.g. 3, 1, 5-10)." },
+      {
+        title: "Reorder & delete in one step",
+        body: "A single page string controls order, removal, and duplication.",
+      },
+      {
+        title: "Full range syntax support",
+        body: "Combine ranges and single pages (e.g. 3, 1, 5-10).",
+      },
       { title: "Lossless extraction", body: "Pages are copied without re-compression." },
     ],
     faqs: [
@@ -708,9 +717,18 @@ export const tools: ToolDefinition[] = [
       "Apply watermark and download your stamped document.",
     ],
     features: [
-      { title: "Custom placement control", body: "Stamp diagonally across the center or in any corner." },
-      { title: "Adjustable opacity levels", body: "Choose from subtle 10% watermark to prominent 65% mark." },
-      { title: "Preserves underlying text", body: "Original text remains selectable underneath the watermark." },
+      {
+        title: "Custom placement control",
+        body: "Stamp diagonally across the center or in any corner.",
+      },
+      {
+        title: "Adjustable opacity levels",
+        body: "Choose from subtle 10% watermark to prominent 65% mark.",
+      },
+      {
+        title: "Preserves underlying text",
+        body: "Original text remains selectable underneath the watermark.",
+      },
     ],
     faqs: [
       {
@@ -751,9 +769,18 @@ export const tools: ToolDefinition[] = [
       "Download the editable .docx file and open in Word, Pages, or Google Docs.",
     ],
     features: [
-      { title: "Fully editable Word paragraphs", body: "Converts text runs into standard editable Word docx paragraphs." },
-      { title: "Complete privacy protection", body: "Your files are never uploaded to any cloud server." },
-      { title: "Universal compatibility", body: "Outputs standard .docx compatible with Microsoft 365, Word, and Docs." },
+      {
+        title: "Fully editable Word paragraphs",
+        body: "Converts text runs into standard editable Word docx paragraphs.",
+      },
+      {
+        title: "Complete privacy protection",
+        body: "Your files are never uploaded to any cloud server.",
+      },
+      {
+        title: "Universal compatibility",
+        body: "Outputs standard .docx compatible with Microsoft 365, Word, and Docs.",
+      },
     ],
     faqs: [
       {
@@ -794,7 +821,10 @@ export const tools: ToolDefinition[] = [
       "Download your finished PDF document.",
     ],
     features: [
-      { title: "Zero cloud upload required", body: "Read and converted locally inside your browser tab." },
+      {
+        title: "Zero cloud upload required",
+        body: "Read and converted locally inside your browser tab.",
+      },
       { title: "Standard A4 layout", body: "Clean paragraph wrapping with standard margins." },
       { title: "Instant conversion", body: "Typical documents convert in less than two seconds." },
     ],
@@ -835,7 +865,10 @@ export const tools: ToolDefinition[] = [
       "Download your encrypted password-protected PDF.",
     ],
     features: [
-      { title: "Strong document encryption", body: "Locks viewing access behind password protection." },
+      {
+        title: "Strong document encryption",
+        body: "Locks viewing access behind password protection.",
+      },
       { title: "Client-side security", body: "Your password and file never leave your browser." },
     ],
     faqs: [
@@ -882,8 +915,14 @@ export const tools: ToolDefinition[] = [
       "Click Unlock PDF and download your unencrypted copy.",
     ],
     features: [
-      { title: "Password never leaves your device", body: "Decryption executes entirely in your browser memory." },
-      { title: "Permanent password removal", body: "The unlocked PDF opens seamlessly without password prompts." },
+      {
+        title: "Password never leaves your device",
+        body: "Decryption executes entirely in your browser memory.",
+      },
+      {
+        title: "Permanent password removal",
+        body: "The unlocked PDF opens seamlessly without password prompts.",
+      },
       { title: "Free with no account", body: "Unlock documents instantly without registration." },
     ],
     faqs: [
@@ -924,7 +963,10 @@ export const tools: ToolDefinition[] = [
     ],
     features: [
       { title: "Apple HEIC support", body: "Converts iPhone photos into standard PDF pages." },
-      { title: "Batch photo conversion", body: "Combine multiple HEIC captures into a single document." },
+      {
+        title: "Batch photo conversion",
+        body: "Combine multiple HEIC captures into a single document.",
+      },
     ],
     faqs: [
       {

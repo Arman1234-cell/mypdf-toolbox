@@ -45,7 +45,7 @@ const readImageSize = (url: string) =>
   });
 
 export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
-  const imageMode = isImageWorkspace(tool);
+  const imageMode = isImageWorkspace(tool) || tool.slug === "rotate-pdf";
   const [files, setFiles] = useState<File[]>([]);
   const [items, setItems] = useState<ImageItem[]>([]);
   const [preview, setPreview] = useState<ImageItem | null>(null);
@@ -101,9 +101,25 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
     if (imageMode) {
       const added: ImageItem[] = [];
       for (const [index, file] of incoming.entries()) {
-        const url = URL.createObjectURL(file);
+        let url: string = "";
+        let size = { width: 0, height: 0 };
+        try {
+          if (tool.slug === "rotate-pdf") {
+            const { generatePdfThumbnail } = await import("@/lib/pdf/operations");
+            const blob = await generatePdfThumbnail(file);
+            url = URL.createObjectURL(blob);
+            size = await readImageSize(url);
+          } else {
+            url = URL.createObjectURL(file);
+            size = await readImageSize(url);
+          }
+        } catch (e) {
+          console.error("Error generating thumbnail:", e);
+          setMessage("Failed to generate PDF thumbnail. Check the browser console for details.");
+          setStatus("error");
+          return;
+        }
         thumbUrls.current.push(url);
-        const size = await readImageSize(url);
         added.push({
           id: `${file.name}-${file.size}-${Date.now()}-${index}`,
           file,
@@ -254,6 +270,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                     return next;
                   })
                 }
+                hideBadge={tool.slug === "rotate-pdf"}
               />
             ) : (
               <FileList
