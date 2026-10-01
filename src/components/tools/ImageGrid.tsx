@@ -22,6 +22,8 @@ type Props = {
   onReorder: (fromIndex: number, toIndex: number) => void;
   onPreview: (item: ImageItem) => void;
   hideBadge?: boolean;
+  /** When true, shows PDF-specific UI (hides reorder hints, shows hover-only buttons) */
+  isPdfMode?: boolean;
 };
 
 export function ImageGrid({
@@ -34,6 +36,7 @@ export function ImageGrid({
   onReorder,
   onPreview,
   hideBadge,
+  isPdfMode,
 }: Props) {
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [overIndex, setOverIndex] = useState<number | null>(null);
@@ -51,14 +54,20 @@ export function ImageGrid({
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
         <div>
           <p className="text-sm font-semibold text-foreground">
-            {items.length} {items.length === 1 ? "image" : "images"}
+            {isPdfMode ? "1 PDF file" : `${items.length} ${items.length === 1 ? "image" : "images"}`}
             <span className="ml-1.5 text-xs font-normal text-muted-foreground">
               ({formatBytes(totalBytes)} total)
             </span>
           </p>
-          <p className="text-xs text-muted-foreground">
-            Drag cards or use arrows to change the PDF page order.
-          </p>
+          {isPdfMode ? (
+            <p className="text-xs text-muted-foreground">
+              Hover the thumbnail and click the rotate icon to rotate all pages.
+            </p>
+          ) : (
+            <p className="text-xs text-muted-foreground">
+              Drag cards or use arrows to change the PDF page order.
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -136,15 +145,15 @@ export function ImageGrid({
               </span>
             )}
 
-            {/* Top action buttons */}
-            <div className="absolute right-2 top-2 z-10 flex gap-1">
+            {/* Top action buttons — always visible for PDF mode, hover-only otherwise */}
+            <div className={`absolute right-2 top-2 z-10 flex gap-1 transition-opacity duration-150 ${isPdfMode ? "opacity-0 group-hover:opacity-100" : ""}`}>
               <button
                 type="button"
                 disabled={disabled}
                 onClick={() => onRotate(item.id)}
-                title={`Rotate ${item.file.name} 90° clockwise`}
-                aria-label={`Rotate page ${index + 1} 90 degrees clockwise`}
-                className="rounded-lg bg-card/95 p-1.5 text-foreground shadow-soft transition-colors hover:bg-secondary focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
+                title={isPdfMode ? "Rotate PDF 90° clockwise" : `Rotate ${item.file.name} 90° clockwise`}
+                aria-label={isPdfMode ? "Rotate PDF 90 degrees clockwise" : `Rotate page ${index + 1} 90 degrees clockwise`}
+                className="rounded-lg bg-card/95 p-1.5 text-foreground shadow-soft transition-colors hover:bg-primary hover:text-white focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
               >
                 <RotateCw className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -152,9 +161,9 @@ export function ImageGrid({
                 type="button"
                 disabled={disabled}
                 onClick={() => onRemove(item.id)}
-                title={`Remove ${item.file.name}`}
-                aria-label={`Remove page ${index + 1}`}
-                className="rounded-lg bg-card/95 p-1.5 text-foreground shadow-soft transition-colors hover:bg-secondary hover:text-destructive focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
+                title={isPdfMode ? "Remove PDF" : `Remove ${item.file.name}`}
+                aria-label={isPdfMode ? "Remove PDF" : `Remove page ${index + 1}`}
+                className="rounded-lg bg-card/95 p-1.5 text-foreground shadow-soft transition-colors hover:bg-destructive hover:text-white focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
               </button>

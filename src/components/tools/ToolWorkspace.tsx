@@ -271,6 +271,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                   })
                 }
                 hideBadge={tool.slug === "rotate-pdf"}
+                isPdfMode={tool.slug === "rotate-pdf"}
               />
             ) : (
               <FileList
