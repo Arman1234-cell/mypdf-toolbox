@@ -853,13 +853,24 @@ export const tools: ToolDefinition[] = [
     metaDescription:
       "Secure and password-protect your PDF documents. Client-side encryption ensures only authorized recipients can open your files.",
     category: "Security",
-    status: "soon",
+    status: "live",
+    operation: "protectPdf",
     accept: "application/pdf,.pdf",
     acceptLabel: "PDF documents",
     multiple: false,
     ctaLabel: "Select PDF file",
     actionLabel: "Protect PDF",
-    outputHint: "",
+    outputHint: "The downloaded PDF will require the password to be opened.",
+    options: [
+      {
+        key: "password",
+        label: "Set password",
+        type: "password",
+        placeholder: "Enter a strong password",
+        defaultValue: "",
+        help: "Make sure you remember this! We cannot recover it if lost.",
+      },
+    ],
     steps: [
       "Upload the PDF you want to secure.",
       "Enter a strong password to lock the document.",

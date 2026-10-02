@@ -676,6 +676,61 @@ export const unlockPdf: Operation = async (files, { onProgress, onStage, options
   ];
 };
 
+/** Add a password to a PDF using Ghostscript WASM. */
+export const protectPdf: Operation = async (files, { onProgress, onStage, options }) => {
+  const file = files[0]!;
+  const password = String(options?.["password"] ?? "");
+  if (!password) throw new ProcessingError("Please provide a password.");
+
+  onStage?.("Initializing encryption engine...");
+  try {
+    const gs = await loadGhostscript();
+    const FS = gs["FS"] as {
+      writeFile: (path: string, data: Uint8Array) => void;
+      readFile: (path: string) => Uint8Array;
+      unlink: (path: string) => void;
+    };
+
+    const inputData = new Uint8Array(await file.arrayBuffer());
+    FS.writeFile("/input.pdf", inputData);
+
+    onStage?.("Encrypting PDF document...");
+    onProgress?.(0.5);
+
+    const callMain = gs["callMain"] as (args: string[]) => number;
+    callMain([
+      "-dBATCH",
+      "-dNOPAUSE",
+      "-dQUIET",
+      `-sDEVICE=pdfwrite`,
+      `-sOwnerPassword=${password}`,
+      `-sUserPassword=${password}`,
+      `-dEncryptionR=3`,
+      `-dKeyLength=128`,
+      `-sOutputFile=/output.pdf`,
+      `/input.pdf`,
+    ]);
+
+    const gsBytes = FS.readFile("/output.pdf");
+
+    try { FS.unlink("/input.pdf"); } catch { /* ignore */ }
+    try { FS.unlink("/output.pdf"); } catch { /* ignore */ }
+
+    onStage?.("Done!");
+    onProgress?.(1);
+
+    return [
+      {
+        name: `${safeName(file.name)}-protected.pdf`,
+        blob: new Blob([gsBytes as BlobPart], { type: "application/pdf" }),
+      },
+    ];
+  } catch (err) {
+    console.error("Ghostscript WASM encryption failed:", err);
+    throw new ProcessingError("Failed to encrypt the document. Please ensure it is not already corrupted.");
+  }
+};
+
 /** Extract the text of a PDF, grouped into lines, page by page. */
 async function extractText(
   file: File,
@@ -950,6 +1005,7 @@ export const operations = {
   rotatePdf,
   watermarkPdf,
   organizePdf,
+  protectPdf,
   unlockPdf,
   pdfToWord,
   wordToPdf,
