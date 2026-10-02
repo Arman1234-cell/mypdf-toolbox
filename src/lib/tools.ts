@@ -207,7 +207,7 @@ export const tools: ToolDefinition[] = [
         key: "level",
         label: "Compression Level",
         type: "range",
-        defaultValue: "85",
+        defaultValue: "65",
         min: 10,
         max: 95,
         step: 5,
