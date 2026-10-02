@@ -119,10 +119,10 @@ function Home() {
           {/* ── LEFT decoration: botanical leaves + blank doc ── */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-0 top-1/2 hidden lg:block"
-            style={{ transform: "translate(-35%, -50%)", width: 220, zIndex: 0 }}
+            className="pointer-events-none absolute left-0 top-1/2 w-[120px] opacity-20 sm:w-[160px] sm:opacity-50 lg:w-[220px] lg:opacity-100"
+            style={{ transform: "translate(-35%, -50%)", zIndex: 0 }}
           >
-            <svg width="220" height="320" viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
               {/* Tilted white document behind leaves */}
               <g transform="rotate(-12, 100, 180)">
                 <rect x="50" y="130" width="100" height="130" rx="8" fill="white" style={{ filter: "drop-shadow(0 6px 18px rgba(20,83,45,0.10))" }} />
@@ -144,10 +144,10 @@ function Home() {
           {/* ── RIGHT decoration: botanical leaves + PDF doc ── */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute right-0 top-1/2 hidden lg:block"
-            style={{ transform: "translate(35%, -50%)", width: 230, zIndex: 0 }}
+            className="pointer-events-none absolute right-0 top-1/2 w-[130px] opacity-20 sm:w-[170px] sm:opacity-50 lg:w-[230px] lg:opacity-100"
+            style={{ transform: "translate(35%, -50%)", zIndex: 0 }}
           >
-            <svg width="230" height="340" viewBox="0 0 230 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 230 340" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
               <path d="M200 70 Q250 20 190 0 Q140 40 160 110 Q180 95 200 70Z" fill="#A7C4A0" opacity="0.7" />
               <path d="M160 130 Q210 70 150 40 Q100 90 140 165 Q150 150 160 130Z" fill="#6BAD6B" opacity="0.5" />
               <path d="M215 175 Q250 135 210 115 Q175 145 198 195 Q208 187 215 175Z" fill="#A7C4A0" opacity="0.55" />

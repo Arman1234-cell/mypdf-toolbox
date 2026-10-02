@@ -251,10 +251,10 @@ function ToolPage() {
           {/* ── LEFT decoration: botanical leaves + blank doc ── */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-0 top-0 hidden lg:block"
-            style={{ transform: "translate(-45%, -10%)", width: 220, zIndex: 0 }}
+            className="pointer-events-none absolute left-0 top-0 w-[120px] opacity-30 sm:w-[160px] sm:opacity-60 lg:w-[220px] lg:opacity-100"
+            style={{ transform: "translate(-45%, -10%)", zIndex: 0 }}
           >
-            <svg width="220" height="320" viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
               {/* Tilted white document behind leaves */}
               <g transform="rotate(-12, 100, 180)">
                 <rect x="50" y="130" width="100" height="130" rx="8" fill="white" style={{ filter: "drop-shadow(0 6px 18px rgba(20,83,45,0.10))" }} />
@@ -281,10 +281,10 @@ function ToolPage() {
           {/* ── RIGHT decoration: botanical leaves + PDF doc ── */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute right-0 top-0 hidden lg:block"
-            style={{ transform: "translate(48%, -5%)", width: 230, zIndex: 0 }}
+            className="pointer-events-none absolute right-0 top-0 w-[130px] opacity-30 sm:w-[170px] sm:opacity-60 lg:w-[230px] lg:opacity-100"
+            style={{ transform: "translate(48%, -5%)", zIndex: 0 }}
           >
-            <svg width="230" height="340" viewBox="0 0 230 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 230 340" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
               {/* Leaves behind document */}
               {/* Big leaf right-1 */}
               <path d="M200 70 Q250 20 190 0 Q140 40 160 110 Q180 95 200 70Z" fill="#A7C4A0" opacity="0.7" />
