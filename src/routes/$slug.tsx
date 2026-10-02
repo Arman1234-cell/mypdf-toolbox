@@ -265,10 +265,10 @@ function ToolPage() {
             </div>
           )}
 
-          <h1 className="text-3xl font-extrabold tracking-tight text-forest sm:text-4xl lg:text-[2.6rem] leading-tight">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#14532D] sm:text-4xl lg:text-[2.75rem] leading-tight">
             {isRotate ? "Rotate PDF pages easily" : tool.h1}
           </h1>
-          <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg leading-relaxed animate-in fade-in duration-300">
+          <p className="mx-auto mt-4 max-w-xl text-base text-[#6B7C6A] sm:text-lg leading-relaxed">
             {isRotate
               ? "Permanently fix upside-down or sideways PDF pages by 90°, 180°, or 270°. Rotate all pages or target specific pages with instant lossless saving directly in your browser."
               : tool.tagline}
@@ -290,26 +290,16 @@ function ToolPage() {
         {/* Privacy Banner */}
         <aside
           aria-label="Security guarantee"
-          className="mt-5 rounded-2xl border border-primary/20 bg-mint/80 p-4 sm:p-5 shadow-soft transition-all"
+          className="mt-4 flex items-center gap-3.5 rounded-2xl border border-[#A8D5B0] bg-[#E8F2E9] px-5 py-4"
         >
-          <div className="flex items-start gap-3.5">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-card text-primary shadow-soft ring-1 ring-primary/20">
-              <ShieldCheck className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-bold text-forest">100% Private In-Browser Processing</h3>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                Your documents are processed securely inside this browser tab. Your files never
-                leave your device, and are never uploaded, stored, or shared. Read our full{" "}
-                <a
-                  href="/security"
-                  className="font-semibold text-primary underline underline-offset-2 hover:text-primary-dark"
-                >
-                  security page
-                </a>
-                .
-              </p>
-            </div>
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#16a34a] shadow-sm ring-1 ring-[#D8EDD9]">
+            <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="text-sm font-bold text-[#14532D]">100% Private &amp; Secure</h3>
+            <p className="text-xs text-[#6B7C6A] mt-0.5">
+              Your files are processed in your browser and never uploaded to our servers.
+            </p>
           </div>
         </aside>
       </div>

@@ -190,81 +190,69 @@ export function Faq({ items }: { items: { q: string; a: string }[] }) {
 export function HowToUse({ tool }: { tool: ToolDefinition }) {
   if (!tool.steps.length) return null;
 
-  // Custom step metadata for rich visual presentation
-  const stepMeta = [
+  const stepCards = [
     {
       num: "01",
+      bg: "bg-[#E8F2E9] border-[#A8D5B0]",
+      numColor: "text-[#16a34a]/25",
       icon: UploadCloud,
-      cardBg: "bg-mint/40 border-primary/20",
-      pillBg: "bg-mint text-primary ring-1 ring-primary/20",
-      defaultTitle: "Upload PDF",
+      iconBg: "bg-white text-[#16a34a]",
+      title: "Select your PDF",
     },
     {
       num: "02",
+      bg: "bg-[#F0EBD9] border-[#D4C8A8]",
+      numColor: "text-[#14532D]/20",
       icon: RotateCw,
-      cardBg: "bg-lavender/40 border-purple-200 dark:border-purple-900/40",
-      pillBg: "bg-lavender text-purple-700 ring-1 ring-purple-300/40",
-      defaultTitle: "Choose Angle & Pages",
+      iconBg: "bg-white text-[#14532D]",
+      title: "Choose compression",
     },
     {
       num: "03",
+      bg: "bg-[#E8F2E9] border-[#A8D5B0]",
+      numColor: "text-[#16a34a]/25",
       icon: Download,
-      cardBg: "bg-peach/40 border-amber-200 dark:border-amber-900/40",
-      pillBg: "bg-peach text-amber-800 ring-1 ring-amber-300/40",
-      defaultTitle: "Save & Download",
+      iconBg: "bg-white text-[#16a34a]",
+      title: "Download instantly",
     },
   ];
 
   return (
     <section aria-labelledby="how-to">
-      <div className="text-center sm:text-left">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary mb-2">
-          <Sparkles className="h-3.5 w-3.5" /> 3 Simple Steps
-        </span>
-        <h2 id="how-to" className="text-2xl font-extrabold text-forest sm:text-3xl">
-          How to use {tool.name}
-        </h2>
-        <p className="mt-1.5 text-sm text-muted-foreground">
-          Quick and straightforward — no accounts or file uploads needed.
-        </p>
-      </div>
+      <h2 id="how-to" className="text-2xl font-extrabold text-[#14532D] sm:text-3xl">
+        How to use {tool.name}
+      </h2>
+      <p className="mt-2 text-sm text-[#6B7C6A]">
+        Just 3 simple steps to reduce your PDF file size quickly.
+      </p>
 
       <ol className="mt-6 grid gap-4 sm:grid-cols-3">
         {tool.steps.map((step, index) => {
-          const meta = stepMeta[index % stepMeta.length]!;
-          const Icon = meta.icon;
+          const card = stepCards[index % stepCards.length]!;
+          const Icon = card.icon;
+          const isLast = index === tool.steps.length - 1;
           return (
             <li
               key={step}
-              className={`relative flex flex-col justify-between overflow-hidden rounded-[1.5rem] border p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-soft ${meta.cardBg}`}
+              className={`relative flex flex-col rounded-2xl border p-5 shadow-sm ${card.bg}`}
             >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`flex h-11 w-11 items-center justify-center rounded-2xl shadow-xs ${meta.pillBg}`}
-                  >
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <span className="text-2xl font-black text-forest/30 tracking-tight">
-                    {meta.num}
-                  </span>
-                </div>
-                <h3 className="mt-4 text-base font-bold text-forest">
-                  {index === 0
-                    ? "1. Select your PDF"
-                    : index === 1
-                      ? "2. Pick angle & pages"
-                      : "3. Download instantly"}
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-                  {step}
-                </p>
-              </div>
-              <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-primary">
-                <span>
-                  Step {index + 1} of {tool.steps.length}
+              {/* Number + arrow connector */}
+              <div className="flex items-center justify-between mb-4">
+                <span className={`text-3xl font-black tracking-tight leading-none ${card.numColor}`}>
+                  {card.num}
                 </span>
+                {!isLast && (
+                  <span className="hidden sm:block text-[#6B7C6A]/40 text-lg font-light">→</span>
+                )}
               </div>
+
+              {/* Icon */}
+              <div className={`flex h-10 w-10 items-center justify-center rounded-xl shadow-sm ring-1 ring-black/5 mb-3 ${card.iconBg}`}>
+                <Icon className="h-5 w-5" aria-hidden="true" />
+              </div>
+
+              <h3 className="text-[15px] font-bold text-[#14532D]">{card.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#6B7C6A]">{step}</p>
             </li>
           );
         })}
@@ -273,26 +261,25 @@ export function HowToUse({ tool }: { tool: ToolDefinition }) {
   );
 }
 
+
 export function KeyFeatures({ tool }: { tool: ToolDefinition }) {
   if (!tool.features.length) return null;
   return (
     <section aria-labelledby="features">
-      <h2 id="features" className="text-2xl font-extrabold text-forest sm:text-3xl">
+      <h2 id="features" className="text-2xl font-extrabold text-[#14532D] sm:text-3xl">
         Key features
       </h2>
-      <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        {tool.features.map((feature, idx) => (
+      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {tool.features.map((feature) => (
           <div
             key={feature.title}
-            className="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 hover:shadow-soft"
+            className="rounded-2xl border border-[#D8EDD9] bg-white p-5 shadow-sm transition-all duration-300 hover:border-[#16a34a]/40 hover:-translate-y-0.5 hover:shadow-md"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-[1.25rem] bg-mint text-primary shadow-sm ring-1 ring-border">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E8F2E9] text-[#16a34a]">
               <Check className="h-5 w-5" aria-hidden="true" />
             </div>
-            <h3 className="mt-5 text-base font-bold text-forest">{feature.title}</h3>
-            <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-              {feature.body}
-            </p>
+            <h3 className="mt-4 text-sm font-bold text-[#14532D]">{feature.title}</h3>
+            <p className="mt-2 text-xs leading-relaxed text-[#6B7C6A]">{feature.body}</p>
           </div>
         ))}
       </div>

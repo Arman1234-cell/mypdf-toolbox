@@ -54,41 +54,41 @@
 
 :root {
   --radius: 0.95rem;
-  /* Warm ivory cream background */
-  --background: #FAF7F0;
+  /* Warm cream background — reference palette */
+  --background: #FAF7ED;
   /* Deep forest green for text and primary headings */
-  --foreground: #203D2E;
+  --foreground: #14532D;
   --card: #FFFFFF;
-  --card-foreground: #203D2E;
+  --card-foreground: #14532D;
   --popover: #FFFFFF;
-  --popover-foreground: #203D2E;
-  /* Fresh green */
-  --primary: #32865A;
+  --popover-foreground: #14532D;
+  /* Bright accent green */
+  --primary: #16a34a;
   --primary-foreground: #FFFFFF;
-  --primary-dark: #286C48;
-  /* Soft sage green */
-  --secondary: #E8F0E6;
-  --secondary-foreground: #203D2E;
-  --muted: #E8F0E6;
-  /* Muted sage for secondary text */
-  --muted-foreground: #718174;
-  --accent: #E8F0E6;
-  --accent-foreground: #203D2E;
-  --mint: #E8F0E6;
-  --forest: #203D2E;
-  /* Soft beige accents */
-  --lavender: #F1E9DA;
-  --lavender-foreground: #203D2E;
-  --peach: #F1E9DA;
-  --peach-foreground: #203D2E;
-  --cream: #FAF7F0;
+  --primary-dark: #14532D;
+  /* Light green background */
+  --secondary: #E8F2E9;
+  --secondary-foreground: #14532D;
+  --muted: #E8F2E9;
+  /* Muted for secondary text */
+  --muted-foreground: #6B7C6A;
+  --accent: #E8F2E9;
+  --accent-foreground: #14532D;
+  --mint: #E8F2E9;
+  --forest: #14532D;
+  /* Warm pale card background */
+  --lavender: #F0EBD9;
+  --lavender-foreground: #14532D;
+  --peach: #F0EBD9;
+  --peach-foreground: #14532D;
+  --cream: #FAF7ED;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
-  --success: #32865A;
+  --success: #22C55E;
   --warning: #EA580C;
-  --border: #E8F0E6;
-  --input: #E8F0E6;
-  --ring: #32865A;
+  --border: #D8EDD9;
+  --input: #E8F2E9;
+  --ring: #22C55E;
 }
 
 @layer base {
