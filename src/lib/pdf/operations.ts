@@ -316,14 +316,15 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
   }
 
   // Compression interpolation — balance between size reduction and readability:
-  //   strength=10  (Light)    → maxDim=1400px, quality=0.78, scale=1.6
-  //   strength=65  (Balanced) → maxDim=950px,  quality=0.55, scale=1.2
-  //   strength=85  (Strong)   → maxDim=800px,  quality=0.48, scale=1.0
-  //   strength=95  (Maximum)  → maxDim=700px,  quality=0.42, scale=0.9
+  // To match tools like 11zon, we need to allow extreme downsampling at the strong end:
+  //   strength=10  (Light)    → maxDim=1600px, quality=0.80, scale=1.5
+  //   strength=65  (Balanced) → maxDim=825px,  quality=0.35, scale=0.9
+  //   strength=85  (Strong)   → maxDim=550px,  quality=0.18, scale=0.7
+  //   strength=95  (Maximum)  → maxDim=400px,  quality=0.10, scale=0.6
   const t = Math.max(0, Math.min(1, (compressionStrength - 10) / 85));
-  const maxDim  = Math.round(1400 - t * 700);      // 1400 → 700
-  const quality = +(0.78 - t * 0.36).toFixed(2);   // 0.78 → 0.42
-  const scale   = +(1.60 - t * 0.70).toFixed(2);   // 1.60 → 0.90
+  const maxDim  = Math.round(1600 - t * 1200);     // 1600 → 400
+  const quality = +(0.80 - t * 0.70).toFixed(2);   // 0.80 → 0.10
+  const scale   = +(1.50 - t * 0.90).toFixed(2);   // 1.50 → 0.60
 
   const { PDFDocument } = await loadPdfLib();
 
