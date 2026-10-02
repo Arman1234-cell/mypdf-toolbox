@@ -37,7 +37,7 @@ export function UploadZone({ accept, acceptLabel, multiple, ctaLabel, onFiles, c
         handleFiles(event.dataTransfer.files);
       }}
       className={`rounded-2xl border-2 border-dashed transition-colors ${
-        dragging ? "border-primary bg-secondary" : "border-border bg-mint"
+        dragging ? "border-primary bg-secondary" : "border-border bg-slate-100 dark:bg-slate-800/50"
       } ${compact ? "p-5" : "px-6 py-10 sm:py-14"}`}
     >
       <input
