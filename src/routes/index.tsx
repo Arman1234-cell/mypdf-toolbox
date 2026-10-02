@@ -115,8 +115,59 @@ function Home() {
   return (
     <>
       <section className="border-b border-border bg-mint">
-        <div className="container-page py-12 sm:py-16">
-          <div className="mx-auto max-w-2xl text-center">
+        <div className="container-page relative py-12 sm:py-16 overflow-hidden sm:overflow-visible">
+          {/* ── LEFT decoration: botanical leaves + blank doc ── */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-1/2 hidden lg:block"
+            style={{ transform: "translate(-35%, -50%)", width: 220, zIndex: 0 }}
+          >
+            <svg width="220" height="320" viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Tilted white document behind leaves */}
+              <g transform="rotate(-12, 100, 180)">
+                <rect x="50" y="130" width="100" height="130" rx="8" fill="white" style={{ filter: "drop-shadow(0 6px 18px rgba(20,83,45,0.10))" }} />
+                <rect x="63" y="155" width="74" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="167" width="60" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="179" width="68" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="191" width="50" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="203" width="64" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="215" width="45" height="5" rx="2.5" fill="#D8EDD9" />
+              </g>
+              <path d="M30 80 Q-20 30 40 0 Q90 40 60 110 Q45 95 30 80Z" fill="#A7C4A0" opacity="0.7" />
+              <path d="M70 130 Q20 70 80 40 Q130 90 90 160 Q80 148 70 130Z" fill="#6BAD6B" opacity="0.5" />
+              <path d="M10 170 Q-20 130 20 110 Q50 140 30 190 Q20 182 10 170Z" fill="#A7C4A0" opacity="0.6" />
+              <path d="M40 0 Q55 60 60 110" stroke="#6BAD6B" strokeWidth="1.5" fill="none" opacity="0.5" />
+              <path d="M80 40 Q82 100 90 160" stroke="#6BAD6B" strokeWidth="1.2" fill="none" opacity="0.4" />
+            </svg>
+          </div>
+
+          {/* ── RIGHT decoration: botanical leaves + PDF doc ── */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-0 top-1/2 hidden lg:block"
+            style={{ transform: "translate(35%, -50%)", width: 230, zIndex: 0 }}
+          >
+            <svg width="230" height="340" viewBox="0 0 230 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M200 70 Q250 20 190 0 Q140 40 160 110 Q180 95 200 70Z" fill="#A7C4A0" opacity="0.7" />
+              <path d="M160 130 Q210 70 150 40 Q100 90 140 165 Q150 150 160 130Z" fill="#6BAD6B" opacity="0.5" />
+              <path d="M215 175 Q250 135 210 115 Q175 145 198 195 Q208 187 215 175Z" fill="#A7C4A0" opacity="0.55" />
+              <path d="M190 0 Q172 60 160 110" stroke="#6BAD6B" strokeWidth="1.5" fill="none" opacity="0.5" />
+              <path d="M150 40 Q148 100 140 165" stroke="#6BAD6B" strokeWidth="1.2" fill="none" opacity="0.4" />
+              <g transform="rotate(10, 115, 230)" style={{ filter: "drop-shadow(0 8px 24px rgba(20,83,45,0.13))" }}>
+                <rect x="55" y="160" width="110" height="140" rx="10" fill="white" />
+                <rect x="68" y="174" width="36" height="20" rx="5" fill="#F45B63" />
+                <text x="86" y="189" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="10" fill="white" letterSpacing="0.5">PDF</text>
+                <rect x="68" y="202" width="74" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="213" width="58" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="224" width="66" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="235" width="48" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="246" width="62" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="257" width="42" height="4.5" rx="2.25" fill="#D8EDD9" />
+              </g>
+            </svg>
+          </div>
+
+          <div className="relative z-10 mx-auto max-w-2xl text-center">
             <p className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-secondary-foreground">
               <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
               Your simple PDF toolbox

@@ -247,32 +247,100 @@ function ToolPage() {
     >
       {/* Hero Section — collapsed when a file is uploaded */}
       {!hasUploadedFile ? (
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-2 flex justify-center">
-            <Breadcrumbs
-              items={[
-                { label: "Home", to: "/" },
-                { label: "PDF Tools", to: "/tools" },
-                { label: tool.name },
-              ]}
-            />
+        <div className="relative">
+          {/* ── LEFT decoration: botanical leaves + blank doc ── */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 hidden lg:block"
+            style={{ transform: "translate(-45%, -10%)", width: 220, zIndex: 0 }}
+          >
+            <svg width="220" height="320" viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Tilted white document behind leaves */}
+              <g transform="rotate(-12, 100, 180)">
+                <rect x="50" y="130" width="100" height="130" rx="8" fill="white" style={{ filter: "drop-shadow(0 6px 18px rgba(20,83,45,0.10))" }} />
+                {/* text lines */}
+                <rect x="63" y="155" width="74" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="167" width="60" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="179" width="68" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="191" width="50" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="203" width="64" height="5" rx="2.5" fill="#D8EDD9" />
+                <rect x="63" y="215" width="45" height="5" rx="2.5" fill="#D8EDD9" />
+              </g>
+              {/* Big leaf 1 */}
+              <path d="M30 80 Q-20 30 40 0 Q90 40 60 110 Q45 95 30 80Z" fill="#A7C4A0" opacity="0.7" />
+              {/* Big leaf 2 */}
+              <path d="M70 130 Q20 70 80 40 Q130 90 90 160 Q80 148 70 130Z" fill="#6BAD6B" opacity="0.5" />
+              {/* Small leaf */}
+              <path d="M10 170 Q-20 130 20 110 Q50 140 30 190 Q20 182 10 170Z" fill="#A7C4A0" opacity="0.6" />
+              {/* Stem curves */}
+              <path d="M40 0 Q55 60 60 110" stroke="#6BAD6B" strokeWidth="1.5" fill="none" opacity="0.5" />
+              <path d="M80 40 Q82 100 90 160" stroke="#6BAD6B" strokeWidth="1.2" fill="none" opacity="0.4" />
+            </svg>
           </div>
 
-          {isRotate && (
-            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-mint/90 px-3.5 py-1 text-xs font-semibold text-primary shadow-xs">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              <span>Free Browser Tool · Permanent Rotation · No Uploads</span>
-            </div>
-          )}
+          {/* ── RIGHT decoration: botanical leaves + PDF doc ── */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-0 top-0 hidden lg:block"
+            style={{ transform: "translate(48%, -5%)", width: 230, zIndex: 0 }}
+          >
+            <svg width="230" height="340" viewBox="0 0 230 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Leaves behind document */}
+              {/* Big leaf right-1 */}
+              <path d="M200 70 Q250 20 190 0 Q140 40 160 110 Q180 95 200 70Z" fill="#A7C4A0" opacity="0.7" />
+              {/* Big leaf right-2 */}
+              <path d="M160 130 Q210 70 150 40 Q100 90 140 165 Q150 150 160 130Z" fill="#6BAD6B" opacity="0.5" />
+              {/* Small leaf right */}
+              <path d="M215 175 Q250 135 210 115 Q175 145 198 195 Q208 187 215 175Z" fill="#A7C4A0" opacity="0.55" />
+              {/* Stems */}
+              <path d="M190 0 Q172 60 160 110" stroke="#6BAD6B" strokeWidth="1.5" fill="none" opacity="0.5" />
+              <path d="M150 40 Q148 100 140 165" stroke="#6BAD6B" strokeWidth="1.2" fill="none" opacity="0.4" />
 
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#14532D] sm:text-4xl lg:text-[2.75rem] leading-tight">
-            {isRotate ? "Rotate PDF pages easily" : tool.h1}
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl text-base text-[#6B7C6A] sm:text-lg leading-relaxed">
-            {isRotate
-              ? "Permanently fix upside-down or sideways PDF pages by 90°, 180°, or 270°. Rotate all pages or target specific pages with instant lossless saving directly in your browser."
-              : tool.tagline}
-          </p>
+              {/* Floating PDF document card */}
+              <g transform="rotate(10, 115, 230)" style={{ filter: "drop-shadow(0 8px 24px rgba(20,83,45,0.13))" }}>
+                <rect x="55" y="160" width="110" height="140" rx="10" fill="white" />
+                {/* Red PDF label badge */}
+                <rect x="68" y="174" width="36" height="20" rx="5" fill="#F45B63" />
+                <text x="86" y="189" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="10" fill="white" letterSpacing="0.5">PDF</text>
+                {/* text lines */}
+                <rect x="68" y="202" width="74" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="213" width="58" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="224" width="66" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="235" width="48" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="246" width="62" height="4.5" rx="2.25" fill="#D8EDD9" />
+                <rect x="68" y="257" width="42" height="4.5" rx="2.25" fill="#D8EDD9" />
+              </g>
+            </svg>
+          </div>
+
+          {/* Actual hero text content — sits above the decorations */}
+          <div className="relative z-10 mx-auto max-w-3xl text-center">
+            <div className="mb-2 flex justify-center">
+              <Breadcrumbs
+                items={[
+                  { label: "Home", to: "/" },
+                  { label: "PDF Tools", to: "/tools" },
+                  { label: tool.name },
+                ]}
+              />
+            </div>
+
+            {isRotate && (
+              <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-mint/90 px-3.5 py-1 text-xs font-semibold text-primary shadow-xs">
+                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>Free Browser Tool · Permanent Rotation · No Uploads</span>
+              </div>
+            )}
+
+            <h1 className="text-3xl font-extrabold tracking-tight text-[#14532D] sm:text-4xl lg:text-[2.75rem] leading-tight">
+              {isRotate ? "Rotate PDF pages easily" : tool.h1}
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl text-base text-[#6B7C6A] sm:text-lg leading-relaxed">
+              {isRotate
+                ? "Permanently fix upside-down or sideways PDF pages by 90°, 180°, or 270°. Rotate all pages or target specific pages with instant lossless saving directly in your browser."
+                : tool.tagline}
+            </p>
+          </div>
         </div>
       ) : (
         /* Keep h1 in DOM for SEO, but hidden visually */
