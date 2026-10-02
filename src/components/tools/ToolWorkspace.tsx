@@ -364,6 +364,13 @@ export function ToolWorkspace({
                     const isLow = numVal < 40;
                     const isMed = numVal >= 40 && numVal <= 75;
 
+                    // Color helpers
+                    const levelColor = isLow
+                      ? { badge: "bg-sky-100 text-sky-700 border-sky-200", pct: "bg-sky-50 text-sky-700 border-sky-300", accent: "accent-sky-500" }
+                      : isMed
+                        ? { badge: "bg-emerald-100 text-emerald-700 border-emerald-200", pct: "bg-emerald-50 text-emerald-700 border-emerald-300", accent: "accent-emerald-600" }
+                        : { badge: "bg-orange-100 text-orange-700 border-orange-200", pct: "bg-orange-50 text-orange-700 border-orange-300", accent: "accent-orange-500" };
+
                     return (
                       <div
                         key={option.key}
@@ -375,25 +382,19 @@ export function ToolWorkspace({
                             className="text-sm font-bold text-forest flex items-center gap-2"
                           >
                             <span>{option.label}</span>
-                            <span className="rounded-md bg-card px-2 py-0.5 text-xs font-extrabold text-primary border border-border">
+                            <span className={`rounded-md px-2 py-0.5 text-xs font-extrabold border transition-colors ${levelColor.pct}`}>
                               {val}%
                             </span>
                           </label>
 
                           <span
-                            className={`rounded-full px-3 py-1 text-xs font-bold transition-colors ${
-                              isLow
-                                ? "bg-card text-forest border border-border"
-                                : isMed
-                                  ? "bg-primary/15 text-primary border border-primary/20"
-                                  : "bg-warning/15 text-warning border border-warning/20"
-                            }`}
+                            className={`rounded-full px-3 py-1 text-xs font-bold border transition-all ${levelColor.badge}`}
                           >
                             {isLow
-                              ? "Light Compression (High Quality)"
+                              ? "🟦 Light — High Quality"
                               : isMed
-                                ? "Balanced (Recommended)"
-                                : "Strong (Smallest File Size)"}
+                                ? "🟢 Balanced — Recommended"
+                                : "🟠 Strong — Smallest File"}
                           </span>
                         </div>
 
@@ -412,11 +413,11 @@ export function ToolWorkspace({
                                 [option.key]: event.target.value,
                               }))
                             }
-                            className="w-full h-2.5 bg-card border border-border rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                            className={`w-full h-2.5 bg-card border border-border rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20 ${levelColor.accent}`}
                           />
                           <div className="flex justify-between text-[11px] font-semibold text-muted-foreground mt-2">
-                            <span>← Less compression (Sharpest detail)</span>
-                            <span>More compression (Smallest file) →</span>
+                            <span>🔵 Less compression (Sharpest detail)</span>
+                            <span>Smaller file (More compression) 🔴</span>
                           </div>
                         </div>
 
@@ -424,9 +425,9 @@ export function ToolWorkspace({
                         <div className="mt-3 flex flex-wrap items-center gap-2 pt-3 border-t border-border/60">
                           <span className="text-xs text-muted-foreground font-medium mr-1">Presets:</span>
                           {[
-                            { label: "Light (30%)", val: "30" },
-                            { label: "Recommended (65%)", val: "65" },
-                            { label: "Strong (85%)", val: "85" },
+                            { label: "🟦 Light (30%)", val: "30", active: "bg-sky-500 text-white border-sky-600", hover: "hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300" },
+                            { label: "🟢 Balanced (65%)", val: "65", active: "bg-emerald-500 text-white border-emerald-600", hover: "hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300" },
+                            { label: "🟠 Strong (85%)", val: "85", active: "bg-orange-500 text-white border-orange-600", hover: "hover:bg-orange-50 hover:text-orange-700 hover:border-orange-300" },
                           ].map((p) => {
                             const isSelected = val === p.val;
                             return (
@@ -439,10 +440,10 @@ export function ToolWorkspace({
                                     [option.key]: p.val,
                                   }))
                                 }
-                                className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                                className={`rounded-xl px-3 py-1.5 text-xs font-semibold border transition-all ${
                                   isSelected
-                                    ? "bg-primary text-white shadow-xs scale-[1.02]"
-                                    : "bg-card border border-border text-foreground hover:bg-secondary hover:text-forest"
+                                    ? `${p.active} shadow-sm scale-[1.02]`
+                                    : `bg-card border-border text-foreground ${p.hover}`
                                 }`}
                               >
                                 {p.label}
@@ -671,7 +672,16 @@ export function ToolWorkspace({
             )}
 
             {/* Option to change compression level after compression */}
-            {tool.slug === "compress-pdf" && (
+            {tool.slug === "compress-pdf" && (() => {
+              const reLevel = Number(optionValues["level"] ?? "65");
+              const reIsLow = reLevel < 40;
+              const reIsMed = reLevel >= 40 && reLevel <= 75;
+              const reLevelColor = reIsLow
+                ? { pct: "bg-sky-50 text-sky-700 border-sky-300", badge: "bg-sky-100 text-sky-700 border-sky-200", accent: "accent-sky-500", label: "🟦 Light — High Quality" }
+                : reIsMed
+                  ? { pct: "bg-emerald-50 text-emerald-700 border-emerald-300", badge: "bg-emerald-100 text-emerald-700 border-emerald-200", accent: "accent-emerald-600", label: "🟢 Balanced — Recommended" }
+                  : { pct: "bg-orange-50 text-orange-700 border-orange-300", badge: "bg-orange-100 text-orange-700 border-orange-200", accent: "accent-orange-500", label: "🟠 Strong — Smallest File" };
+              return (
               <div className="mt-5 rounded-2xl border border-primary/20 bg-secondary/30 p-4 sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2">
@@ -683,9 +693,14 @@ export function ToolWorkspace({
                       <span className="text-[11px] text-muted-foreground">Adjust slider to get a smaller file or sharper quality</span>
                     </div>
                   </div>
-                  <span className="rounded-md bg-card px-2.5 py-0.5 text-xs font-extrabold text-primary border border-border">
-                    {optionValues["level"] ?? "65"}%
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className={`rounded-full px-3 py-0.5 text-xs font-bold border transition-all ${reLevelColor.badge}`}>
+                      {reLevelColor.label}
+                    </span>
+                    <span className={`rounded-md px-2.5 py-0.5 text-xs font-extrabold border transition-colors ${reLevelColor.pct}`}>
+                      {optionValues["level"] ?? "65"}%
+                    </span>
+                  </div>
                 </div>
 
                 {/* Slider bar */}
@@ -702,11 +717,11 @@ export function ToolWorkspace({
                         level: event.target.value,
                       }))
                     }
-                    className="w-full h-2.5 bg-card border border-border rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className={`w-full h-2.5 bg-card border border-border rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20 ${reLevelColor.accent}`}
                   />
                   <div className="flex justify-between text-[11px] font-semibold text-muted-foreground mt-1.5">
-                    <span>← Less compression (High quality)</span>
-                    <span>More compression (Smallest file) →</span>
+                    <span>🔵 Less compression (High quality)</span>
+                    <span>Smaller file (More compression) 🔴</span>
                   </div>
                 </div>
 
@@ -715,9 +730,9 @@ export function ToolWorkspace({
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs text-muted-foreground font-medium mr-1">Presets:</span>
                     {[
-                      { label: "Light (30%)", val: "30" },
-                      { label: "Recommended (65%)", val: "65" },
-                      { label: "Strong (85%)", val: "85" },
+                      { label: "🟦 Light (30%)", val: "30", active: "bg-sky-500 text-white border-sky-600", hover: "hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300" },
+                      { label: "🟢 Balanced (65%)", val: "65", active: "bg-emerald-500 text-white border-emerald-600", hover: "hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300" },
+                      { label: "🟠 Strong (85%)", val: "85", active: "bg-orange-500 text-white border-orange-600", hover: "hover:bg-orange-50 hover:text-orange-700 hover:border-orange-300" },
                     ].map((p) => {
                       const isSelected = (optionValues["level"] ?? "65") === p.val;
                       return (
@@ -730,10 +745,10 @@ export function ToolWorkspace({
                               level: p.val,
                             }))
                           }
-                          className={`rounded-xl px-2.5 py-1 text-xs font-semibold transition-all ${
+                          className={`rounded-xl px-2.5 py-1 text-xs font-semibold border transition-all ${
                             isSelected
-                              ? "bg-primary text-white shadow-xs scale-[1.02]"
-                              : "bg-card border border-border text-foreground hover:bg-secondary hover:text-forest"
+                              ? `${p.active} shadow-sm scale-[1.02]`
+                              : `bg-card border-border text-foreground ${p.hover}`
                           }`}
                         >
                           {p.label}
@@ -752,7 +767,8 @@ export function ToolWorkspace({
                   </button>
                 </div>
               </div>
-            )}
+              );
+            })()}
 
             {/* Related Tools — shown immediately after success */}
             {tool.related && tool.related.length > 0 && (
