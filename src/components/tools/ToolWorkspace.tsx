@@ -270,6 +270,20 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                     return next;
                   })
                 }
+                onRename={(id, newName) =>
+                  setItems((current) =>
+                    current.map((item) => {
+                      if (item.id === id) {
+                        const ext = item.file.name.match(/\.[^.]+$/)?.[0] || "";
+                        const newFile = new File([item.file], `${newName}${ext}`, {
+                          type: item.file.type,
+                        });
+                        return { ...item, file: newFile };
+                      }
+                      return item;
+                    })
+                  )
+                }
                 hideBadge={tool.slug === "rotate-pdf"}
                 isPdfMode={tool.slug === "rotate-pdf"}
               />
