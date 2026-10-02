@@ -65,9 +65,16 @@ export function ToolWorkspace({
   const [outputs, setOutputs] = useState<ProcessedOutput[]>([]);
   const [urls, setUrls] = useState<string[]>([]);
   const [inputBytes, setInputBytes] = useState(0);
-  const [optionValues, setOptionValues] = useState<Record<string, string>>(() =>
-    Object.fromEntries((tool.options ?? []).map((option) => [option.key, option.defaultValue])),
-  );
+  const [optionValues, setOptionValues] = useState<Record<string, string>>(() => {
+    const defaults = Object.fromEntries(
+      (tool.options ?? []).map((option) => [option.key, option.defaultValue]),
+    );
+    // Always force compress-pdf to default to Strong (85%) regardless of cached values
+    if (tool.slug === "compress-pdf") {
+      defaults["level"] = "85";
+    }
+    return defaults;
+  });
   const thumbUrls = useRef<string[]>([]);
 
   useEffect(() => () => urls.forEach((url) => URL.revokeObjectURL(url)), [urls]);
