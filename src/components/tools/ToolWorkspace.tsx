@@ -69,9 +69,9 @@ export function ToolWorkspace({
     const defaults = Object.fromEntries(
       (tool.options ?? []).map((option) => [option.key, option.defaultValue]),
     );
-    // Always force compress-pdf to default to Balanced (65%)
+    // Always force compress-pdf to default to Strong (85%)
     if (tool.slug === "compress-pdf") {
-      defaults["level"] = "65";
+      defaults["level"] = "85";
     }
     return defaults;
   });
