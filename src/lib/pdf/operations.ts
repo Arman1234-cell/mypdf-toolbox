@@ -300,8 +300,8 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
   const file = files[0]!;
   const originalSize = file.size;
 
-  // 1. Determine compression strength (10 to 95, default 65)
-  let compressionStrength = 65;
+  // 1. Determine compression strength (10 to 95, default 85)
+  let compressionStrength = 85;
   const rawLevel = options?.["level"];
   if (rawLevel) {
     if (rawLevel === "light") compressionStrength = 30;

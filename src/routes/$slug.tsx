@@ -232,21 +232,21 @@ function ToolPage() {
     track("tool_page_view", { tool: tool.slug });
   }, [tool.slug]);
 
+  // Scroll to top for ALL tools when a file is uploaded so the workspace is always visible
   useEffect(() => {
-    if (hasUploadedFile && isRotate) {
-      // Smoothly scroll to top so the box sits with a clean gap right under the nav
+    if (hasUploadedFile) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [hasUploadedFile, isRotate]);
+  }, [hasUploadedFile]);
 
   return (
     <div
       className={`container-page transition-all duration-300 ${
-        hasUploadedFile && isRotate ? "pt-8 sm:pt-11 pb-10" : "py-6 sm:py-10"
+        hasUploadedFile ? "pt-6 sm:pt-8 pb-10" : "py-6 sm:py-10"
       }`}
     >
-      {/* Hero Section - visible when awaiting upload, hidden during editing to match preview */}
-      {(!hasUploadedFile || !isRotate) ? (
+      {/* Hero Section — collapsed when a file is uploaded */}
+      {!hasUploadedFile ? (
         <div className="mx-auto max-w-3xl text-center">
           <div className="mb-2 flex justify-center">
             <Breadcrumbs
@@ -275,13 +275,14 @@ function ToolPage() {
           </p>
         </div>
       ) : (
-        <h1 className="sr-only">Rotate PDF pages easily</h1>
+        /* Keep h1 in DOM for SEO, but hidden visually */
+        <h1 className="sr-only">{isRotate ? "Rotate PDF pages easily" : tool.h1}</h1>
       )}
 
       {/* Main Tool Workspace */}
       <div
         className={`mx-auto transition-all duration-300 max-w-3xl ${
-          hasUploadedFile && isRotate ? "mt-0" : "mt-8"
+          hasUploadedFile ? "mt-0" : "mt-8"
         }`}
       >
         <ToolWorkspace tool={tool} onHasFilesChange={setHasUploadedFile} />
