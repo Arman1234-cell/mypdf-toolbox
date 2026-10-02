@@ -336,7 +336,12 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
     structDoc.setAuthor("");
     structDoc.setProducer("MyPDF4U");
     structDoc.setCreator("MyPDF4U");
-    structBytes = await structDoc.save({ useObjectStreams: true, addDefaultPage: false });
+    
+    // Try both with and without object streams, as tiny PDFs sometimes compress better without them
+    const struct1 = await structDoc.save({ useObjectStreams: true, addDefaultPage: false });
+    const struct2 = await structDoc.save({ useObjectStreams: false, addDefaultPage: false });
+    
+    structBytes = struct1.length < struct2.length ? struct1 : struct2;
   } catch (err) {
     console.warn("Structural optimisation skipped:", err);
   }
