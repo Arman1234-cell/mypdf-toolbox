@@ -315,16 +315,15 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
     }
   }
 
-  // Compression interpolation — balance between size reduction and readability:
-  // To match tools like 11zon, we need to allow extreme downsampling at the strong end:
-  //   strength=10  (Light)    → maxDim=1600px, quality=0.80, scale=1.5
-  //   strength=65  (Balanced) → maxDim=825px,  quality=0.35, scale=0.9
-  //   strength=85  (Strong)   → maxDim=550px,  quality=0.18, scale=0.7
-  //   strength=95  (Maximum)  → maxDim=400px,  quality=0.10, scale=0.6
+  // Compression interpolation (Tuned to ensure size reduction across all levels without extreme blur)
+  //   strength=10  (Light)    → maxDim=1200px, quality=0.60, scale=1.2
+  //   strength=65  (Balanced) → maxDim=780px,  quality=0.30, scale=0.8
+  //   strength=85  (Strong)   → maxDim=630px,  quality=0.20, scale=0.67
+  //   strength=95  (Maximum)  → maxDim=550px,  quality=0.15, scale=0.6
   const t = Math.max(0, Math.min(1, (compressionStrength - 10) / 85));
-  const maxDim  = Math.round(1600 - t * 1200);     // 1600 → 400
-  const quality = +(0.80 - t * 0.70).toFixed(2);   // 0.80 → 0.10
-  const scale   = +(1.50 - t * 0.90).toFixed(2);   // 1.50 → 0.60
+  const maxDim  = Math.round(1200 - t * 650);      // 1200 → 550
+  const quality = +(0.60 - t * 0.45).toFixed(2);   // 0.60 → 0.15
+  const scale   = +(1.20 - t * 0.60).toFixed(2);   // 1.20 → 0.60
 
   const { PDFDocument } = await loadPdfLib();
 
@@ -372,13 +371,13 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
   onStage?.("Compressing pages…");
   let rasterBytes = await buildRasterDoc(scale, quality, maxDim);
 
-  // If the raster candidate is bigger than the original file (very common for small vector/text PDFs),
-  // forcefully crush it further if the user wants compression.
-  if (rasterBytes.length >= originalSize && compressionStrength >= 50) {
+  // If raster candidate is bigger than original (very common for small text PDFs),
+  // apply one gentle fallback pass so all levels show *some* reduction without blurring.
+  if (rasterBytes.length >= originalSize) {
     onStage?.("Applying stronger compression…");
-    const harderMaxDim  = Math.max(250, Math.round(maxDim * 0.6));
-    const harderQuality = Math.max(0.05, quality - 0.20);
-    const harderScale   = Math.max(0.30, scale - 0.40);
+    const harderMaxDim  = Math.max(500, Math.round(maxDim * 0.8)); // Never go below 500px to prevent blur
+    const harderQuality = Math.max(0.12, quality - 0.15);
+    const harderScale   = Math.max(0.50, scale - 0.20);
     const harderBytes   = await buildRasterDoc(harderScale, harderQuality, harderMaxDim);
     if (harderBytes.length < rasterBytes.length) {
       rasterBytes = harderBytes;
