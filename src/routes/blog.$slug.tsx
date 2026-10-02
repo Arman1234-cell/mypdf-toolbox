@@ -109,13 +109,23 @@ function RichText({ text }: { text: string }) {
           const isInternal = href.startsWith("/");
           if (isInternal) {
             return (
-              <Link key={i} to={href as "/" } className="font-medium text-primary underline underline-offset-2 hover:text-primary-dark">
+              <Link
+                key={i}
+                to={href as "/"}
+                className="font-medium text-primary underline underline-offset-2 hover:text-primary-dark"
+              >
                 {label}
               </Link>
             );
           }
           return (
-            <a key={i} href={href} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-2 hover:text-primary-dark">
+            <a
+              key={i}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-dark"
+            >
               {label}
             </a>
           );
@@ -129,7 +139,11 @@ function RichText({ text }: { text: string }) {
 function Block({ block }: { block: ArticleBlock }) {
   switch (block.type) {
     case "h2":
-      return <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">{block.text}</h2>;
+      return (
+        <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+          {block.text}
+        </h2>
+      );
     case "h3":
       return <h3 className="text-lg font-semibold text-foreground">{block.text}</h3>;
     case "p":
@@ -156,7 +170,9 @@ function Block({ block }: { block: ArticleBlock }) {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                 {i + 1}
               </span>
-              <span className="pt-0.5"><RichText text={item} /></span>
+              <span className="pt-0.5">
+                <RichText text={item} />
+              </span>
             </li>
           ))}
         </ol>
@@ -183,7 +199,8 @@ function Block({ block }: { block: ArticleBlock }) {
             params={{ slug: block.toolSlug }}
             className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-lift transition-colors hover:bg-primary-dark"
           >
-            {block.buttonText ?? `Open ${block.toolName}`} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            {block.buttonText ?? `Open ${block.toolName}`}{" "}
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
       );
@@ -329,7 +346,8 @@ function ArticlePage() {
 
         <p className="mt-10 flex items-center justify-center gap-2 text-center text-xs text-muted-foreground">
           <ShieldCheck className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-          All MyPDF4U tools process documents locally in your browser. Your files are never uploaded.
+          All MyPDF4U tools process documents locally in your browser. Your files are never
+          uploaded.
         </p>
       </article>
     </div>

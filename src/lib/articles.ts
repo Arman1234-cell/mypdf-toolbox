@@ -74,7 +74,8 @@ const coreArticles: Article[] = [
       desktop: "/blog/jpg-to-pdf-workflow-desktop-v2.jpg",
       mobile: "/blog/jpg-to-pdf-workflow-mobile.jpg",
       alt: "How to convert JPG to PDF in iPhone, Android, and PC using MyPDF4U",
-      caption: "Turn photos, receipts, and scans into an ordered, high-resolution PDF on iPhone, mobile, or computer.",
+      caption:
+        "Turn photos, receipts, and scans into an ordered, high-resolution PDF on iPhone, mobile, or computer.",
       ...heroDims,
     },
     intro: [
@@ -307,7 +308,11 @@ const coreArticles: Article[] = [
         a: "No software or browser extensions are required. Everything processes securely inside your web browser on iPhone, Android, Windows, or Mac.",
       },
     ],
-    related: ["how-to-compress-pdf-for-email", "how-to-convert-png-to-pdf", "how-to-merge-pdf-files"],
+    related: [
+      "how-to-compress-pdf-for-email",
+      "how-to-convert-png-to-pdf",
+      "how-to-merge-pdf-files",
+    ],
   },
   {
     slug: "how-to-convert-png-to-pdf",
@@ -414,7 +419,11 @@ const coreArticles: Article[] = [
         a: "Open your PNG images in Apple Preview, press Command + P, click the PDF dropdown at the bottom of the print dialog, and choose Save as PDF.",
       },
     ],
-    related: ["how-to-convert-jpg-to-pdf", "how-to-compress-pdf-for-email", "how-to-merge-pdf-files"],
+    related: [
+      "how-to-convert-jpg-to-pdf",
+      "how-to-compress-pdf-for-email",
+      "how-to-merge-pdf-files",
+    ],
   },
   {
     slug: "how-to-compress-pdf-for-email",
@@ -675,7 +684,11 @@ const coreArticles: Article[] = [
         a: "Yes. Processing takes place entirely inside your browser using client-side JavaScript. Your files are never uploaded to any server.",
       },
     ],
-    related: ["how-to-compress-pdf-for-email", "how-to-convert-jpg-to-pdf", "how-to-convert-png-to-pdf"],
+    related: [
+      "how-to-compress-pdf-for-email",
+      "how-to-convert-jpg-to-pdf",
+      "how-to-convert-png-to-pdf",
+    ],
   },
 ];
 

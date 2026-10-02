@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { ArrowLeft, ArrowRight, RotateCw, X, Trash2, Maximize2 } from "lucide-react";
+import { useState, useMemo, useRef } from "react";
+import { ArrowLeft, ArrowRight, RotateCw, X, Trash2, Maximize2, Pencil } from "lucide-react";
 import { formatBytes } from "@/lib/format";
 
 export type ImageItem = {
@@ -24,6 +24,8 @@ type Props = {
   hideBadge?: boolean;
   /** When true, shows PDF-specific UI (hides reorder hints, shows hover-only buttons) */
   isPdfMode?: boolean;
+  /** Called when the user renames a file */
+  onRename?: (id: string, newName: string) => void;
 };
 
 export function ImageGrid({
@@ -37,9 +39,12 @@ export function ImageGrid({
   onPreview,
   hideBadge,
   isPdfMode,
+  onRename,
 }: Props) {
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [overIndex, setOverIndex] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const renameInputRef = useRef<HTMLInputElement>(null);
 
   const totalBytes = useMemo(() => items.reduce((sum, item) => sum + item.file.size, 0), [items]);
 
@@ -191,9 +196,52 @@ export function ImageGrid({
 
             {/* Card footer details & reorder buttons */}
             <div className="border-t border-border bg-card p-2.5">
-              <p className="truncate text-xs font-medium text-foreground" title={item.file.name}>
-                {item.file.name}
-              </p>
+              {editingId === item.id && onRename ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const val = renameInputRef.current?.value.trim();
+                    if (val) onRename(item.id, val);
+                    setEditingId(null);
+                  }}
+                  className="flex items-center gap-1"
+                >
+                  <input
+                    ref={renameInputRef}
+                    type="text"
+                    defaultValue={item.file.name.replace(/\.[^.]+$/, "")}
+                    autoFocus
+                    onBlur={() => {
+                      const val = renameInputRef.current?.value.trim();
+                      if (val) onRename(item.id, val);
+                      setEditingId(null);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") setEditingId(null);
+                    }}
+                    className="w-full rounded border border-border bg-background px-1.5 py-0.5 text-xs font-medium text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </form>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <p
+                    className="flex-1 truncate text-xs font-medium text-foreground"
+                    title={item.file.name}
+                  >
+                    {item.file.name}
+                  </p>
+                  {onRename && (
+                    <button
+                      type="button"
+                      onClick={() => setEditingId(item.id)}
+                      title="Rename file"
+                      className="shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                    >
+                      <Pencil className="h-3 w-3" aria-hidden="true" />
+                    </button>
+                  )}
+                </div>
+              )}
               <div className="mt-0.5 flex items-center justify-between text-[11px] text-muted-foreground">
                 <span>{formatBytes(item.file.size)}</span>
                 {item.rotation > 0 && (

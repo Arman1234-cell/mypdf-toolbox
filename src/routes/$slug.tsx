@@ -14,23 +14,74 @@ import { track } from "@/lib/analytics";
 import { getAbsoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/config";
 
 const toolGuideMap: Record<string, { slug: string; title: string }> = {
-  "jpg-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Convert JPG to PDF (Free, No Quality Loss)" },
-  "pdf-to-jpg": { slug: "how-to-convert-pdf-to-jpg", title: "How to Convert PDF Pages to JPG Images" },
-  "image-to-pdf": { slug: "how-to-convert-images-to-pdf", title: "How to Convert Images to PDF in One Document" },
-  "heic-to-pdf": { slug: "how-to-convert-jpg-to-pdf", title: "How to Convert iPhone HEIC Photos to PDF" },
-  "png-to-pdf": { slug: "how-to-convert-png-to-pdf", title: "How to Convert PNG to PDF Online for Free" },
-  "pdf-to-png": { slug: "how-to-convert-pdf-to-png", title: "How to Convert PDF to PNG Without Losing Sharpness" },
-  "pdf-to-word": { slug: "how-to-convert-pdf-to-word", title: "How to Convert a PDF into an Editable Word Document" },
-  "word-to-pdf": { slug: "how-to-convert-word-to-pdf", title: "How to Convert a Word Document to PDF" },
-  "ocr-pdf": { slug: "how-to-ocr-scanned-pdf", title: "How to Make a Scanned PDF Searchable with OCR" },
-  "compress-pdf": { slug: "how-to-compress-pdf-for-email", title: "How to Compress Large PDF Files for Email" },
-  "merge-pdf": { slug: "how-to-merge-pdf-files", title: "How to Merge PDF Files on Windows, Mac, iPhone & Android" },
-  "split-pdf": { slug: "how-to-split-pdf-pages", title: "How to Split a PDF and Extract the Pages You Need" },
-  "rotate-pdf": { slug: "how-to-rotate-pdf-pages", title: "How to Rotate PDF Pages and Save the Change" },
-  "organize-pdf": { slug: "how-to-organize-pdf-pages", title: "How to Reorder and Delete Pages in a PDF" },
-  "watermark-pdf": { slug: "how-to-add-watermark-to-pdf", title: "How to Add a Watermark to a PDF" },
-  "unlock-pdf": { slug: "how-to-remove-pdf-password", title: "How to Remove a Password from a PDF You Own" },
-  "protect-pdf": { slug: "how-to-remove-pdf-password", title: "How to Remove or Add a Password on a PDF" },
+  "jpg-to-pdf": {
+    slug: "how-to-convert-jpg-to-pdf",
+    title: "How to Convert JPG to PDF (Free, No Quality Loss)",
+  },
+  "pdf-to-jpg": {
+    slug: "how-to-convert-pdf-to-jpg",
+    title: "How to Convert PDF Pages to JPG Images",
+  },
+  "image-to-pdf": {
+    slug: "how-to-convert-images-to-pdf",
+    title: "How to Convert Images to PDF in One Document",
+  },
+  "heic-to-pdf": {
+    slug: "how-to-convert-jpg-to-pdf",
+    title: "How to Convert iPhone HEIC Photos to PDF",
+  },
+  "png-to-pdf": {
+    slug: "how-to-convert-png-to-pdf",
+    title: "How to Convert PNG to PDF Online for Free",
+  },
+  "pdf-to-png": {
+    slug: "how-to-convert-pdf-to-png",
+    title: "How to Convert PDF to PNG Without Losing Sharpness",
+  },
+  "pdf-to-word": {
+    slug: "how-to-convert-pdf-to-word",
+    title: "How to Convert a PDF into an Editable Word Document",
+  },
+  "word-to-pdf": {
+    slug: "how-to-convert-word-to-pdf",
+    title: "How to Convert a Word Document to PDF",
+  },
+  "ocr-pdf": {
+    slug: "how-to-ocr-scanned-pdf",
+    title: "How to Make a Scanned PDF Searchable with OCR",
+  },
+  "compress-pdf": {
+    slug: "how-to-compress-pdf-for-email",
+    title: "How to Compress Large PDF Files for Email",
+  },
+  "merge-pdf": {
+    slug: "how-to-merge-pdf-files",
+    title: "How to Merge PDF Files on Windows, Mac, iPhone & Android",
+  },
+  "split-pdf": {
+    slug: "how-to-split-pdf-pages",
+    title: "How to Split a PDF and Extract the Pages You Need",
+  },
+  "rotate-pdf": {
+    slug: "how-to-rotate-pdf-pages",
+    title: "How to Rotate PDF Pages and Save the Change",
+  },
+  "organize-pdf": {
+    slug: "how-to-organize-pdf-pages",
+    title: "How to Reorder and Delete Pages in a PDF",
+  },
+  "watermark-pdf": {
+    slug: "how-to-add-watermark-to-pdf",
+    title: "How to Add a Watermark to a PDF",
+  },
+  "unlock-pdf": {
+    slug: "how-to-remove-pdf-password",
+    title: "How to Remove a Password from a PDF You Own",
+  },
+  "protect-pdf": {
+    slug: "how-to-remove-pdf-password",
+    title: "How to Remove or Add a Password on a PDF",
+  },
 };
 
 export const Route = createFileRoute("/$slug")({
@@ -197,13 +248,18 @@ function ToolPage() {
 
         {/* Step-by-Step Tutorial Banner for Long-tail Searchers */}
         {relatedGuide && (
-          <aside aria-label="Step-by-step guide" className="card-soft flex flex-col items-start justify-between gap-4 p-5 sm:flex-row sm:items-center sm:p-6 bg-mint/50 border-primary/20">
+          <aside
+            aria-label="Step-by-step guide"
+            className="card-soft flex flex-col items-start justify-between gap-4 p-5 sm:flex-row sm:items-center sm:p-6 bg-mint/50 border-primary/20"
+          >
             <div className="flex items-start gap-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <BookOpen className="h-5 w-5" aria-hidden="true" />
               </span>
               <div>
-                <h3 className="text-sm font-bold text-foreground">Detailed Step-by-Step Tutorial</h3>
+                <h3 className="text-sm font-bold text-foreground">
+                  Detailed Step-by-Step Tutorial
+                </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Learn how to use {tool.name} with tips for Windows 11, Mac, iPhone, and Android.
                 </p>
@@ -225,29 +281,37 @@ function ToolPage() {
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
             No account, no installation, and no queue. Every tool opens directly to the upload area
-            with zero watermarks and no file count restrictions. Your files are converted and processed
-            locally in client memory, keeping your documents confidential while delivering instant results.
+            with zero watermarks and no file count restrictions. Your files are converted and
+            processed locally in client memory, keeping your documents confidential while delivering
+            instant results.
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="flex items-start gap-2.5">
               <Laptop className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
               <div>
                 <p className="text-xs font-bold text-foreground">Windows, Mac & Linux</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Works in Chrome, Edge, Safari, and Firefox with no software download.</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Works in Chrome, Edge, Safari, and Firefox with no software download.
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
               <Smartphone className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
               <div>
                 <p className="text-xs font-bold text-foreground">iPhone, iPad & Android</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Mobile-first design lets you process files directly from photo galleries and Files.</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Mobile-first design lets you process files directly from photo galleries and
+                  Files.
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
               <Lock className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
               <div>
                 <p className="text-xs font-bold text-foreground">100% Private & Free</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Zero server uploads, no subscription walls, and no watermarks.</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Zero server uploads, no subscription walls, and no watermarks.
+                </p>
               </div>
             </div>
           </div>
@@ -270,4 +334,3 @@ function ToolPage() {
     </div>
   );
 }
-

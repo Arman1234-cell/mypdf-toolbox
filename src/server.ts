@@ -13,7 +13,9 @@ import * as serverEntryModule from "@tanstack/react-start/server-entry";
 
 async function getServerEntry(): Promise<ServerEntry> {
   if (!serverEntryPromise) {
-    serverEntryPromise = Promise.resolve((serverEntryModule.default ?? serverEntryModule) as ServerEntry);
+    serverEntryPromise = Promise.resolve(
+      (serverEntryModule.default ?? serverEntryModule) as ServerEntry,
+    );
   }
   return serverEntryPromise;
 }
@@ -49,8 +51,7 @@ function getCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
 
   const isHttp = url.protocol === "http:";
-  const isNoWww =
-    url.hostname === "mypdf4u.com" || url.hostname === "mypdf4u.com.";
+  const isNoWww = url.hostname === "mypdf4u.com" || url.hostname === "mypdf4u.com.";
 
   if (!isHttp && !isNoWww) return null; // already canonical
 

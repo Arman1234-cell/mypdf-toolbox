@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Blog Template</title>
+<style>
+  body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+  h1 { text-align: center; color: #2E8B57; }
+  h2 { color: #2E8B57; margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+  h3 { color: #555; margin-top: 25px; }
+  .field { margin-bottom: 20px; }
+  .label { font-weight: bold; color: #333; display: block; margin-bottom: 5px; }
+  .input-box { border: 1px dashed #999; padding: 15px; background: #f9f9f9; min-height: 30px; color: #666; font-style: italic; }
+  .instruction { font-size: 0.9em; color: #666; margin-bottom: 10px; display: block; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+  th { background: #f0f0f0; }
+</style>
+</head>
+<body>
+
+<h1>MyPDF4U Blog Post Template</h1>
+<p style="text-align: center; color: #666;">Use this template to write your new blog articles. Once you fill this out, it will be very easy to add it directly to the website code.</p>
+
+<h2>1. Basic Information</h2>
+
+<div class="field">
+  <span class="label">Article Title (H1):</span>
+  <span class="instruction">The main title of the article. E.g., "How to Convert PDF to Word"</span>
+  <div class="input-box">[Write your title here]</div>
+</div>
+
+<div class="field">
+  <span class="label">URL Slug:</span>
+  <span class="instruction">The URL path (use dashes, no spaces). E.g., "how-to-convert-pdf-to-word"</span>
+  <div class="input-box">[Write your URL slug here]</div>
+</div>
+
+<div class="field">
+  <span class="label">SEO Description:</span>
+  <span class="instruction">A short summary of the article (1-2 sentences) for Google and the blog list page.</span>
+  <div class="input-box">[Write your short description here]</div>
+</div>
+
+<div class="field">
+  <span class="label">Read Time & Date:</span>
+  <div class="input-box">
+    <strong>Time:</strong> [e.g., 3 min read]<br>
+    <strong>Date:</strong> [e.g., September 20, 2026]
+  </div>
+</div>
+
+<div class="field">
+  <span class="label">Related Tool:</span>
+  <span class="instruction">Which tool does this guide relate to? (e.g., PDF to Word, Merge PDF)</span>
+  <div class="input-box">
+    <strong>Tool Name:</strong> [e.g., PDF to Word]<br>
+    <strong>Tool URL Slug:</strong> [e.g., pdf-to-word]
+  </div>
+</div>
+
+<h2>2. Images</h2>
+<p class="instruction">Provide the names of the hero images you want to use. These should be saved in the `public/blog/` folder.</p>
+<table>
+  <tr>
+    <th>Image Type</th>
+    <th>File Name</th>
+  </tr>
+  <tr>
+    <td>Desktop Image</td>
+    <td class="input-box">[e.g., pdf-to-word-workflow-desktop.jpg]</td>
+  </tr>
+  <tr>
+    <td>Mobile Image</td>
+    <td class="input-box">[e.g., pdf-to-word-workflow-mobile.jpg]</td>
+  </tr>
+  <tr>
+    <td>Alt Text (for SEO)</td>
+    <td class="input-box">[e.g., An illustration showing a PDF document converting into a Word document]</td>
+  </tr>
+</table>
+
+<h2>3. Article Content (The Body)</h2>
+<p class="instruction">Write the actual content of your article here. Use the headings to structure your guide step-by-step.</p>
+
+<div class="field">
+  <span class="label">Introductory Paragraph(s):</span>
+  <div class="input-box">
+    [Write your introduction here...]
+  </div>
+</div>
+
+<div class="field">
+  <span class="label">Main Heading (H2): E.g., "Why Convert PDF to Word?"</span>
+  <div class="input-box">[Your Heading Here]</div>
+  <span class="label" style="margin-top: 10px;">Paragraphs under this heading:</span>
+  <div class="input-box" style="min-height: 100px;">[Write your text here...]</div>
+</div>
+
+<div class="field">
+  <span class="label">Step-by-Step Guide Heading (H2): E.g., "How to do it in 3 Steps"</span>
+  <div class="input-box">[Your Heading Here]</div>
+  <span class="label" style="margin-top: 10px;">Numbered List (Steps):</span>
+  <div class="input-box" style="min-height: 150px;">
+    1. [Step 1 description]<br><br>
+    2. [Step 2 description]<br><br>
+    3. [Step 3 description]
+  </div>
+</div>
+
+<div class="field">
+  <span class="label">Additional Section (Optional Heading H2/H3):</span>
+  <div class="input-box">[Your Heading Here]</div>
+  <span class="label" style="margin-top: 10px;">Bulleted List or text:</span>
+  <div class="input-box" style="min-height: 100px;">
+    - [Point 1]<br>
+    - [Point 2]
+  </div>
+</div>
+
+<div class="field">
+  <span class="label">Pro Tip / Alert Box (Optional):</span>
+  <span class="instruction">Important notes you want to highlight in a colored box.</span>
+  <div class="input-box">[Write your pro tip here]</div>
+</div>
+
+<h2>4. Frequently Asked Questions (FAQs)</h2>
+<p class="instruction">Provide 2-4 questions and answers for the end of the article.</p>
+
+<div class="field">
+  <span class="label">FAQ 1</span>
+  <div class="input-box">
+    <strong>Q:</strong> [Your Question Here]<br><br>
+    <strong>A:</strong> [Your Answer Here]
+  </div>
+</div>
+
+<div class="field">
+  <span class="label">FAQ 2</span>
+  <div class="input-box">
+    <strong>Q:</strong> [Your Question Here]<br><br>
+    <strong>A:</strong> [Your Answer Here]
+  </div>
+</div>
+
+<div class="field">
+  <span class="label">FAQ 3 (Optional)</span>
+  <div class="input-box">
+    <strong>Q:</strong> [Your Question Here]<br><br>
+    <strong>A:</strong> [Your Answer Here]
+  </div>
+</div>
+
+<hr>
+<p style="text-align: center; color: #666; font-size: 0.9em;">When you are done filling this out, you can save it and provide it to the AI, and it will perfectly translate your text into the required website code.</p>
+
+</body>
+</html>

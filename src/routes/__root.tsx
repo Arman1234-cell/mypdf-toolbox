@@ -124,7 +124,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: SITE_NAME,
-          description: "Free browser-based PDF tools: convert, compress, merge, split, OCR and organize PDF files without signing up.",
+          description:
+            "Free browser-based PDF tools: convert, compress, merge, split, OCR and organize PDF files without signing up.",
           url: SITE_URL,
           potentialAction: {
             "@type": "SearchAction",
@@ -145,7 +146,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           url: SITE_URL,
           logo: `${SITE_URL}/logo.svg`,
           image: DEFAULT_OG_IMAGE,
-          description: "Free browser-based online PDF utility tools for documents, images, compression, and conversion.",
+          description:
+            "Free browser-based online PDF utility tools for documents, images, compression, and conversion.",
         }),
       },
       {
@@ -166,10 +168,7 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', '${GA_MEASUREMENT_ID}');`,

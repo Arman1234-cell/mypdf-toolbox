@@ -1,6 +1,5 @@
 import type { Article } from "@/lib/articles";
 
-
 const heroDims = {
   desktopWidth: 1536,
   desktopHeight: 768,

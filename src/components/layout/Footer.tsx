@@ -4,7 +4,14 @@ import { tools } from "@/lib/tools";
 
 const popular = ["jpg-to-pdf", "compress-pdf", "merge-pdf", "split-pdf", "pdf-to-word"];
 const convert = ["pdf-to-jpg", "pdf-to-png", "png-to-pdf", "image-to-pdf", "word-to-pdf"];
-const organize = ["rotate-pdf", "organize-pdf", "watermark-pdf", "ocr-pdf", "unlock-pdf", "protect-pdf"];
+const organize = [
+  "rotate-pdf",
+  "organize-pdf",
+  "watermark-pdf",
+  "ocr-pdf",
+  "unlock-pdf",
+  "protect-pdf",
+];
 
 function ToolLinks({ slugs }: { slugs: string[] }) {
   return (
@@ -41,7 +48,8 @@ export function Footer() {
             </span>
           </div>
           <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-            Simple PDF tools for everyday work. Convert, compress, merge, and edit documents privately inside your browser.
+            Simple PDF tools for everyday work. Convert, compress, merge, and edit documents
+            privately inside your browser.
           </p>
           <div className="mt-4">
             <Link
@@ -77,17 +85,29 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/blog/$slug" params={{ slug: "how-to-convert-jpg-to-pdf" }} className="hover:text-primary">
+              <Link
+                to="/blog/$slug"
+                params={{ slug: "how-to-convert-jpg-to-pdf" }}
+                className="hover:text-primary"
+              >
                 JPG to PDF Guide
               </Link>
             </li>
             <li>
-              <Link to="/blog/$slug" params={{ slug: "how-to-merge-pdf-files" }} className="hover:text-primary">
+              <Link
+                to="/blog/$slug"
+                params={{ slug: "how-to-merge-pdf-files" }}
+                className="hover:text-primary"
+              >
                 Merge PDF Guide
               </Link>
             </li>
             <li>
-              <Link to="/blog/$slug" params={{ slug: "how-to-compress-pdf-for-email" }} className="hover:text-primary">
+              <Link
+                to="/blog/$slug"
+                params={{ slug: "how-to-compress-pdf-for-email" }}
+                className="hover:text-primary"
+              >
                 Compress PDF Guide
               </Link>
             </li>
