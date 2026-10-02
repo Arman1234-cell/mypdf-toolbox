@@ -168,8 +168,21 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
         options: optionValues,
         ...(imageMode ? { rotations: items.map((item) => item.rotation) } : {}),
       });
-      setOutputs(result);
-      setUrls(result.map((output) => URL.createObjectURL(output.blob)));
+
+      // Smart-rename: If the user explicitly renamed a file, we respect their exact name 
+      // instead of appending suffixes like "-rotated", ONLY if the tool produces a 1:1 output.
+      const smartResult = result.map((output, i) => {
+        const original = target[i];
+        if (result.length === target.length && original && (original as any).isRenamedByUser) {
+          const outExt = output.name.match(/\.[^.]+$/)?.[0] || "";
+          const newBase = original.name.replace(/\.[^.]+$/, "");
+          return { ...output, name: `${newBase}${outExt}` };
+        }
+        return output;
+      });
+
+      setOutputs(smartResult);
+      setUrls(smartResult.map((output) => URL.createObjectURL(output.blob)));
       setStatus("success");
       setProgress(1);
       setStage(null);
@@ -278,6 +291,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                         const newFile = new File([item.file], `${newName}${ext}`, {
                           type: item.file.type,
                         });
+                        (newFile as any).isRenamedByUser = true;
                         return { ...item, file: newFile };
                       }
                       return item;
