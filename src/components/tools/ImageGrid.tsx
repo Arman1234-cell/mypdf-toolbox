@@ -145,8 +145,8 @@ export function ImageGrid({
               </span>
             )}
 
-            {/* Top action buttons — always visible for PDF mode, hover-only otherwise */}
-            <div className={`absolute right-2 top-2 z-10 flex gap-1 transition-opacity duration-150 ${isPdfMode ? "opacity-0 group-hover:opacity-100" : ""}`}>
+            {/* Top action buttons — always visible in PDF mode */}
+            <div className="absolute right-2 top-2 z-10 flex gap-1">
               <button
                 type="button"
                 disabled={disabled}
@@ -174,7 +174,7 @@ export function ImageGrid({
               type="button"
               onClick={() => onPreview(item)}
               aria-label={`Preview ${item.file.name} full size`}
-              className="relative flex h-36 w-full items-center justify-center bg-mint/50 p-2 transition-colors hover:bg-mint/80 sm:h-40"
+              className={`relative flex h-36 w-full items-center justify-center p-2 transition-colors sm:h-40 ${isPdfMode ? "bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600" : "bg-mint/50 hover:bg-mint/80"}`}
             >
               <img
                 src={item.url}
