@@ -295,13 +295,29 @@ export const splitPdf: Operation = async (files, { onProgress, onStage, options 
   return [await zipOutputs(`${safeName(file.name)}-split.zip`, outputs)];
 };
 
-/** Compress PDF with dual-mode optimization: structural compression + intelligent visual downsampling. */
+/** Load Ghostscript WASM module (browser-only, ~16MB, loaded once and cached) */
+let _gsModule: Record<string, unknown> | null = null;
+async function loadGhostscript() {
+  if (_gsModule) return _gsModule;
+  const createModule = (await import("ghostscript-wasm-esm")).default;
+  // Point the WASM binary to our public folder
+  _gsModule = await createModule({
+    locateFile: (path: string) => (path.endsWith(".wasm") ? "/gs.wasm" : path),
+  }) as Record<string, unknown>;
+  return _gsModule;
+}
+
+/**
+ * Compress PDF using Ghostscript WASM — the same engine used by PDF24 / 11zon.
+ * Performs real font subsetting, stream deduplication, and FlateDecode re-compression.
+ * Falls back to pdf-lib rasterization if WASM fails to initialise.
+ */
 export const compressPdf: Operation = async (files, { onProgress, onStage, options }) => {
   const file = files[0]!;
   const originalSize = file.size;
 
-  // 1. Determine compression strength (10 to 95, default 85)
-  let compressionStrength = 85;
+  // Map slider value (10–95) → Ghostscript settings
+  let compressionStrength = 30; // default = Light
   const rawLevel = options?.["level"];
   if (rawLevel) {
     if (rawLevel === "light") compressionStrength = 30;
@@ -315,104 +331,114 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
     }
   }
 
-  // Compression interpolation (Tuned to ensure size reduction across all levels without extreme blur)
-  //   strength=10  (Light)    → maxDim=1200px, quality=0.60, scale=1.2
-  //   strength=65  (Balanced) → maxDim=780px,  quality=0.30, scale=0.8
-  //   strength=85  (Strong)   → maxDim=630px,  quality=0.20, scale=0.67
-  //   strength=95  (Maximum)  → maxDim=550px,  quality=0.15, scale=0.6
+  // Map compression strength → Ghostscript PDFSETTINGS + DPI
+  // Ghostscript presets: /screen(72dpi) /ebook(150dpi) /printer(300dpi)
   const t = Math.max(0, Math.min(1, (compressionStrength - 10) / 85));
-  const maxDim  = Math.round(1200 - t * 650);      // 1200 → 550
-  const quality = +(0.60 - t * 0.45).toFixed(2);   // 0.60 → 0.15
-  const scale   = +(1.20 - t * 0.60).toFixed(2);   // 1.20 → 0.60
+  const dpi = Math.round(144 - t * 72); // 144 → 72 dpi
+  const gsQuality = t < 0.35 ? "/ebook" : t < 0.70 ? "/ebook" : "/screen";
+  const imageDownsampleDPI = dpi;
 
-  const { PDFDocument } = await loadPdfLib();
-
-  // Pass 1: Lossless structural optimisation — always try first (great for text/vector PDFs)
-  onStage?.("Analysing document structure…");
-  let structBytes: Uint8Array | null = null;
+  // ─── PASS 1: Ghostscript WASM (real structural compression) ───────────────
+  onStage?.("Loading compression engine…");
+  let gsBytes: Uint8Array | null = null;
   try {
-    const structDoc = await PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: true });
-    structDoc.setTitle("");
-    structDoc.setAuthor("");
-    structDoc.setProducer("MyPDF4U");
-    structDoc.setCreator("MyPDF4U");
-    
-    // Try both with and without object streams, as tiny PDFs sometimes compress better without them
-    const struct1 = await structDoc.save({ useObjectStreams: true, addDefaultPage: false });
-    const struct2 = await structDoc.save({ useObjectStreams: false, addDefaultPage: false });
-    
-    structBytes = struct1.length < struct2.length ? struct1 : struct2;
+    const gs = await loadGhostscript();
+    const FS = gs["FS"] as {
+      writeFile: (path: string, data: Uint8Array) => void;
+      readFile: (path: string) => Uint8Array;
+      unlink: (path: string) => void;
+    };
+
+    // Write the input PDF to the virtual FS
+    const inputData = new Uint8Array(await file.arrayBuffer());
+    FS.writeFile("/input.pdf", inputData);
+
+    onStage?.("Compressing with Ghostscript engine…");
+    onProgress?.(0.1);
+
+    // Run Ghostscript with optimal compression args
+    const callMain = gs["callMain"] as (args: string[]) => number;
+    callMain([
+      "-dBATCH",
+      "-dNOPAUSE",
+      "-dNOSAFER",
+      "-dQUIET",
+      `-sDEVICE=pdfwrite`,
+      `-dPDFSETTINGS=${gsQuality}`,
+      `-dCompatibilityLevel=1.5`,
+      `-dDetectDuplicateImages=true`,
+      `-dCompressFonts=true`,
+      `-dSubsetFonts=true`,
+      `-dEmbedAllFonts=false`,
+      `-dColorImageResolution=${imageDownsampleDPI}`,
+      `-dGrayImageResolution=${imageDownsampleDPI}`,
+      `-dMonoImageResolution=${imageDownsampleDPI}`,
+      `-dColorImageDownsampleType=/Bicubic`,
+      `-dGrayImageDownsampleType=/Bicubic`,
+      `-dOptimize=true`,
+      `-sOutputFile=/output.pdf`,
+      `/input.pdf`,
+    ]);
+
+    onProgress?.(0.85);
+    gsBytes = FS.readFile("/output.pdf");
+
+    // Cleanup virtual FS
+    try { FS.unlink("/input.pdf"); } catch { /* ignore */ }
+    try { FS.unlink("/output.pdf"); } catch { /* ignore */ }
+
+    onProgress?.(0.95);
   } catch (err) {
-    console.warn("Structural optimisation skipped:", err);
+    console.warn("Ghostscript WASM failed, falling back to rasterization:", err);
+    gsBytes = null;
   }
 
-  // Pass 2: Visual re-encoding — most effective for image-heavy PDFs
-  const buildRasterDoc = async (
-    targetScale: number,
-    targetQuality: number,
-    targetMaxDim: number,
-  ) => {
-    const pdf = await PDFDocument.create();
-    await renderPages(
-      file,
-      targetScale,
-      async (canvas, _pageNumber, _total, baseDimensions) => {
-        const blob = await canvasToBlob(canvas, "image/jpeg", targetQuality);
-        const image = await pdf.embedJpg(new Uint8Array(await blob.arrayBuffer()));
-        const pageWidth  = baseDimensions?.width  || image.width;
-        const pageHeight = baseDimensions?.height || image.height;
-        const page = pdf.addPage([pageWidth, pageHeight]);
-        page.drawImage(image, { x: 0, y: 0, width: pageWidth, height: pageHeight });
-      },
-      onProgress,
-      onStage,
-      "Compressing",
-      targetMaxDim,
-    );
-    onStage?.("Finalising…");
-    return pdf.save({ useObjectStreams: true, addDefaultPage: false });
-  };
+  // ─── PASS 2: pdf-lib rasterization fallback ───────────────────────────────
+  let rasterBytes: Uint8Array | null = null;
+  if (!gsBytes || gsBytes.length >= originalSize) {
+    // Only rasterize if GS failed or didn't reduce size
+    const { PDFDocument } = await loadPdfLib();
+    const quality = +(0.60 - t * 0.35).toFixed(2);
+    const maxDim  = Math.round(1200 - t * 500);
+    const scale   = +(1.2 - t * 0.5).toFixed(2);
 
-  onStage?.("Compressing pages…");
-  let rasterBytes = await buildRasterDoc(scale, quality, maxDim);
-
-  // If raster candidate is bigger than original (very common for small text PDFs),
-  // apply one gentle fallback pass so all levels show *some* reduction without blurring.
-  if (rasterBytes.length >= originalSize) {
-    onStage?.("Applying stronger compression…");
-    const harderMaxDim  = Math.max(700, Math.round(maxDim * 0.8)); // Never go below 700px so text remains sharp
-    const harderQuality = Math.max(0.12, quality - 0.15);
-    const harderScale   = Math.max(0.50, scale - 0.20);
-    const harderBytes   = await buildRasterDoc(harderScale, harderQuality, harderMaxDim);
-    if (harderBytes.length < rasterBytes.length) {
-      rasterBytes = harderBytes;
+    onStage?.("Applying visual compression…");
+    try {
+      const pdf = await PDFDocument.create();
+      await renderPages(
+        file,
+        scale,
+        async (canvas, _pn, _total, baseDimensions) => {
+          const blob = await canvasToBlob(canvas, "image/jpeg", quality);
+          const image = await pdf.embedJpg(new Uint8Array(await blob.arrayBuffer()));
+          const pw = baseDimensions?.width  || image.width;
+          const ph = baseDimensions?.height || image.height;
+          const page = pdf.addPage([pw, ph]);
+          page.drawImage(image, { x: 0, y: 0, width: pw, height: ph });
+        },
+        onProgress,
+        onStage,
+        "Compressing",
+        maxDim,
+      );
+      rasterBytes = await pdf.save({ useObjectStreams: true, addDefaultPage: false });
+    } catch (err) {
+      console.warn("Rasterization fallback failed:", err);
     }
   }
 
-  // Pick the smallest result — structural is lossless and preferred when smaller
-  let bestBytes = rasterBytes;
-  if (structBytes && structBytes.length < bestBytes.length) {
-    bestBytes = structBytes;
-  }
-
-  // GUARANTEE: never return a file larger than the original
-  let finalBlob: Blob;
-  if (bestBytes.length < originalSize) {
-    finalBlob = new Blob([bestBytes as BlobPart], { type: "application/pdf" });
-  } else if (structBytes && structBytes.length < originalSize) {
-    finalBlob = new Blob([structBytes as BlobPart], { type: "application/pdf" });
-  } else {
-    // PDF is already maximally compact (common for small text-only PDFs)
-    finalBlob = new Blob([await file.arrayBuffer()], { type: "application/pdf" });
-  }
+  // Pick the best (smallest) result that is smaller than the original
+  const candidates = [gsBytes, rasterBytes].filter(Boolean) as Uint8Array[];
+  const best = candidates
+    .filter((b) => b.length < originalSize)
+    .sort((a, b) => a.length - b.length)[0];
 
   onStage?.("Done!");
-  return [
-    {
-      name: `${safeName(file.name)}-compressed.pdf`,
-      blob: finalBlob,
-    },
-  ];
+  const finalBlob = best
+    ? new Blob([best as BlobPart], { type: "application/pdf" })
+    : new Blob([await file.arrayBuffer()], { type: "application/pdf" }); // already optimal
+
+  return [{ name: `${safeName(file.name)}-compressed.pdf`, blob: finalBlob }];
 };
 
 
