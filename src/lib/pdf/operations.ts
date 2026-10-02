@@ -380,9 +380,9 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
   // apply one gentle fallback pass so all levels show *some* reduction without blurring.
   if (rasterBytes.length >= originalSize) {
     onStage?.("Applying stronger compression…");
-    const harderMaxDim  = Math.max(400, Math.round(maxDim * 0.7)); // Allow down to 400px for small files to hit 50% reduction
-    const harderQuality = Math.max(0.08, quality - 0.15);
-    const harderScale   = Math.max(0.40, scale - 0.20);
+    const harderMaxDim  = Math.max(700, Math.round(maxDim * 0.8)); // Never go below 700px so text remains sharp
+    const harderQuality = Math.max(0.12, quality - 0.15);
+    const harderScale   = Math.max(0.50, scale - 0.20);
     const harderBytes   = await buildRasterDoc(harderScale, harderQuality, harderMaxDim);
     if (harderBytes.length < rasterBytes.length) {
       rasterBytes = harderBytes;
