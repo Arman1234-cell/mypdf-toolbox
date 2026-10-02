@@ -234,65 +234,54 @@ function ToolPage() {
 
   useEffect(() => {
     if (hasUploadedFile && isRotate) {
-      const timer = setTimeout(() => {
-        const el = document.getElementById("workspace-section");
-        if (el) {
-          const yOffset = -76;
-          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-        }
-      }, 80);
-      return () => clearTimeout(timer);
+      // Smoothly scroll to top so the box sits with a clean gap right under the nav
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [hasUploadedFile, isRotate]);
 
   return (
     <div
       className={`container-page transition-all duration-300 ${
-        hasUploadedFile && isRotate ? "py-2 sm:py-4" : "py-6 sm:py-10"
+        hasUploadedFile && isRotate ? "pt-8 sm:pt-11 pb-10" : "py-6 sm:py-10"
       }`}
     >
-      {/* Hero Section */}
-      <div className="mx-auto max-w-3xl text-center">
-        <div className="mb-2 flex justify-center">
-          <Breadcrumbs
-            items={[
-              { label: "Home", to: "/" },
-              { label: "PDF Tools", to: "/tools" },
-              { label: tool.name },
-            ]}
-          />
-        </div>
-
-        {isRotate && !hasUploadedFile && (
-          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-mint/90 px-3.5 py-1 text-xs font-semibold text-primary shadow-xs">
-            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-            <span>Free Browser Tool · Permanent Rotation · No Uploads</span>
+      {/* Hero Section - visible when awaiting upload, hidden during editing to match preview */}
+      {(!hasUploadedFile || !isRotate) ? (
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="mb-2 flex justify-center">
+            <Breadcrumbs
+              items={[
+                { label: "Home", to: "/" },
+                { label: "PDF Tools", to: "/tools" },
+                { label: tool.name },
+              ]}
+            />
           </div>
-        )}
 
-        <h1
-          className={`font-extrabold tracking-tight text-forest leading-tight transition-all duration-200 ${
-            hasUploadedFile && isRotate
-              ? "text-xl sm:text-2xl"
-              : "text-3xl sm:text-4xl lg:text-[2.6rem]"
-          }`}
-        >
-          {isRotate ? "Rotate PDF pages easily" : tool.h1}
-        </h1>
-        {(!hasUploadedFile || !isRotate) && (
+          {isRotate && (
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-mint/90 px-3.5 py-1 text-xs font-semibold text-primary shadow-xs">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>Free Browser Tool · Permanent Rotation · No Uploads</span>
+            </div>
+          )}
+
+          <h1 className="text-3xl font-extrabold tracking-tight text-forest sm:text-4xl lg:text-[2.6rem] leading-tight">
+            {isRotate ? "Rotate PDF pages easily" : tool.h1}
+          </h1>
           <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg leading-relaxed animate-in fade-in duration-300">
             {isRotate
               ? "Permanently fix upside-down or sideways PDF pages by 90°, 180°, or 270°. Rotate all pages or target specific pages with instant lossless saving directly in your browser."
               : tool.tagline}
           </p>
-        )}
-      </div>
+        </div>
+      ) : (
+        <h1 className="sr-only">Rotate PDF pages easily</h1>
+      )}
 
       {/* Main Tool Workspace */}
       <div
         className={`mx-auto transition-all duration-300 max-w-3xl ${
-          hasUploadedFile && isRotate ? "mt-3 sm:mt-4" : "mt-8"
+          hasUploadedFile && isRotate ? "mt-0" : "mt-8"
         }`}
       >
         <ToolWorkspace tool={tool} onHasFilesChange={setHasUploadedFile} />
