@@ -13,11 +13,14 @@ export type ToolOptionField = {
   key: string;
   label: string;
   help?: string;
-  type: "text" | "select" | "password";
+  type: "text" | "select" | "password" | "range";
   placeholder?: string;
   defaultValue: string;
   required?: boolean;
   choices?: { value: string; label: string }[];
+  min?: number;
+  max?: number;
+  step?: number;
 };
 
 export type ToolDefinition = {
@@ -198,19 +201,17 @@ export const tools: ToolDefinition[] = [
     multiple: false,
     ctaLabel: "Select PDF file",
     actionLabel: "Compress PDF",
-    outputHint: "Pages are re-encoded as optimised images, so text becomes non-selectable.",
+    outputHint: "Smart compression automatically optimizes streams and image assets to minimize file size.",
     options: [
       {
         key: "level",
-        label: "Compression level",
-        type: "select",
-        defaultValue: "balanced",
-        help: "Stronger compression means smaller files and softer detail.",
-        choices: [
-          { value: "light", label: "Light — best quality" },
-          { value: "balanced", label: "Balanced — recommended" },
-          { value: "strong", label: "Strong — smallest size" },
-        ],
+        label: "Compression Level",
+        type: "range",
+        defaultValue: "65",
+        min: 10,
+        max: 95,
+        step: 5,
+        help: "Adjust the slide bar to pick the perfect balance between smaller file size and visual clarity.",
       },
     ],
     steps: [

@@ -87,10 +87,16 @@ async function readPdf(file: File) {
 async function renderPages(
   file: File,
   scale: number,
-  onPage: (canvas: HTMLCanvasElement, pageNumber: number, total: number) => Promise<void> | void,
+  onPage: (
+    canvas: HTMLCanvasElement,
+    pageNumber: number,
+    total: number,
+    baseDimensions?: { width: number; height: number },
+  ) => Promise<void> | void,
   onProgress?: (fraction: number) => void,
   onStage?: (stage: string) => void,
   stagePrefix = "Processing",
+  maxDimension?: number,
 ) {
   onStage?.("Loading document pages...");
   const pdfjs = await loadPdfJs();
@@ -101,7 +107,15 @@ async function renderPages(
     const percent = Math.round((pageNumber / total) * 100);
     onStage?.(`${stagePrefix} page ${pageNumber} of ${total} (${percent}%)`);
     const page = await doc.getPage(pageNumber);
-    const viewport = page.getViewport({ scale });
+    const baseViewport = page.getViewport({ scale: 1 });
+    let finalScale = scale;
+    if (maxDimension) {
+      const maxSide = Math.max(baseViewport.width, baseViewport.height);
+      if (maxSide * scale > maxDimension) {
+        finalScale = maxDimension / maxSide;
+      }
+    }
+    const viewport = page.getViewport({ scale: finalScale });
     const canvas = document.createElement("canvas");
     canvas.width = Math.max(1, Math.floor(viewport.width));
     canvas.height = Math.max(1, Math.floor(viewport.height));
@@ -110,7 +124,7 @@ async function renderPages(
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, canvas.width, canvas.height);
     await page.render({ canvas, canvasContext: context, viewport }).promise;
-    await onPage(canvas, pageNumber, total);
+    await onPage(canvas, pageNumber, total, { width: baseViewport.width, height: baseViewport.height });
     onProgress?.(pageNumber / total);
   }
 }
@@ -281,40 +295,107 @@ export const splitPdf: Operation = async (files, { onProgress, onStage, options 
   return [await zipOutputs(`${safeName(file.name)}-split.zip`, outputs)];
 };
 
-/** Compress by re-rendering pages as tuned JPEGs and rebuilding the PDF. */
+/** Compress PDF with dual-mode optimization: structural compression + intelligent visual downsampling. */
 export const compressPdf: Operation = async (files, { onProgress, onStage, options }) => {
-  const level = String(options?.["level"] ?? "balanced");
-  const preset =
-    level === "strong"
-      ? { scale: 1, quality: 0.55 }
-      : level === "light"
-        ? { scale: 1.6, quality: 0.85 }
-        : { scale: 1.3, quality: 0.7 };
-
   const file = files[0]!;
+  const originalSize = file.size;
+
+  // 1. Determine compression strength (10 to 95, default 65)
+  let compressionStrength = 65;
+  const rawLevel = options?.["level"];
+  if (rawLevel) {
+    if (rawLevel === "light") compressionStrength = 30;
+    else if (rawLevel === "balanced") compressionStrength = 65;
+    else if (rawLevel === "strong") compressionStrength = 85;
+    else {
+      const parsed = parseInt(String(rawLevel), 10);
+      if (!isNaN(parsed) && parsed >= 10 && parsed <= 95) {
+        compressionStrength = parsed;
+      }
+    }
+  }
+
+  // Smooth interpolation for slider control (10 = light, 95 = extreme)
+  const t = Math.max(0, Math.min(1, (compressionStrength - 10) / 85));
+  const scale = +(1.0 - t * 0.35).toFixed(2);
+  const quality = +(0.70 - t * 0.35).toFixed(2);
+  const maxDim = Math.round(1100 - t * 450);
+
   const { PDFDocument } = await loadPdfLib();
-  const pdf = await PDFDocument.create();
 
-  await renderPages(
-    file,
-    preset.scale,
-    async (canvas) => {
-      const blob = await canvasToBlob(canvas, "image/jpeg", preset.quality);
-      const image = await pdf.embedJpg(new Uint8Array(await blob.arrayBuffer()));
-      const page = pdf.addPage([image.width, image.height]);
-      page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height });
-    },
-    onProgress,
-    onStage,
-    "Optimizing and compressing",
-  );
+  // Pass 1: Try structural stream optimization (lossless, preserves text & vectors)
+  onStage?.("Analyzing document structure...");
+  let structBytes: Uint8Array | null = null;
+  try {
+    const structDoc = await PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: true });
+    structDoc.setTitle("");
+    structDoc.setAuthor("");
+    structDoc.setProducer("MyPDF4U");
+    structDoc.setCreator("MyPDF4U");
+    structBytes = await structDoc.save({ useObjectStreams: true, addDefaultPage: false });
+  } catch (err) {
+    console.warn("Structural optimization skipped:", err);
+  }
 
-  onStage?.("Saving compressed document...");
-  const out = await pdf.save();
+  // Pass 2: Re-encode pages as optimized visual JPEGs with proper page geometry
+  const buildRasterDoc = async (targetScale: number, targetQuality: number, targetMaxDim: number) => {
+    const pdf = await PDFDocument.create();
+    await renderPages(
+      file,
+      targetScale,
+      async (canvas, _pageNumber, _total, baseDimensions) => {
+        const blob = await canvasToBlob(canvas, "image/jpeg", targetQuality);
+        const image = await pdf.embedJpg(new Uint8Array(await blob.arrayBuffer()));
+        const pageWidth = baseDimensions?.width || image.width;
+        const pageHeight = baseDimensions?.height || image.height;
+        const page = pdf.addPage([pageWidth, pageHeight]);
+        page.drawImage(image, { x: 0, y: 0, width: pageWidth, height: pageHeight });
+      },
+      onProgress,
+      onStage,
+      "Optimizing & compressing",
+      targetMaxDim,
+    );
+    onStage?.("Compressing document streams...");
+    return await pdf.save({ useObjectStreams: true, addDefaultPage: false });
+  };
+
+  let bestBytes = await buildRasterDoc(scale, quality, maxDim);
+
+  // If raster candidate is bigger than original file (common for small vector/text PDFs),
+  // check if structural compression reduced it!
+  if (bestBytes.length >= originalSize) {
+    if (structBytes && structBytes.length < originalSize) {
+      bestBytes = structBytes;
+    } else {
+      // Try aggressive pass
+      onStage?.("Applying aggressive compression...");
+      const aggressiveBytes = await buildRasterDoc(0.60, 0.30, 600);
+      if (aggressiveBytes.length < bestBytes.length) {
+        bestBytes = aggressiveBytes;
+      }
+    }
+  } else if (structBytes && structBytes.length < bestBytes.length) {
+    // If structural optimization was even smaller than rasterization, choose the smaller!
+    bestBytes = structBytes;
+  }
+
+  // GUARANTEE: Never return a file larger than the original!
+  let finalBlob: Blob;
+  if (bestBytes.length < originalSize) {
+    finalBlob = new Blob([bestBytes as BlobPart], { type: "application/pdf" });
+  } else if (structBytes && structBytes.length < originalSize) {
+    finalBlob = new Blob([structBytes as BlobPart], { type: "application/pdf" });
+  } else {
+    // Original is already at maximum compactness
+    finalBlob = new Blob([await file.arrayBuffer()], { type: "application/pdf" });
+  }
+
+  onStage?.("Done!");
   return [
     {
       name: `${safeName(file.name)}-compressed.pdf`,
-      blob: new Blob([out as BlobPart], { type: "application/pdf" }),
+      blob: finalBlob,
     },
   ];
 };

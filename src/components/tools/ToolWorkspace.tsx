@@ -355,53 +355,158 @@ export function ToolWorkspace({
 
             {tool.options && tool.options.length > 0 && tool.slug !== "rotate-pdf" && (
               <div className="grid gap-4 sm:grid-cols-2">
-                {tool.options.map((option) => (
-                  <div key={option.key}>
-                    <label
-                      htmlFor={`option-${option.key}`}
-                      className="mb-1.5 block text-sm font-semibold text-forest"
-                    >
-                      {option.label}
-                    </label>
-                    {option.type === "select" ? (
-                      <select
-                        id={`option-${option.key}`}
-                        value={optionValues[option.key] ?? option.defaultValue}
-                        onChange={(event) =>
-                          setOptionValues((current) => ({
-                            ...current,
-                            [option.key]: event.target.value,
-                          }))
-                        }
-                        className="w-full rounded-2xl border border-border/80 bg-card px-3.5 py-2.5 text-sm text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+                {tool.options.map((option) => {
+                  const val = optionValues[option.key] ?? option.defaultValue;
+                  const numVal = Number(val);
+
+                  if (option.type === "range") {
+                    const isLow = numVal < 40;
+                    const isMed = numVal >= 40 && numVal <= 75;
+
+                    return (
+                      <div
+                        key={option.key}
+                        className="col-span-full rounded-2xl border border-border/80 bg-secondary/30 p-4 sm:p-5"
                       >
-                        {option.choices?.map((choice) => (
-                          <option key={choice.value} value={choice.value}>
-                            {choice.label}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <input
-                        id={`option-${option.key}`}
-                        type={option.type === "password" ? "password" : "text"}
-                        autoComplete={option.type === "password" ? "off" : undefined}
-                        value={optionValues[option.key] ?? ""}
-                        placeholder={option.placeholder}
-                        onChange={(event) =>
-                          setOptionValues((current) => ({
-                            ...current,
-                            [option.key]: event.target.value,
-                          }))
-                        }
-                        className="w-full rounded-2xl border border-border/80 bg-card px-3.5 py-2.5 text-sm text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
-                      />
-                    )}
-                    {option.help && (
-                      <p className="mt-1.5 text-xs text-muted-foreground">{option.help}</p>
-                    )}
-                  </div>
-                ))}
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                          <label
+                            htmlFor={`option-${option.key}`}
+                            className="text-sm font-bold text-forest flex items-center gap-2"
+                          >
+                            <span>{option.label}</span>
+                            <span className="rounded-md bg-card px-2 py-0.5 text-xs font-extrabold text-primary border border-border">
+                              {val}%
+                            </span>
+                          </label>
+
+                          <span
+                            className={`rounded-full px-3 py-1 text-xs font-bold transition-colors ${
+                              isLow
+                                ? "bg-card text-forest border border-border"
+                                : isMed
+                                  ? "bg-primary/15 text-primary border border-primary/20"
+                                  : "bg-warning/15 text-warning border border-warning/20"
+                            }`}
+                          >
+                            {isLow
+                              ? "Light Compression (High Quality)"
+                              : isMed
+                                ? "Balanced (Recommended)"
+                                : "Strong (Smallest File Size)"}
+                          </span>
+                        </div>
+
+                        {/* Slide bar */}
+                        <div className="relative py-2">
+                          <input
+                            id={`option-${option.key}`}
+                            type="range"
+                            min={option.min ?? 10}
+                            max={option.max ?? 95}
+                            step={option.step ?? 5}
+                            value={val}
+                            onChange={(event) =>
+                              setOptionValues((current) => ({
+                                ...current,
+                                [option.key]: event.target.value,
+                              }))
+                            }
+                            className="w-full h-2.5 bg-card border border-border rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                          />
+                          <div className="flex justify-between text-[11px] font-semibold text-muted-foreground mt-2">
+                            <span>← Less compression (Sharpest detail)</span>
+                            <span>More compression (Smallest file) →</span>
+                          </div>
+                        </div>
+
+                        {/* Quick Presets */}
+                        <div className="mt-3 flex flex-wrap items-center gap-2 pt-3 border-t border-border/60">
+                          <span className="text-xs text-muted-foreground font-medium mr-1">Presets:</span>
+                          {[
+                            { label: "Light (30%)", val: "30" },
+                            { label: "Recommended (65%)", val: "65" },
+                            { label: "Strong (85%)", val: "85" },
+                          ].map((p) => {
+                            const isSelected = val === p.val;
+                            return (
+                              <button
+                                key={p.val}
+                                type="button"
+                                onClick={() =>
+                                  setOptionValues((current) => ({
+                                    ...current,
+                                    [option.key]: p.val,
+                                  }))
+                                }
+                                className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                                  isSelected
+                                    ? "bg-primary text-white shadow-xs scale-[1.02]"
+                                    : "bg-card border border-border text-foreground hover:bg-secondary hover:text-forest"
+                                }`}
+                              >
+                                {p.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {option.help && (
+                          <p className="mt-2.5 text-xs text-muted-foreground leading-relaxed">
+                            {option.help}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div key={option.key}>
+                      <label
+                        htmlFor={`option-${option.key}`}
+                        className="mb-1.5 block text-sm font-semibold text-forest"
+                      >
+                        {option.label}
+                      </label>
+                      {option.type === "select" ? (
+                        <select
+                          id={`option-${option.key}`}
+                          value={optionValues[option.key] ?? option.defaultValue}
+                          onChange={(event) =>
+                            setOptionValues((current) => ({
+                              ...current,
+                              [option.key]: event.target.value,
+                            }))
+                          }
+                          className="w-full rounded-2xl border border-border/80 bg-card px-3.5 py-2.5 text-sm text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        >
+                          {option.choices?.map((choice) => (
+                            <option key={choice.value} value={choice.value}>
+                              {choice.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          id={`option-${option.key}`}
+                          type={option.type === "password" ? "password" : "text"}
+                          autoComplete={option.type === "password" ? "off" : undefined}
+                          value={optionValues[option.key] ?? ""}
+                          placeholder={option.placeholder}
+                          onChange={(event) =>
+                            setOptionValues((current) => ({
+                              ...current,
+                              [option.key]: event.target.value,
+                            }))
+                          }
+                          className="w-full rounded-2xl border border-border/80 bg-card px-3.5 py-2.5 text-sm text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        />
+                      )}
+                      {option.help && (
+                        <p className="mt-1.5 text-xs text-muted-foreground">{option.help}</p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
 
