@@ -7,6 +7,7 @@ import {
   Loader2,
   RefreshCw,
   ShieldCheck,
+  SlidersHorizontal,
 } from "lucide-react";
 import { UploadZone } from "./UploadZone";
 import { FileList } from "./FileList";
@@ -667,6 +668,90 @@ export function ToolWorkspace({
                   </span>
                 )}
               </p>
+            )}
+
+            {/* Option to change compression level after compression */}
+            {tool.slug === "compress-pdf" && (
+              <div className="mt-5 rounded-2xl border border-primary/20 bg-secondary/30 p-4 sm:p-5">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <SlidersHorizontal className="h-4 w-4" />
+                    </span>
+                    <div>
+                      <span className="text-sm font-bold text-forest block">Change Compression Level</span>
+                      <span className="text-[11px] text-muted-foreground">Adjust slider to get a smaller file or sharper quality</span>
+                    </div>
+                  </div>
+                  <span className="rounded-md bg-card px-2.5 py-0.5 text-xs font-extrabold text-primary border border-border">
+                    {optionValues["level"] ?? "65"}%
+                  </span>
+                </div>
+
+                {/* Slider bar */}
+                <div className="py-2">
+                  <input
+                    type="range"
+                    min={10}
+                    max={95}
+                    step={5}
+                    value={optionValues["level"] ?? "65"}
+                    onChange={(event) =>
+                      setOptionValues((current) => ({
+                        ...current,
+                        level: event.target.value,
+                      }))
+                    }
+                    className="w-full h-2.5 bg-card border border-border rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  />
+                  <div className="flex justify-between text-[11px] font-semibold text-muted-foreground mt-1.5">
+                    <span>← Less compression (High quality)</span>
+                    <span>More compression (Smallest file) →</span>
+                  </div>
+                </div>
+
+                {/* Presets & Re-compress button */}
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border/60">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs text-muted-foreground font-medium mr-1">Presets:</span>
+                    {[
+                      { label: "Light (30%)", val: "30" },
+                      { label: "Recommended (65%)", val: "65" },
+                      { label: "Strong (85%)", val: "85" },
+                    ].map((p) => {
+                      const isSelected = (optionValues["level"] ?? "65") === p.val;
+                      return (
+                        <button
+                          key={p.val}
+                          type="button"
+                          onClick={() =>
+                            setOptionValues((current) => ({
+                              ...current,
+                              level: p.val,
+                            }))
+                          }
+                          className={`rounded-xl px-2.5 py-1 text-xs font-semibold transition-all ${
+                            isSelected
+                              ? "bg-primary text-white shadow-xs scale-[1.02]"
+                              : "bg-card border border-border text-foreground hover:bg-secondary hover:text-forest"
+                          }`}
+                        >
+                          {p.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={run}
+                    className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lift transition-all hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <RefreshCw className="h-3.5 w-3.5" />
+                    Re-compress with this level
+                  </button>
+                </div>
+              </div>
             )}
 
             {/* Related Tools — shown immediately after success */}
