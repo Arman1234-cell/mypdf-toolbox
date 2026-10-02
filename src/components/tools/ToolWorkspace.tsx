@@ -358,6 +358,21 @@ export function ToolWorkspace({
                   next.splice(target, 0, moved!);
                   setFiles(next);
                 }}
+                onRename={(index, newName) => {
+                  setFiles((current) => {
+                    const next = [...current];
+                    const original = next[index];
+                    if (original) {
+                      const ext = original.name.match(/\.[^.]+$/)?.[0] || "";
+                      const renamed = new File([original], `${newName}${ext}`, {
+                        type: original.type,
+                      }) as RenamedFile;
+                      renamed.isRenamedByUser = true;
+                      next[index] = renamed;
+                    }
+                    return next;
+                  });
+                }}
               />
             )}
 
