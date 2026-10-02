@@ -251,8 +251,8 @@ function ToolPage() {
           {/* ── LEFT decoration: botanical leaves + blank doc ── */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-0 top-0 w-[120px] opacity-30 sm:w-[160px] sm:opacity-60 lg:w-[220px] lg:opacity-100"
-            style={{ transform: "translate(-45%, -10%)", zIndex: 0 }}
+            className="pointer-events-none absolute left-0 top-0 w-[140px] opacity-100 sm:w-[180px] lg:w-[220px] -translate-y-[10%] -translate-x-[15%] sm:-translate-x-[25%] lg:-translate-x-[45%]"
+            style={{ zIndex: 0 }}
           >
             <svg viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
               {/* Tilted white document behind leaves */}
@@ -281,8 +281,8 @@ function ToolPage() {
           {/* ── RIGHT decoration: botanical leaves + PDF doc ── */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute right-0 top-0 w-[130px] opacity-30 sm:w-[170px] sm:opacity-60 lg:w-[230px] lg:opacity-100"
-            style={{ transform: "translate(48%, -5%)", zIndex: 0 }}
+            className="pointer-events-none absolute right-0 top-0 w-[150px] opacity-100 sm:w-[190px] lg:w-[230px] -translate-y-[5%] translate-x-[15%] sm:translate-x-[25%] lg:translate-x-[48%]"
+            style={{ zIndex: 0 }}
           >
             <svg viewBox="0 0 230 340" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
               {/* Leaves behind document */}

@@ -59,8 +59,7 @@ export function UploadZone({ accept, acceptLabel, multiple, ctaLabel, onFiles, c
   }
 
   return (
-    /* Outer white card */
-    <div className="w-full rounded-3xl bg-white border border-[#D8EDD9] shadow-sm p-5 sm:p-7">
+    <>
       {/* Inner dashed light-green upload zone */}
       <div
         onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
@@ -120,6 +119,6 @@ export function UploadZone({ accept, acceptLabel, multiple, ctaLabel, onFiles, c
           No registration
         </span>
       </div>
-    </div>
+    </>
   );
 }
