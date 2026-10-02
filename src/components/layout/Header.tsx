@@ -20,7 +20,7 @@ export function Header() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[#E8E5DC] bg-[#FAF7F0]/95 backdrop-blur-md transition-all">
+    <header className="sticky top-0 z-40 border-b border-[#E8E5DC] bg-[#FAF7F0] transition-all">
       <div className="container-page flex h-18 items-center justify-between gap-4">
         <Logo />
 
