@@ -38,11 +38,11 @@ function ToolLinks({ slugs }: { slugs: string[] }) {
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-border/80 bg-gradient-to-b from-card to-secondary/30">
-      <div className="container-page grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-5">
+    <footer className="mt-32 border-t border-border bg-card">
+      <div className="container-page grid gap-12 py-20 sm:grid-cols-2 lg:grid-cols-5">
         <div className="lg:col-span-1">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint text-primary ring-1 ring-primary/20 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-[1.25rem] bg-mint text-primary ring-1 ring-border shadow-sm">
               <LogoMark className="h-full w-full" />
             </div>
             <span className="text-base font-extrabold text-forest">
@@ -151,8 +151,8 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-border/70 bg-card/60">
-        <div className="container-page flex flex-col gap-2.5 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-border bg-card/60">
+        <div className="container-page flex flex-col gap-3 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 MyPDF4U · All rights reserved.</p>
           <p className="flex items-center gap-1.5">
             <span>Built for students, freelancers, and teams who just need the file done.</span>

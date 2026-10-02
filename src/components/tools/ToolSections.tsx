@@ -54,30 +54,30 @@ export function ToolCard({ tool, compact }: { tool: ToolDefinition; compact?: bo
     <Link
       to="/$slug"
       params={{ slug: tool.slug }}
-      className="group card-soft flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl transition-all duration-200 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lift bg-card"
+      className="group flex items-start gap-4 p-5 rounded-[1.5rem] border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft"
     >
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-mint text-primary transition-all duration-200 group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-105 shadow-xs">
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.25rem] bg-mint text-primary shadow-sm ring-1 ring-border transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-105 group-hover:ring-primary/50">
         <ToolIcon slug={tool.slug} />
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-2">
-          <span className="text-sm font-bold text-forest group-hover:text-primary transition-colors">
+          <span className="text-[15px] font-bold text-forest group-hover:text-primary transition-colors">
             {tool.name}
           </span>
           {tool.status === "soon" && (
-            <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
+            <span className="rounded-full bg-secondary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
               Soon
             </span>
           )}
         </span>
         {!compact && (
-          <span className="mt-1 block text-xs leading-relaxed text-muted-foreground line-clamp-2">
+          <span className="mt-1.5 block text-[13px] leading-relaxed text-muted-foreground line-clamp-2">
             {tool.cardDescription}
           </span>
         )}
       </span>
       <ArrowRight
-        className="mt-1 h-4 w-4 shrink-0 text-muted-foreground/60 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary"
+        className="mt-1 h-4 w-4 shrink-0 text-muted-foreground/60 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary"
         aria-hidden="true"
       />
     </Link>
@@ -116,9 +116,9 @@ export function RelatedTools({
               key={tool.slug}
               to="/$slug"
               params={{ slug: tool.slug }}
-              className="flex flex-col items-center gap-2 rounded-2xl border border-border/80 bg-secondary/60 p-3 text-center text-xs font-semibold text-forest transition-all hover:border-primary/40 hover:bg-mint/60 hover:-translate-y-0.5"
+              className="flex flex-col items-center gap-2.5 rounded-[1.25rem] border border-border bg-card p-4 text-center text-xs font-semibold text-forest transition-all duration-300 hover:border-primary/30 hover:bg-secondary hover:-translate-y-0.5 hover:shadow-sm"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-card text-primary shadow-xs ring-1 ring-primary/15">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-primary ring-1 ring-border shadow-sm">
                 <ToolIcon slug={tool.slug} className="h-4 w-4" />
               </span>
               <span className="leading-snug">{tool.name}</span>
@@ -169,7 +169,7 @@ export function Faq({ items }: { items: { q: string; a: string }[] }) {
         {items.map((item) => (
           <details
             key={item.q}
-            className="group rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-soft transition-all duration-200 open:border-primary/40 open:shadow-lift"
+            className="group rounded-[1.5rem] border border-border bg-card p-5 sm:p-6 shadow-sm transition-all duration-300 open:border-primary/30 open:shadow-soft"
           >
             <summary className="flex cursor-pointer items-center justify-between gap-4 text-base font-bold text-forest transition-colors hover:text-primary list-none">
               <span>{item.q}</span>
@@ -177,7 +177,7 @@ export function Faq({ items }: { items: { q: string; a: string }[] }) {
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </span>
             </summary>
-            <p className="mt-3.5 text-sm leading-relaxed text-muted-foreground sm:text-base border-t border-border/60 pt-3">
+            <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground border-t border-border pt-4">
               {item.a}
             </p>
           </details>
@@ -236,7 +236,7 @@ export function HowToUse({ tool }: { tool: ToolDefinition }) {
           return (
             <li
               key={step}
-              className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border p-5 sm:p-6 shadow-soft transition-all duration-200 hover:-translate-y-1 hover:shadow-lift ${meta.cardBg}`}
+              className={`relative flex flex-col justify-between overflow-hidden rounded-[1.5rem] border p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-soft ${meta.cardBg}`}
             >
               <div>
                 <div className="flex items-center justify-between">
@@ -256,7 +256,7 @@ export function HowToUse({ tool }: { tool: ToolDefinition }) {
                       ? "2. Pick angle & pages"
                       : "3. Download instantly"}
                 </h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
                   {step}
                 </p>
               </div>
@@ -284,13 +284,13 @@ export function KeyFeatures({ tool }: { tool: ToolDefinition }) {
         {tool.features.map((feature, idx) => (
           <div
             key={feature.title}
-            className="card-soft rounded-3xl border border-border/80 bg-card p-5 sm:p-6 shadow-soft transition-all duration-200 hover:border-primary/40 hover:-translate-y-0.5"
+            className="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 hover:shadow-soft"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-mint text-primary shadow-xs ring-1 ring-primary/20">
+            <div className="flex h-12 w-12 items-center justify-center rounded-[1.25rem] bg-mint text-primary shadow-sm ring-1 ring-border">
               <Check className="h-5 w-5" aria-hidden="true" />
             </div>
-            <h3 className="mt-4 text-base font-bold text-forest">{feature.title}</h3>
-            <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+            <h3 className="mt-5 text-base font-bold text-forest">{feature.title}</h3>
+            <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
               {feature.body}
             </p>
           </div>

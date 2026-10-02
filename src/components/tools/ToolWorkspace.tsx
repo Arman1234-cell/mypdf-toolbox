@@ -240,7 +240,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
   return (
     <section
       aria-labelledby="workspace"
-      className="card-soft border-primary/20 bg-card p-5 sm:p-8 rounded-3xl shadow-soft"
+      className="rounded-[2.5rem] border border-border bg-card p-6 sm:p-10 shadow-sm transition-all duration-300 hover:shadow-soft"
     >
       <h2 id="workspace" className="sr-only">
         {tool.name} workspace
@@ -482,29 +482,29 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
         )}
 
         {status === "success" && (
-          <div className="rounded-3xl border border-primary/25 bg-gradient-to-br from-mint/50 via-card to-card p-5 shadow-soft animate-in zoom-in-95 duration-300">
+          <div className="rounded-[2rem] border border-border bg-gradient-to-br from-secondary/50 via-card to-card p-6 shadow-sm animate-in zoom-in-95 duration-300">
 
             {/* Horizontal success banner */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
               {/* Left: icon + text */}
-              <div className="flex items-center gap-3.5">
-                <div className="relative shrink-0 flex h-12 w-12 items-center justify-center">
+              <div className="flex items-center gap-4">
+                <div className="relative shrink-0 flex h-14 w-14 items-center justify-center">
                   <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-30" />
-                  <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-lift">
-                    <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+                  <span className="relative flex h-14 w-14 items-center justify-center rounded-[1.25rem] bg-primary text-primary-foreground shadow-sm">
+                    <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
                   </span>
                 </div>
                 <div className="min-w-0">
-                  <p className="text-base font-extrabold text-forest">
+                  <p className="text-lg font-extrabold text-forest">
                     {tool.slug === "rotate-pdf" ? "Your rotated PDF is ready!" : "Your file is ready!"}
                   </p>
-                  <div className="mt-0.5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                    <span className="truncate max-w-[180px] font-medium text-forest/80" title={outputs[0]?.name}>
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                    <span className="truncate max-w-[200px] font-medium text-forest/90" title={outputs[0]?.name}>
                       {outputs[0]?.name}
                     </span>
-                    <span>·</span>
+                    <span className="opacity-60">·</span>
                     <span>{formatBytes(totalOutputSize)}</span>
-                    <span className="inline-flex items-center rounded-md bg-mint px-1.5 py-0.5 font-bold text-primary">
+                    <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 font-bold text-primary">
                       {tool.slug === "rotate-pdf"
                         ? `Rotated ${items[0]?.rotation || 90}°`
                         : "Processed"}
@@ -514,14 +514,14 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
               </div>
 
               {/* Right: action buttons */}
-              <div className="flex shrink-0 items-center gap-2">
+              <div className="flex shrink-0 items-center gap-2.5">
                 {outputs.map((output, index) => (
                   <a
                     key={output.name}
                     href={urls[index]}
                     download={output.name}
                     onClick={() => track("download_clicked", { tool: tool.slug })}
-                    className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lift transition-all duration-200 hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-sm transition-all duration-300 hover:bg-primary-dark hover:shadow-soft active:scale-[0.98]"
                   >
                     <Download className="h-4 w-4" aria-hidden="true" />
                     Download
@@ -530,7 +530,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                 <button
                   type="button"
                   onClick={reset}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card px-4 py-2.5 text-sm font-semibold text-muted-foreground transition-all hover:bg-mint hover:text-forest"
+                  className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-sm transition-all duration-300 hover:border-primary/40 hover:bg-secondary hover:text-primary"
                   title="Start over with a new file"
                 >
                   <RefreshCw className="h-4 w-4" aria-hidden="true" />
