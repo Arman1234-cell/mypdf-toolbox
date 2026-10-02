@@ -698,7 +698,7 @@ export function ToolWorkspace({
                       {reLevelColor.label}
                     </span>
                     <span className={`rounded-md px-2.5 py-0.5 text-xs font-extrabold border transition-colors ${reLevelColor.pct}`}>
-                      {optionValues["level"] ?? "65"}%
+                      {optionValues["level"] ?? "85"}%
                     </span>
                   </div>
                 </div>
@@ -710,7 +710,7 @@ export function ToolWorkspace({
                     min={10}
                     max={95}
                     step={5}
-                    value={optionValues["level"] ?? "65"}
+                    value={optionValues["level"] ?? "85"}
                     onChange={(event) =>
                       setOptionValues((current) => ({
                         ...current,
@@ -734,7 +734,7 @@ export function ToolWorkspace({
                       { label: "🟢 Balanced (65%)", val: "65", active: "bg-emerald-500 text-white border-emerald-600", hover: "hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300" },
                       { label: "🟠 Strong (85%)", val: "85", active: "bg-orange-500 text-white border-orange-600", hover: "hover:bg-orange-50 hover:text-orange-700 hover:border-orange-300" },
                     ].map((p) => {
-                      const isSelected = (optionValues["level"] ?? "65") === p.val;
+                      const isSelected = (optionValues["level"] ?? "85") === p.val;
                       return (
                         <button
                           key={p.val}
