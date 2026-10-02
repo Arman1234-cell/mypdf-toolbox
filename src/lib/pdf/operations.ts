@@ -315,16 +315,20 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
     }
   }
 
-  // Smooth interpolation for slider control (10 = light, 95 = extreme)
+  // Aggressively mapped interpolation:
+  //   strength=10  → maxDim=900, quality=0.55 (light touch)
+  //   strength=65  → maxDim=600, quality=0.28 (balanced)
+  //   strength=85  → maxDim=480, quality=0.18 (strong)
+  //   strength=95  → maxDim=380, quality=0.10 (maximum)
   const t = Math.max(0, Math.min(1, (compressionStrength - 10) / 85));
-  const scale = +(1.0 - t * 0.35).toFixed(2);
-  const quality = +(0.70 - t * 0.35).toFixed(2);
-  const maxDim = Math.round(1100 - t * 450);
+  const maxDim  = Math.round(900  - t * 520);   // 900 → 380
+  const quality = +(0.55 - t * 0.45).toFixed(2); // 0.55 → 0.10
+  const scale   = +(0.85 - t * 0.35).toFixed(2); // 0.85 → 0.50
 
   const { PDFDocument } = await loadPdfLib();
 
-  // Pass 1: Try structural stream optimization (lossless, preserves text & vectors)
-  onStage?.("Analyzing document structure...");
+  // Pass 1: Structural stream optimization (lossless – good for vector/text PDFs)
+  onStage?.("Analysing document structure…");
   let structBytes: Uint8Array | null = null;
   try {
     const structDoc = await PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: true });
@@ -334,11 +338,15 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
     structDoc.setCreator("MyPDF4U");
     structBytes = await structDoc.save({ useObjectStreams: true, addDefaultPage: false });
   } catch (err) {
-    console.warn("Structural optimization skipped:", err);
+    console.warn("Structural optimisation skipped:", err);
   }
 
-  // Pass 2: Re-encode pages as optimized visual JPEGs with proper page geometry
-  const buildRasterDoc = async (targetScale: number, targetQuality: number, targetMaxDim: number) => {
+  // Pass 2: Raster-based visual compression (best for image-heavy PDFs)
+  const buildRasterDoc = async (
+    targetScale: number,
+    targetQuality: number,
+    targetMaxDim: number,
+  ) => {
     const pdf = await PDFDocument.create();
     await renderPages(
       file,
@@ -346,48 +354,46 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
       async (canvas, _pageNumber, _total, baseDimensions) => {
         const blob = await canvasToBlob(canvas, "image/jpeg", targetQuality);
         const image = await pdf.embedJpg(new Uint8Array(await blob.arrayBuffer()));
-        const pageWidth = baseDimensions?.width || image.width;
+        const pageWidth  = baseDimensions?.width  || image.width;
         const pageHeight = baseDimensions?.height || image.height;
         const page = pdf.addPage([pageWidth, pageHeight]);
         page.drawImage(image, { x: 0, y: 0, width: pageWidth, height: pageHeight });
       },
       onProgress,
       onStage,
-      "Optimizing & compressing",
+      "Compressing",
       targetMaxDim,
     );
-    onStage?.("Compressing document streams...");
-    return await pdf.save({ useObjectStreams: true, addDefaultPage: false });
+    onStage?.("Finalising compressed document…");
+    return pdf.save({ useObjectStreams: true, addDefaultPage: false });
   };
 
+  onStage?.("Compressing pages…");
   let bestBytes = await buildRasterDoc(scale, quality, maxDim);
 
-  // If raster candidate is bigger than original file (common for small vector/text PDFs),
-  // check if structural compression reduced it!
-  if (bestBytes.length >= originalSize) {
-    if (structBytes && structBytes.length < originalSize) {
-      bestBytes = structBytes;
-    } else {
-      // Try aggressive pass
-      onStage?.("Applying aggressive compression...");
-      const aggressiveBytes = await buildRasterDoc(0.60, 0.30, 600);
-      if (aggressiveBytes.length < bestBytes.length) {
-        bestBytes = aggressiveBytes;
-      }
-    }
-  } else if (structBytes && structBytes.length < bestBytes.length) {
-    // If structural optimization was even smaller than rasterization, choose the smaller!
+  // If user asked for balanced/strong and raster isn't helping, try one harder pass
+  if (bestBytes.length >= originalSize && compressionStrength >= 50) {
+    onStage?.("Applying stronger compression…");
+    const harderMaxDim  = Math.round(maxDim  * 0.70);
+    const harderQuality = Math.max(0.08, quality - 0.12);
+    const harderScale   = Math.max(0.40, scale   - 0.15);
+    const harderBytes   = await buildRasterDoc(harderScale, harderQuality, harderMaxDim);
+    if (harderBytes.length < bestBytes.length) bestBytes = harderBytes;
+  }
+
+  // Compare structural vs raster — always pick the smallest winner
+  if (structBytes && structBytes.length < bestBytes.length) {
     bestBytes = structBytes;
   }
 
-  // GUARANTEE: Never return a file larger than the original!
+  // GUARANTEE: never return a file larger than the original
   let finalBlob: Blob;
   if (bestBytes.length < originalSize) {
     finalBlob = new Blob([bestBytes as BlobPart], { type: "application/pdf" });
   } else if (structBytes && structBytes.length < originalSize) {
     finalBlob = new Blob([structBytes as BlobPart], { type: "application/pdf" });
   } else {
-    // Original is already at maximum compactness
+    // PDF is already maximally compact – return original untouched
     finalBlob = new Blob([await file.arrayBuffer()], { type: "application/pdf" });
   }
 
@@ -399,6 +405,7 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
     },
   ];
 };
+
 
 /** PDF pages -> images (one per page, zipped when there are several). */
 function pdfToImages(format: "jpeg" | "png"): Operation {
