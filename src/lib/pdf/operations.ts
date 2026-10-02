@@ -135,7 +135,7 @@ export async function generatePdfThumbnail(file: File): Promise<Blob> {
   const pdfjs = await loadPdfJs();
   const doc = await pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
   const page = await doc.getPage(1);
-  const viewport = page.getViewport({ scale: 1.0 });
+  const viewport = page.getViewport({ scale: 1.5 });
   const canvas = document.createElement("canvas");
   canvas.width = Math.max(1, Math.floor(viewport.width));
   canvas.height = Math.max(1, Math.floor(viewport.height));
@@ -143,8 +143,16 @@ export async function generatePdfThumbnail(file: File): Promise<Blob> {
   if (!context) throw new ProcessingError("Your browser blocked the canvas used for rendering.");
   context.fillStyle = "#ffffff";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  await page.render({ canvas, canvasContext: context, viewport }).promise;
-  return canvasToBlob(canvas, "image/jpeg", 0.8);
+  await page.render({ canvasContext: context, viewport }).promise;
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("Canvas toBlob returned null"));
+      },
+      "image/png",
+    );
+  });
 }
 
 /**
@@ -826,3 +834,4 @@ export const operations = {
 } satisfies Record<string, Operation>;
 
 export type OperationName = keyof typeof operations;
+
