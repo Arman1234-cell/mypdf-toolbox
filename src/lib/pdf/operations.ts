@@ -315,15 +315,15 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
     }
   }
 
-  // Readable-quality interpolation — text must stay legible at ALL levels:
-  //   strength=10  (Light)    → maxDim=1800px, quality=0.88, scale=2.0
-  //   strength=65  (Balanced) → maxDim=1350px, quality=0.75, scale=1.5
-  //   strength=85  (Strong)   → maxDim=1150px, quality=0.68, scale=1.3
-  //   strength=95  (Maximum)  → maxDim=1000px, quality=0.65, scale=1.2
+  // Compression interpolation — balance between size reduction and readability:
+  //   strength=10  (Light)    → maxDim=1400px, quality=0.78, scale=1.6
+  //   strength=65  (Balanced) → maxDim=950px,  quality=0.55, scale=1.2
+  //   strength=85  (Strong)   → maxDim=800px,  quality=0.48, scale=1.0
+  //   strength=95  (Maximum)  → maxDim=700px,  quality=0.42, scale=0.9
   const t = Math.max(0, Math.min(1, (compressionStrength - 10) / 85));
-  const maxDim  = Math.round(1800 - t * 800);      // 1800 → 1000
-  const quality = +(0.88 - t * 0.23).toFixed(2);   // 0.88 → 0.65
-  const scale   = +(2.00 - t * 0.80).toFixed(2);   // 2.00 → 1.20
+  const maxDim  = Math.round(1400 - t * 700);      // 1400 → 700
+  const quality = +(0.78 - t * 0.36).toFixed(2);   // 0.78 → 0.42
+  const scale   = +(1.60 - t * 0.70).toFixed(2);   // 1.60 → 0.90
 
   const { PDFDocument } = await loadPdfLib();
 
