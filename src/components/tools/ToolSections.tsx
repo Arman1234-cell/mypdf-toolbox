@@ -87,12 +87,48 @@ export function ToolCard({ tool, compact }: { tool: ToolDefinition; compact?: bo
 export function RelatedTools({
   slugs,
   title = "Related PDF tools",
+  compact = false,
 }: {
   slugs: string[];
   title?: string;
+  compact?: boolean;
 }) {
   const items = slugs.map(getTool).filter((tool): tool is ToolDefinition => Boolean(tool));
   if (!items.length) return null;
+
+  if (compact) {
+    return (
+      <section aria-labelledby="related-compact">
+        <div className="flex items-center justify-between mb-4">
+          <h3 id="related-compact" className="text-base font-extrabold text-forest">
+            What would you like to do next?
+          </h3>
+          <Link
+            to="/tools"
+            className="text-xs font-bold text-primary hover:text-primary-dark underline underline-offset-2"
+          >
+            All tools →
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          {items.map((tool) => (
+            <Link
+              key={tool.slug}
+              to="/$slug"
+              params={{ slug: tool.slug }}
+              className="flex flex-col items-center gap-2 rounded-2xl border border-border/80 bg-secondary/60 p-3 text-center text-xs font-semibold text-forest transition-all hover:border-primary/40 hover:bg-mint/60 hover:-translate-y-0.5"
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-card text-primary shadow-xs ring-1 ring-primary/15">
+                <ToolIcon slug={tool.slug} className="h-4 w-4" />
+              </span>
+              <span className="leading-snug">{tool.name}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section aria-labelledby="related">
       <div className="flex items-center justify-between">
@@ -114,6 +150,7 @@ export function RelatedTools({
     </section>
   );
 }
+
 
 export function Faq({ items }: { items: { q: string; a: string }[] }) {
   if (!items.length) return null;

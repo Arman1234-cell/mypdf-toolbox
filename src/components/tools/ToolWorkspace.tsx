@@ -15,6 +15,7 @@ import { formatBytes } from "@/lib/format";
 import { track } from "@/lib/analytics";
 import { operations, ProcessingError, type ProcessedOutput } from "@/lib/pdf/operations";
 import { isImageWorkspace, type ToolDefinition } from "@/lib/tools";
+import { RelatedTools } from "./ToolSections";
 
 type Status = "empty" | "ready" | "processing" | "success" | "error";
 type RenamedFile = File & { isRenamedByUser?: boolean };
@@ -556,6 +557,13 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                 Process another file
               </button>
             </div>
+
+            {/* Related Tools — shown immediately after success */}
+            {tool.related && tool.related.length > 0 && (
+              <div className="mt-8 border-t border-border/60 pt-6 text-left">
+                <RelatedTools slugs={tool.related} compact />
+              </div>
+            )}
           </div>
         )}
       </div>
