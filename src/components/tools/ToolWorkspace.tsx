@@ -437,7 +437,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
         )}
 
         {status === "processing" && (
-          <div className="rounded-2xl bg-mint px-6 py-10 text-center">
+          <div className="rounded-2xl border border-border/50 bg-slate-100 px-6 py-10 text-center dark:bg-slate-800/50">
             <Loader2 className="mx-auto h-9 w-9 animate-spin text-primary" aria-hidden="true" />
             <p className="mt-4 text-base font-bold text-foreground">Processing your files…</p>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -461,7 +461,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
         )}
 
         {status === "success" && (
-          <div className="rounded-2xl bg-mint px-6 py-10 text-center">
+          <div className="rounded-2xl border border-border/50 bg-slate-100 px-6 py-10 text-center dark:bg-slate-800/50">
             <span className="mx-auto flex h-16 w-16 animate-in zoom-in items-center justify-center rounded-2xl bg-card text-primary shadow-soft">
               <CheckCircle2 className="h-8 w-8" aria-hidden="true" />
             </span>
