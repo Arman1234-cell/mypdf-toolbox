@@ -232,11 +232,29 @@ function ToolPage() {
     track("tool_page_view", { tool: tool.slug });
   }, [tool.slug]);
 
+  useEffect(() => {
+    if (hasUploadedFile && isRotate) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById("workspace-section");
+        if (el) {
+          const yOffset = -76;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+        }
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [hasUploadedFile, isRotate]);
+
   return (
-    <div className="container-page py-6 sm:py-10">
+    <div
+      className={`container-page transition-all duration-300 ${
+        hasUploadedFile && isRotate ? "py-2 sm:py-4" : "py-6 sm:py-10"
+      }`}
+    >
       {/* Hero Section */}
       <div className="mx-auto max-w-3xl text-center">
-        <div className="mb-3 flex justify-center">
+        <div className="mb-2 flex justify-center">
           <Breadcrumbs
             items={[
               { label: "Home", to: "/" },
@@ -246,14 +264,20 @@ function ToolPage() {
           />
         </div>
 
-        {isRotate && (
+        {isRotate && !hasUploadedFile && (
           <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-mint/90 px-3.5 py-1 text-xs font-semibold text-primary shadow-xs">
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Free Browser Tool · Permanent Rotation · No Uploads</span>
           </div>
         )}
 
-        <h1 className="text-3xl font-extrabold tracking-tight text-forest sm:text-4xl lg:text-[2.6rem] leading-tight">
+        <h1
+          className={`font-extrabold tracking-tight text-forest leading-tight transition-all duration-200 ${
+            hasUploadedFile && isRotate
+              ? "text-xl sm:text-2xl"
+              : "text-3xl sm:text-4xl lg:text-[2.6rem]"
+          }`}
+        >
           {isRotate ? "Rotate PDF pages easily" : tool.h1}
         </h1>
         {(!hasUploadedFile || !isRotate) && (
@@ -266,7 +290,11 @@ function ToolPage() {
       </div>
 
       {/* Main Tool Workspace */}
-      <div className="mx-auto mt-8 max-w-3xl">
+      <div
+        className={`mx-auto transition-all duration-300 max-w-3xl ${
+          hasUploadedFile && isRotate ? "mt-3 sm:mt-4" : "mt-8"
+        }`}
+      >
         <ToolWorkspace tool={tool} onHasFilesChange={setHasUploadedFile} />
 
         {/* Privacy Banner */}

@@ -170,9 +170,9 @@ export function ImageGrid({
           </div>
 
           {/* Interactive Preview Canvas */}
-          <div className="relative flex min-h-[350px] lg:min-h-[450px] w-full flex-1 items-center justify-center p-6 sm:p-10 bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-800/60 dark:to-slate-900/60 overflow-hidden">
+          <div className="relative flex min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] w-full flex-1 items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-800/60 dark:to-slate-900/60 overflow-hidden">
             <div
-              className="relative max-h-[350px] max-w-[280px] sm:max-w-[350px] rounded-lg shadow-2xl transition-transform duration-300 ease-out"
+              className="relative max-h-[280px] sm:max-h-[310px] max-w-[260px] sm:max-w-[320px] rounded-lg shadow-2xl transition-transform duration-300 ease-out"
               style={{ transform: `rotate(${currentRotation}deg)` }}
             >
               <img
@@ -180,18 +180,18 @@ export function ImageGrid({
                 alt={item.file.name}
                 loading="lazy"
                 decoding="async"
-                className="max-h-[330px] w-auto rounded-lg object-contain bg-white"
+                className="max-h-[260px] sm:max-h-[290px] w-auto rounded-lg object-contain bg-white"
               />
             </div>
 
             {/* Floating Quick Action Overlay */}
-            <div className="absolute bottom-4 right-4 flex items-center gap-2">
+            <div className="absolute bottom-3 right-3 flex items-center gap-2">
               <button
                 type="button"
                 disabled={disabled}
                 onClick={() => onRotate(item.id)}
                 title="Rotate +90° clockwise"
-                className="flex items-center gap-1.5 rounded-xl bg-card/95 backdrop-blur px-3 py-2 text-xs font-bold text-forest shadow-lift hover:bg-primary hover:text-white transition-all duration-150"
+                className="flex items-center gap-1.5 rounded-xl bg-card/95 backdrop-blur px-3 py-1.5 text-xs font-bold text-forest shadow-lift hover:bg-primary hover:text-white transition-all duration-150"
               >
                 <RotateCw className="h-4 w-4" />
                 <span>+90°</span>
@@ -200,7 +200,7 @@ export function ImageGrid({
                 type="button"
                 onClick={() => onPreview(item)}
                 title="View full-size preview"
-                className="rounded-xl bg-card/95 backdrop-blur p-2 text-muted-foreground shadow-lift hover:bg-secondary hover:text-forest transition-all duration-150"
+                className="rounded-xl bg-card/95 backdrop-blur p-1.5 text-muted-foreground shadow-lift hover:bg-secondary hover:text-forest transition-all duration-150"
               >
                 <Maximize2 className="h-4 w-4" />
               </button>
@@ -209,23 +209,23 @@ export function ImageGrid({
         </div>
 
         {/* Rotation Preset Controls Card (Right Side on Desktop) */}
-        <div className="w-full lg:w-[320px] xl:w-[360px] shrink-0 rounded-3xl border border-primary/20 bg-gradient-to-br from-mint/50 via-card to-lavender/30 p-5 sm:p-6 shadow-soft h-fit flex flex-col">
-          <div className="flex flex-col gap-4 border-b border-border/60 pb-5">
+        <div className="w-full lg:w-[320px] xl:w-[350px] shrink-0 rounded-3xl border border-primary/20 bg-gradient-to-br from-mint/50 via-card to-lavender/30 p-4 sm:p-5 shadow-soft h-fit flex flex-col">
+          <div className="flex flex-col gap-3 border-b border-border/60 pb-4">
             <div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-0.5 text-xs font-bold text-primary">
                 <Sparkles className="h-3.5 w-3.5" /> Quick Controls
               </span>
-              <h3 className="mt-2 text-lg font-extrabold text-forest">
+              <h3 className="mt-1.5 text-base sm:text-lg font-extrabold text-forest">
                 Rotation settings
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-0.5">
                 Click any angle to apply it.
               </p>
             </div>
 
             {/* Current rotation status pill & Trash */}
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/25 bg-card px-3 py-1.5 text-xs font-bold text-forest shadow-xs">
+              <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/25 bg-card px-2.5 py-1 text-xs font-bold text-forest shadow-xs">
                 <RotateCw className="h-3.5 w-3.5 text-primary" />
                 {currentRotation === 0
                   ? "Original (0°)"
@@ -238,7 +238,7 @@ export function ImageGrid({
               <button
                 type="button"
                 onClick={() => onRemove(item.id)}
-                className="rounded-xl border border-border bg-card p-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
+                className="rounded-xl border border-border bg-card p-1.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
                 title="Remove file"
                 aria-label="Remove PDF file"
               >
@@ -248,11 +248,11 @@ export function ImageGrid({
           </div>
 
           {/* Quick preset buttons: 90, 180, 270 */}
-          <div className="mt-5 grid grid-cols-2 gap-3">
+          <div className="mt-4 grid grid-cols-2 gap-2.5">
             <button
               type="button"
               onClick={() => handleAngle(90)}
-              className={`flex flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-4 text-sm font-bold transition-all duration-200 ${
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-3 py-3 text-sm font-bold transition-all duration-200 ${
                 currentRotation === 90
                   ? "border-primary bg-primary text-white shadow-lift scale-[1.02]"
                   : "border-border/80 bg-card text-foreground hover:border-primary/40 hover:bg-mint/60"
@@ -265,7 +265,7 @@ export function ImageGrid({
             <button
               type="button"
               onClick={() => handleAngle(180)}
-              className={`flex flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-4 text-sm font-bold transition-all duration-200 ${
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-3 py-3 text-sm font-bold transition-all duration-200 ${
                 currentRotation === 180
                   ? "border-primary bg-primary text-white shadow-lift scale-[1.02]"
                   : "border-border/80 bg-card text-foreground hover:border-primary/40 hover:bg-mint/60"
@@ -278,7 +278,7 @@ export function ImageGrid({
             <button
               type="button"
               onClick={() => handleAngle(270)}
-              className={`flex flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-4 text-sm font-bold transition-all duration-200 ${
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-3 py-3 text-sm font-bold transition-all duration-200 ${
                 currentRotation === 270
                   ? "border-primary bg-primary text-white shadow-lift scale-[1.02]"
                   : "border-border/80 bg-card text-foreground hover:border-primary/40 hover:bg-mint/60"
@@ -291,7 +291,7 @@ export function ImageGrid({
             <button
               type="button"
               onClick={() => handleAngle(0)}
-              className={`flex flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-4 text-sm font-bold transition-all duration-200 ${
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-3 py-3 text-sm font-bold transition-all duration-200 ${
                 currentRotation === 0
                   ? "border-primary/40 bg-secondary text-forest"
                   : "border-border/80 bg-card text-muted-foreground hover:border-primary/40 hover:bg-mint/60 hover:text-forest"
@@ -303,7 +303,7 @@ export function ImageGrid({
           </div>
 
           {/* Page Scope Selection (All vs Selective Pages) */}
-          <div className="mt-6 rounded-2xl border border-border/70 bg-card/80 p-4">
+          <div className="mt-4 rounded-2xl border border-border/70 bg-card/80 p-3 sm:p-3.5">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
                 <Layers className="h-4 w-4 text-primary" />

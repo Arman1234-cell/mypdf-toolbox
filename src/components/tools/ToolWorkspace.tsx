@@ -249,8 +249,11 @@ export function ToolWorkspace({
 
   return (
     <section
+      id="workspace-section"
       aria-labelledby="workspace"
-      className="rounded-[2.5rem] border border-border bg-card p-6 sm:p-10 shadow-sm transition-all duration-300 hover:shadow-soft"
+      className={`rounded-[2.5rem] border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-soft ${
+        hasFiles && tool.slug === "rotate-pdf" ? "p-4 sm:p-6 lg:p-7" : "p-6 sm:p-10"
+      }`}
     >
       <h2 id="workspace" className="sr-only">
         {tool.name} workspace
