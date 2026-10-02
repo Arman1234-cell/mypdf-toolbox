@@ -57,41 +57,41 @@
 
 :root {
   --radius: 0.95rem;
-  /* Warm white background */
-  --background: oklch(0.99 0.005 95);
-  /* Dark forest green for text and primary headings */
-  --foreground: oklch(0.22 0.035 155);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.035 155);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.035 155);
+  /* Warm ivory cream background */
+  --background: #FAF7F0;
+  /* Deep forest green for text and primary headings */
+  --foreground: #203D2E;
+  --card: #FFFFFF;
+  --card-foreground: #203D2E;
+  --popover: #FFFFFF;
+  --popover-foreground: #203D2E;
   /* Fresh green */
-  --primary: oklch(0.58 0.15 152);
-  --primary-foreground: oklch(0.99 0.005 95);
-  --primary-dark: oklch(0.48 0.14 152);
-  /* Pale mint */
-  --secondary: oklch(0.968 0.022 155);
-  --secondary-foreground: oklch(0.26 0.055 155);
-  --muted: oklch(0.965 0.015 155);
-  /* Muted gray-green for secondary text */
-  --muted-foreground: oklch(0.48 0.028 155);
-  --accent: oklch(0.968 0.022 155);
-  --accent-foreground: oklch(0.26 0.055 155);
-  --mint: oklch(0.972 0.024 155);
-  --forest: oklch(0.22 0.045 155);
-  /* Subtle lavender & peach accents */
-  --lavender: oklch(0.965 0.022 295);
-  --lavender-foreground: oklch(0.38 0.1 295);
-  --peach: oklch(0.97 0.032 65);
-  --peach-foreground: oklch(0.42 0.11 55);
-  --cream: oklch(0.988 0.01 95);
-  --destructive: oklch(0.62 0.17 25);
-  --destructive-foreground: oklch(0.99 0.005 95);
-  --success: oklch(0.58 0.15 152);
-  --warning: oklch(0.74 0.14 76);
-  --border: oklch(0.92 0.015 155);
-  --input: oklch(0.92 0.015 155);
-  --ring: oklch(0.58 0.15 152);
+  --primary: #32865A;
+  --primary-foreground: #FFFFFF;
+  --primary-dark: #286C48;
+  /* Soft sage green */
+  --secondary: #E8F0E6;
+  --secondary-foreground: #203D2E;
+  --muted: #E8F0E6;
+  /* Muted sage for secondary text */
+  --muted-foreground: #718174;
+  --accent: #E8F0E6;
+  --accent-foreground: #203D2E;
+  --mint: #E8F0E6;
+  --forest: #203D2E;
+  /* Soft beige accents */
+  --lavender: #F1E9DA;
+  --lavender-foreground: #203D2E;
+  --peach: #F1E9DA;
+  --peach-foreground: #203D2E;
+  --cream: #FAF7F0;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --success: #32865A;
+  --warning: #EA580C;
+  --border: #E8F0E6;
+  --input: #E8F0E6;
+  --ring: #32865A;
 }
 
 @layer base {
@@ -148,19 +148,19 @@
 
 @utility card-mint {
   background-color: var(--color-mint);
-  border: 1px solid oklch(0.88 0.03 155);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-2xl);
 }
 
 @utility card-lavender {
   background-color: var(--color-lavender);
-  border: 1px solid oklch(0.89 0.03 295);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-2xl);
 }
 
 @utility card-peach {
   background-color: var(--color-peach);
-  border: 1px solid oklch(0.9 0.04 65);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-2xl);
 }
 
