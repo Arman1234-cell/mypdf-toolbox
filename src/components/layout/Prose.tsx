@@ -17,8 +17,8 @@ export function PageShell({
     <div className="container-page py-8 sm:py-12">
       <div className="mx-auto max-w-3xl">
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: breadcrumb }]} />
-        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{title}</h1>
-        {intro && <p className="mt-3 text-base leading-relaxed text-muted-foreground">{intro}</p>}
+        <h1 className="text-2xl font-extrabold tracking-tight text-[#14532D] sm:text-3xl">{title}</h1>
+        {intro && <p className="mt-3 text-base leading-relaxed text-[#6B7C6A]">{intro}</p>}
         <div className="mt-8 space-y-8">{children}</div>
       </div>
     </div>

@@ -19,11 +19,11 @@ function BlogIndexPage() {
       title="PDF Tips & Guides"
       intro="Simple, step-by-step guides to help you get the most out of your documents."
     >
-      <div className="grid gap-6">
+      <div className="grid gap-5">
         {articles.map((article) => (
           <article
             key={article.slug}
-            className="card-soft flex flex-col justify-between p-5 transition-all hover:border-primary/40 hover:shadow-soft sm:p-6"
+            className="flex flex-col justify-between rounded-2xl border border-border bg-white p-5 shadow-sm transition-all hover:border-[#22C55E]/50 hover:shadow-md sm:p-6"
           >
             <div className="flex flex-col gap-5 sm:flex-row">
               <Link
@@ -47,23 +47,23 @@ function BlogIndexPage() {
                 </picture>
               </Link>
               <div>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-3 text-xs text-[#6B7C6A]">
                   <span className="flex items-center gap-1">
                     <Clock className="h-3.5 w-3.5" aria-hidden="true" /> {article.readTime}
                   </span>
                   <span aria-hidden="true">•</span>
                   <span>{article.updated ?? article.date}</span>
                 </div>
-                <h2 className="mt-2 text-lg font-bold tracking-tight text-foreground sm:text-xl">
+                <h2 className="mt-2 text-lg font-bold tracking-tight text-[#14532D] sm:text-xl">
                   <Link
                     to="/blog/$slug"
                     params={{ slug: article.slug }}
-                    className="hover:text-primary hover:underline"
+                    className="transition-colors hover:text-[#16a34a] hover:underline"
                   >
                     {article.title}
                   </Link>
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2 text-sm leading-relaxed text-[#263B30]">
                   {article.description}
                 </p>
               </div>
@@ -72,7 +72,7 @@ function BlogIndexPage() {
               <Link
                 to="/$slug"
                 params={{ slug: article.toolSlug }}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#16a34a] transition-colors hover:text-[#14532D] hover:underline"
               >
                 <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
                 Try {article.toolName}
@@ -80,7 +80,7 @@ function BlogIndexPage() {
               <Link
                 to="/blog/$slug"
                 params={{ slug: article.slug }}
-                className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-semibold text-foreground hover:text-primary"
+                className="inline-flex items-center gap-1 rounded-full bg-[#14532D] px-4 py-1.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-[#16a34a] active:scale-95"
               >
                 Read guide <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>

@@ -112,7 +112,7 @@ function RichText({ text }: { text: string }) {
               <Link
                 key={i}
                 to={href as "/"}
-                className="font-medium text-primary underline underline-offset-2 hover:text-primary-dark"
+                className="font-semibold text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary-dark hover:decoration-primary/80"
               >
                 {label}
               </Link>
@@ -124,7 +124,7 @@ function RichText({ text }: { text: string }) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-primary underline underline-offset-2 hover:text-primary-dark"
+              className="font-semibold text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary-dark hover:decoration-primary/80"
             >
               {label}
             </a>
@@ -140,15 +140,15 @@ function Block({ block }: { block: ArticleBlock }) {
   switch (block.type) {
     case "h2":
       return (
-        <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+        <h2 className="border-l-4 border-[#22C55E] pl-4 text-xl font-bold tracking-tight text-[#14532D] sm:text-2xl">
           {block.text}
         </h2>
       );
     case "h3":
-      return <h3 className="text-lg font-semibold text-foreground">{block.text}</h3>;
+      return <h3 className="text-lg font-semibold text-[#14532D]">{block.text}</h3>;
     case "p":
       return (
-        <p className="text-base leading-relaxed text-foreground/90">
+        <p className="text-base leading-relaxed text-[#263B30]">
           <RichText text={block.text} />
         </p>
       );
@@ -156,7 +156,7 @@ function Block({ block }: { block: ArticleBlock }) {
       return (
         <ul className="space-y-2 pl-5">
           {block.items.map((item, i) => (
-            <li key={i} className="list-disc text-sm leading-relaxed text-foreground/90">
+            <li key={i} className="list-disc text-base leading-relaxed text-[#263B30]">
               <RichText text={item} />
             </li>
           ))}
@@ -166,8 +166,8 @@ function Block({ block }: { block: ArticleBlock }) {
       return (
         <ol className="space-y-3">
           {block.items.map((item, i) => (
-            <li key={i} className="flex gap-3 text-sm leading-relaxed text-foreground/90">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+            <li key={i} className="flex gap-3 text-base leading-relaxed text-[#263B30]">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
                 {i + 1}
               </span>
               <span className="pt-0.5">
@@ -179,8 +179,8 @@ function Block({ block }: { block: ArticleBlock }) {
       );
     case "note":
       return (
-        <div className="rounded-xl border border-primary/20 bg-mint/40 px-4 py-3 text-sm leading-relaxed text-foreground/80">
-          <span className="mr-1 font-semibold text-primary">Note:</span>
+        <div className="rounded-xl border border-border bg-mint px-5 py-4 text-sm leading-relaxed text-foreground shadow-sm">
+          <span className="mr-2 font-bold text-primary-dark">Note:</span>
           <RichText text={block.text} />
         </div>
       );
@@ -192,12 +192,12 @@ function Block({ block }: { block: ArticleBlock }) {
       );
     case "cta":
       return (
-        <div className="card-soft flex flex-col items-start justify-between gap-4 border-2 border-primary/30 bg-mint/50 p-5 sm:flex-row sm:items-center">
-          <p className="text-sm leading-relaxed text-muted-foreground">{block.text}</p>
+        <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm transition-all sm:flex-row sm:items-center">
+          <p className="text-sm font-medium leading-relaxed text-foreground">{block.text}</p>
           <Link
             to="/$slug"
             params={{ slug: block.toolSlug }}
-            className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-lift transition-colors hover:bg-primary-dark"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-primary-dark hover:shadow-md active:scale-95"
           >
             {block.buttonText ?? `Open ${block.toolName}`}{" "}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -226,7 +226,7 @@ function ArticlePage() {
           ]}
         />
 
-        <h1 className="mt-3 text-[1.6rem] font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl">
+        <h1 className="mt-3 text-[1.6rem] font-extrabold leading-tight tracking-tight text-[#14532D] sm:text-4xl">
           {article.title}
         </h1>
 
@@ -272,8 +272,8 @@ function ArticlePage() {
               key={idx}
               className={
                 idx === 0
-                  ? "text-base leading-relaxed text-foreground sm:text-lg"
-                  : "text-base leading-relaxed text-foreground/90"
+                  ? "text-base leading-relaxed text-[#263B30] sm:text-lg"
+                  : "text-base leading-relaxed text-[#263B30]"
               }
             >
               <RichText text={paragraph} />
@@ -291,14 +291,14 @@ function ArticlePage() {
         {/* FAQs */}
         {article.faqs.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+            <h2 className="text-xl font-bold tracking-tight text-[#14532D] sm:text-2xl">
               Frequently asked questions
             </h2>
-            <dl className="mt-4 space-y-4">
+            <dl className="mt-4 space-y-3">
               {article.faqs.map((faq) => (
-                <div key={faq.q} className="card-soft p-5">
-                  <dt className="text-base font-semibold text-foreground">{faq.q}</dt>
-                  <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{faq.a}</dd>
+                <div key={faq.q} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
+                  <dt className="text-base font-bold text-[#14532D]">{faq.q}</dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-[#263B30]">{faq.a}</dd>
                 </div>
               ))}
             </dl>
@@ -306,17 +306,17 @@ function ArticlePage() {
         )}
 
         {/* Bottom CTA */}
-        <div className="card-soft mt-10 flex flex-col items-start justify-between gap-4 border-2 border-primary/30 bg-mint/50 p-6 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-2xl border border-border bg-white p-6 shadow-sm sm:flex-row sm:items-center">
           <div>
-            <h2 className="text-lg font-bold text-foreground">Ready to try it yourself?</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <h2 className="text-lg font-bold text-[#14532D]">Ready to try it yourself?</h2>
+            <p className="mt-1 text-sm text-[#6B7C6A]">
               Everything runs in your browser — your files are never uploaded.
             </p>
           </div>
           <Link
             to="/$slug"
             params={{ slug: article.toolSlug }}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-lift transition-colors hover:bg-primary-dark"
+            className="inline-flex items-center gap-2 rounded-full bg-[#14532D] px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-[#16a34a] hover:shadow-md active:scale-95"
           >
             Open {article.toolName} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
@@ -325,17 +325,17 @@ function ArticlePage() {
         {/* Related guides */}
         {related.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-xl font-bold tracking-tight text-foreground">Related guides</h2>
+            <h2 className="text-xl font-bold tracking-tight text-[#14532D]">Related guides</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               {related.map((item) => (
                 <Link
                   key={item.slug}
                   to="/blog/$slug"
                   params={{ slug: item.slug }}
-                  className="card-soft p-5 transition-all hover:border-primary/40 hover:shadow-soft"
+                  className="rounded-2xl border border-border bg-white p-5 shadow-sm transition-all hover:border-[#16a34a]/50 hover:shadow-md"
                 >
-                  <h3 className="text-base font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  <h3 className="text-base font-bold text-[#14532D]">{item.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-[#263B30]">
                     {item.description}
                   </p>
                 </Link>
