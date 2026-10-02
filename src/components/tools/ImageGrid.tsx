@@ -150,7 +150,7 @@ export function ImageGrid({
                       type="button"
                       onClick={() => setEditingId(item.id)}
                       title="Rename output file"
-                      className="shrink-0 rounded-lg bg-mint/70 p-1.5 text-primary/70 hover:bg-primary hover:text-white transition-all duration-200"
+                      className="animate-pencil-nudge shrink-0 rounded-lg bg-mint/70 p-1.5 text-primary/70 hover:bg-primary hover:text-white transition-all duration-200"
                     >
                       <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
                     </button>
@@ -537,7 +537,7 @@ export function ImageGrid({
                       type="button"
                       onClick={() => setEditingId(item.id)}
                       title="Rename file"
-                      className="shrink-0 rounded-md bg-mint/70 p-1 text-primary/70 transition-all duration-200 hover:bg-primary hover:text-white"
+                      className="animate-pencil-nudge shrink-0 rounded-md bg-mint/70 p-1 text-primary/70 transition-all duration-200 hover:bg-primary hover:text-white"
                     >
                       <Pencil className="h-3 w-3" aria-hidden="true" />
                     </button>
