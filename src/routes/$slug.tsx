@@ -1,5 +1,5 @@
 import { createFileRoute, notFound, redirect, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ShieldCheck,
   BookOpen,
@@ -222,6 +222,11 @@ function ToolPage() {
   const { tool } = Route.useLoaderData();
   const relatedGuide = toolGuideMap[tool.slug];
   const isRotate = tool.slug === "rotate-pdf";
+  const [hasUploadedFile, setHasUploadedFile] = useState(false);
+
+  useEffect(() => {
+    setHasUploadedFile(false);
+  }, [tool.slug]);
 
   useEffect(() => {
     track("tool_page_view", { tool: tool.slug });
@@ -251,16 +256,18 @@ function ToolPage() {
         <h1 className="text-3xl font-extrabold tracking-tight text-forest sm:text-4xl lg:text-[2.6rem] leading-tight">
           {isRotate ? "Rotate PDF pages easily" : tool.h1}
         </h1>
-        <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg leading-relaxed">
-          {isRotate
-            ? "Permanently fix upside-down or sideways PDF pages by 90°, 180°, or 270°. Rotate all pages or target specific pages with instant lossless saving directly in your browser."
-            : tool.tagline}
-        </p>
+        {(!hasUploadedFile || !isRotate) && (
+          <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg leading-relaxed animate-in fade-in duration-300">
+            {isRotate
+              ? "Permanently fix upside-down or sideways PDF pages by 90°, 180°, or 270°. Rotate all pages or target specific pages with instant lossless saving directly in your browser."
+              : tool.tagline}
+          </p>
+        )}
       </div>
 
       {/* Main Tool Workspace */}
       <div className="mx-auto mt-8 max-w-3xl">
-        <ToolWorkspace tool={tool} />
+        <ToolWorkspace tool={tool} onHasFilesChange={setHasUploadedFile} />
 
         {/* Privacy Banner */}
         <aside

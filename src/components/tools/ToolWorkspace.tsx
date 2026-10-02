@@ -46,7 +46,13 @@ const readImageSize = (url: string) =>
     image.src = url;
   });
 
-export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
+export function ToolWorkspace({
+  tool,
+  onHasFilesChange,
+}: {
+  tool: ToolDefinition;
+  onHasFilesChange?: (hasFiles: boolean) => void;
+}) {
   const imageMode = isImageWorkspace(tool) || tool.slug === "rotate-pdf";
   const [files, setFiles] = useState<File[]>([]);
   const [items, setItems] = useState<ImageItem[]>([]);
@@ -215,6 +221,10 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
       ? Math.round((1 - totalOutputSize / inputBytes) * 100)
       : 0;
   const hasFiles = imageMode ? items.length > 0 : files.length > 0;
+
+  useEffect(() => {
+    onHasFilesChange?.(hasFiles);
+  }, [hasFiles, onHasFilesChange]);
 
   if (tool.status === "soon") {
     return (
