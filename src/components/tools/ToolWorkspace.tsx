@@ -482,35 +482,35 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
         )}
 
         {status === "success" && (
-          <div className="rounded-3xl border border-primary/25 bg-gradient-to-b from-mint/60 via-card to-card p-6 sm:p-10 text-center shadow-soft animate-in zoom-in-95 duration-300">
-            {/* Subtle animated success badge */}
-            <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
+          <div className="rounded-3xl border border-primary/25 bg-gradient-to-b from-mint/60 via-card to-card p-5 sm:p-6 text-center shadow-soft animate-in zoom-in-95 duration-300">
+            {/* Compact success badge */}
+            <div className="relative mx-auto flex h-14 w-14 items-center justify-center">
               <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-30" />
-              <span className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white shadow-lift">
-                <CheckCircle2 className="h-9 w-9" aria-hidden="true" />
+              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-lift">
+                <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
               </span>
             </div>
 
-            <p className="mt-5 text-2xl font-extrabold text-forest">
+            <p className="mt-3 text-lg font-extrabold text-forest">
               {tool.slug === "rotate-pdf" ? "Your rotated PDF is ready!" : "Your file is ready!"}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Permanently saved with zero data sent to external servers.
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              Permanently saved · zero data sent to external servers.
             </p>
 
-            {/* Clean PDF File Card */}
-            <div className="mx-auto mt-6 max-w-md overflow-hidden rounded-2xl border border-primary/20 bg-card p-4 text-left shadow-soft">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-mint text-primary">
-                  <Download className="h-5 w-5" />
+            {/* Compact PDF File Card */}
+            <div className="mx-auto mt-4 max-w-md overflow-hidden rounded-xl border border-primary/20 bg-card p-3 text-left shadow-soft">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mint text-primary">
+                  <Download className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-bold text-forest" title={outputs[0]?.name}>
                     {outputs[0]?.name}
                   </p>
-                  <div className="mt-0.5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                  <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
                     <span>{formatBytes(totalOutputSize)}</span>
-                    <span className="inline-flex items-center rounded-md bg-mint px-2 py-0.5 font-bold text-primary">
+                    <span className="inline-flex items-center rounded-md bg-mint px-1.5 py-0.5 font-bold text-primary">
                       {tool.slug === "rotate-pdf"
                         ? `Rotated ${items[0]?.rotation || 90}° · Saved`
                         : "Processed"}
@@ -521,7 +521,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
             </div>
 
             {tool.slug === "compress-pdf" && inputBytes > 0 && (
-              <p className="mt-3 text-sm font-semibold text-foreground">
+              <p className="mt-2 text-sm font-semibold text-foreground">
                 {formatBytes(inputBytes)} → {formatBytes(totalOutputSize)}{" "}
                 {savedPercent > 0 ? (
                   <span className="text-primary font-bold">({savedPercent}% smaller)</span>
@@ -533,17 +533,17 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
               </p>
             )}
 
-            {/* Prominent Action Buttons */}
-            <div className="mt-7 flex flex-col items-center gap-3">
+            {/* Action Buttons — more compact */}
+            <div className="mt-4 flex flex-col items-center gap-2">
               {outputs.map((output, index) => (
                 <a
                   key={output.name}
                   href={urls[index]}
                   download={output.name}
                   onClick={() => track("download_clicked", { tool: tool.slug })}
-                  className="inline-flex w-full max-w-sm items-center justify-center gap-2.5 rounded-2xl bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-lift transition-all duration-200 hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
+                  className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-lift transition-all duration-200 hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <Download className="h-5 w-5" aria-hidden="true" />
+                  <Download className="h-4 w-4" aria-hidden="true" />
                   Download Rotated PDF
                 </a>
               ))}
@@ -551,16 +551,16 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
               <button
                 type="button"
                 onClick={reset}
-                className="mt-1 inline-flex items-center gap-2 rounded-2xl border border-border/80 bg-card px-5 py-2.5 text-sm font-semibold text-muted-foreground transition-all hover:bg-mint hover:text-forest"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card px-4 py-2 text-xs font-semibold text-muted-foreground transition-all hover:bg-mint hover:text-forest"
               >
-                <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
                 Process another file
               </button>
             </div>
 
             {/* Related Tools — shown immediately after success */}
             {tool.related && tool.related.length > 0 && (
-              <div className="mt-8 border-t border-border/60 pt-6 text-left">
+              <div className="mt-5 border-t border-border/60 pt-4 text-left">
                 <RelatedTools slugs={tool.related} compact />
               </div>
             )}
