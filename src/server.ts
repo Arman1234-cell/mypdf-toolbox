@@ -50,6 +50,14 @@ function isH3SwallowedErrorBody(body: string): boolean {
 function getCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
 
+  if (
+    url.hostname === "localhost" ||
+    url.hostname === "127.0.0.1" ||
+    url.hostname.endsWith(".local")
+  ) {
+    return null;
+  }
+
   const isHttp = url.protocol === "http:";
   const isNoWww = url.hostname === "mypdf4u.com" || url.hostname === "mypdf4u.com.";
 

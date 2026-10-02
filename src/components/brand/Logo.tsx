@@ -21,11 +21,22 @@ export function LogoMark({ className = "h-9 w-9" }: { className?: string }) {
 
 export function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-2.5 text-primary" aria-label="MyPDF4U home">
-      <LogoMark />
-      <span className="text-lg font-bold tracking-tight text-foreground">
-        MyPDF<span className="text-primary">4U</span>
-      </span>
+    <Link
+      to="/"
+      className="group flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.02]"
+      aria-label="MyPDF4U home"
+    >
+      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-mint/90 p-1.5 text-primary ring-1 ring-primary/20 shadow-soft transition-all duration-200 group-hover:ring-primary/40 group-hover:shadow-lift">
+        <LogoMark className="h-full w-full" />
+      </div>
+      <div className="flex flex-col">
+        <span className="text-lg font-extrabold tracking-tight text-forest leading-tight">
+          MyPDF<span className="text-primary">4U</span>
+        </span>
+        <span className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase -mt-0.5">
+          Fast & Private
+        </span>
+      </div>
     </Link>
   );
 }

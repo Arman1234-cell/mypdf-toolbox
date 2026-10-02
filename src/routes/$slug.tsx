@@ -1,6 +1,16 @@
 import { createFileRoute, notFound, redirect, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { ShieldCheck, BookOpen, Laptop, Smartphone, CheckCircle2, Lock } from "lucide-react";
+import {
+  ShieldCheck,
+  BookOpen,
+  Laptop,
+  Smartphone,
+  CheckCircle2,
+  Lock,
+  Sparkles,
+  RotateCw,
+  Lightbulb,
+} from "lucide-react";
 import { getTool } from "@/lib/tools";
 import { ToolWorkspace } from "@/components/tools/ToolWorkspace";
 import {
@@ -211,39 +221,76 @@ export const Route = createFileRoute("/$slug")({
 function ToolPage() {
   const { tool } = Route.useLoaderData();
   const relatedGuide = toolGuideMap[tool.slug];
+  const isRotate = tool.slug === "rotate-pdf";
 
   useEffect(() => {
     track("tool_page_view", { tool: tool.slug });
   }, [tool.slug]);
 
   return (
-    <div className="container-page py-6 sm:py-8">
-      <div className="mx-auto max-w-3xl">
-        <Breadcrumbs
-          items={[
-            { label: "Home", to: "/" },
-            { label: "PDF Tools", to: "/tools" },
-            { label: tool.name },
-          ]}
-        />
-        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{tool.h1}</h1>
-        <p className="mt-2 text-base text-muted-foreground">{tool.tagline}</p>
-      </div>
+    <div className="container-page py-6 sm:py-10">
+      {/* Hero Section */}
+      <div className="mx-auto max-w-3xl text-center">
+        <div className="mb-3 flex justify-center">
+          <Breadcrumbs
+            items={[
+              { label: "Home", to: "/" },
+              { label: "PDF Tools", to: "/tools" },
+              { label: tool.name },
+            ]}
+          />
+        </div>
 
-      <div className="mx-auto mt-6 max-w-3xl">
-        <ToolWorkspace tool={tool} />
-        <p className="mt-4 flex items-start gap-2 rounded-xl bg-secondary px-4 py-3 text-xs leading-relaxed text-secondary-foreground">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-          Your documents are processed securely inside this browser tab. Nothing is uploaded, stored
-          or shared — read more on our{" "}
-          <a href="/security" className="font-semibold underline">
-            security page
-          </a>
-          .
+        {isRotate && (
+          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-mint/90 px-3.5 py-1 text-xs font-semibold text-primary shadow-xs">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Free Browser Tool · Permanent Rotation · No Uploads</span>
+          </div>
+        )}
+
+        <h1 className="text-3xl font-extrabold tracking-tight text-forest sm:text-4xl lg:text-[2.6rem] leading-tight">
+          {isRotate ? "Rotate PDF pages easily" : tool.h1}
+        </h1>
+        <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg leading-relaxed">
+          {isRotate
+            ? "Permanently fix upside-down or sideways PDF pages by 90°, 180°, or 270°. Rotate all pages or target specific pages with instant lossless saving directly in your browser."
+            : tool.tagline}
         </p>
       </div>
 
-      <div className="mx-auto mt-14 max-w-4xl space-y-14">
+      {/* Main Tool Workspace */}
+      <div className="mx-auto mt-8 max-w-3xl">
+        <ToolWorkspace tool={tool} />
+
+        {/* Privacy Banner */}
+        <aside
+          aria-label="Security guarantee"
+          className="mt-5 rounded-2xl border border-primary/20 bg-mint/80 p-4 sm:p-5 shadow-soft transition-all"
+        >
+          <div className="flex items-start gap-3.5">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-card text-primary shadow-soft ring-1 ring-primary/20">
+              <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-sm font-bold text-forest">100% Private In-Browser Processing</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                Your documents are processed securely inside this browser tab. Your files never
+                leave your device, and are never uploaded, stored, or shared. Read our full{" "}
+                <a
+                  href="/security"
+                  className="font-semibold text-primary underline underline-offset-2 hover:text-primary-dark"
+                >
+                  security page
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      {/* Supporting Sections */}
+      <div className="mx-auto mt-16 max-w-4xl space-y-16">
         <HowToUse tool={tool} />
 
         {/* Step-by-Step Tutorial Banner for Long-tail Searchers */}
@@ -252,14 +299,12 @@ function ToolPage() {
             aria-label="Step-by-step guide"
             className="card-soft flex flex-col items-start justify-between gap-4 p-5 sm:flex-row sm:items-center sm:p-6 bg-mint/50 border-primary/20"
           >
-            <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex items-start gap-3.5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-card text-primary shadow-soft ring-1 ring-primary/20">
                 <BookOpen className="h-5 w-5" aria-hidden="true" />
               </span>
               <div>
-                <h3 className="text-sm font-bold text-foreground">
-                  Detailed Step-by-Step Tutorial
-                </h3>
+                <h3 className="text-sm font-bold text-forest">Detailed Step-by-Step Tutorial</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Learn how to use {tool.name} with tips for Windows 11, Mac, iPhone, and Android.
                 </p>
@@ -268,51 +313,67 @@ function ToolPage() {
             <Link
               to="/blog/$slug"
               params={{ slug: relatedGuide.slug }}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-soft transition-colors hover:bg-primary-dark"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-4.5 py-2.5 text-xs font-semibold text-primary-foreground shadow-lift transition-all hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
             >
-              Read guide
+              Read guide →
             </Link>
           </aside>
         )}
 
+        {/* Why Use Section */}
         <section aria-labelledby="why">
-          <h2 id="why" className="text-xl font-bold text-foreground sm:text-2xl">
-            Why use MyPDF4U for {tool.name}?
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-            No account, no installation, and no queue. Every tool opens directly to the upload area
-            with zero watermarks and no file count restrictions. Your files are converted and
-            processed locally in client memory, keeping your documents confidential while delivering
-            instant results.
-          </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <div className="flex items-start gap-2.5">
-              <Laptop className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
-              <div>
-                <p className="text-xs font-bold text-foreground">Windows, Mac & Linux</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Works in Chrome, Edge, Safari, and Firefox with no software download.
-                </p>
+          <div className="text-center sm:text-left">
+            <h2 id="why" className="text-2xl font-extrabold text-forest sm:text-3xl">
+              Why use MyPDF4U for {tool.name}?
+            </h2>
+            <p className="mt-2.5 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              No account, no software installation, and no waiting queues. Every tool opens directly
+              to the upload area with zero watermarks and no file count restrictions. Your files are
+              processed locally in client memory, keeping your documents confidential while
+              delivering instant results.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="card-soft p-5 bg-card/80 transition-all hover:border-primary/40 hover:-translate-y-0.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-mint text-primary">
+                <Laptop className="h-5 w-5" aria-hidden="true" />
               </div>
+              <h3 className="mt-3.5 text-sm font-bold text-forest">Windows, Mac & Linux</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                Works in Chrome, Edge, Safari, and Firefox with no software download.
+              </p>
             </div>
-            <div className="flex items-start gap-2.5">
-              <Smartphone className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
-              <div>
-                <p className="text-xs font-bold text-foreground">iPhone, iPad & Android</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Mobile-first design lets you process files directly from photo galleries and
-                  Files.
-                </p>
+
+            <div className="card-soft p-5 bg-card/80 transition-all hover:border-primary/40 hover:-translate-y-0.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-lavender text-purple-700">
+                <Smartphone className="h-5 w-5" aria-hidden="true" />
               </div>
+              <h3 className="mt-3.5 text-sm font-bold text-forest">iPhone & Android</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                Mobile-first design lets you process files directly from photo galleries and Files.
+              </p>
             </div>
-            <div className="flex items-start gap-2.5">
-              <Lock className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
-              <div>
-                <p className="text-xs font-bold text-foreground">100% Private & Free</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Zero server uploads, no subscription walls, and no watermarks.
-                </p>
+
+            <div className="card-soft p-5 bg-card/80 transition-all hover:border-primary/40 hover:-translate-y-0.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-mint text-primary">
+                <RotateCw className="h-5 w-5" aria-hidden="true" />
               </div>
+              <h3 className="mt-3.5 text-sm font-bold text-forest">Permanent Metadata</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                Rotations are written directly into the PDF specification, so it stays fixed
+                forever.
+              </p>
+            </div>
+
+            <div className="card-soft p-5 bg-card/80 transition-all hover:border-primary/40 hover:-translate-y-0.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-peach text-amber-700">
+                <Lock className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <h3 className="mt-3.5 text-sm font-bold text-forest">100% Private & Free</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                Zero server uploads, no subscription walls, and no added watermarks.
+              </p>
             </div>
           </div>
         </section>
@@ -320,13 +381,23 @@ function ToolPage() {
         <KeyFeatures tool={tool} />
         <Faq items={tool.faqs} />
 
+        {/* Good to Know Section */}
         <section aria-labelledby="learn">
-          <h2 id="learn" className="text-xl font-bold text-foreground sm:text-2xl">
-            Good to know
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-            {tool.learn}
-          </p>
+          <div className="card-soft border-primary/20 bg-gradient-to-br from-mint/50 via-card to-lavender/30 p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-card text-primary shadow-soft ring-1 ring-primary/20">
+                <Lightbulb className="h-6 w-6" aria-hidden="true" />
+              </div>
+              <div>
+                <h2 id="learn" className="text-xl font-bold text-forest sm:text-2xl">
+                  Good to know
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                  {tool.learn}
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
         <RelatedTools slugs={tool.related} />

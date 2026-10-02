@@ -38,23 +38,25 @@ function ToolLinks({ slugs }: { slugs: string[] }) {
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-border bg-card">
-      <div className="container-page grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-5">
+    <footer className="mt-24 border-t border-border/80 bg-gradient-to-b from-card to-secondary/30">
+      <div className="container-page grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-5">
         <div className="lg:col-span-1">
-          <div className="flex items-center gap-2 text-primary">
-            <LogoMark className="h-8 w-8" />
-            <span className="text-base font-bold text-foreground">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint text-primary ring-1 ring-primary/20 shadow-xs">
+              <LogoMark className="h-full w-full" />
+            </div>
+            <span className="text-base font-extrabold text-forest">
               MyPDF<span className="text-primary">4U</span>
             </span>
           </div>
-          <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-            Simple PDF tools for everyday work. Convert, compress, merge, and edit documents
-            privately inside your browser.
+          <p className="mt-4 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+            Simple, private PDF tools for everyday work. Convert, compress, rotate, and edit
+            documents locally inside your browser.
           </p>
           <div className="mt-4">
             <Link
               to="/tools"
-              className="text-xs font-semibold text-primary underline hover:text-primary-dark"
+              className="inline-flex items-center gap-1 text-xs font-bold text-primary underline underline-offset-2 hover:text-primary-dark transition-colors"
             >
               Browse all 17 PDF tools →
             </Link>
@@ -62,25 +64,29 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Most Popular</h2>
+          <h2 className="text-xs font-bold uppercase tracking-wider text-forest">Most Popular</h2>
           <ToolLinks slugs={popular} />
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Convert PDF</h2>
+          <h2 className="text-xs font-bold uppercase tracking-wider text-forest">Convert PDF</h2>
           <ToolLinks slugs={convert} />
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Edit & Security</h2>
+          <h2 className="text-xs font-bold uppercase tracking-wider text-forest">
+            Edit & Security
+          </h2>
           <ToolLinks slugs={organize} />
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Guides & Company</h2>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-forest">
+            Guides & Company
+          </h2>
+          <ul className="mt-3.5 space-y-2 text-sm text-muted-foreground">
             <li>
-              <Link to="/blog" className="hover:text-primary">
+              <Link to="/blog" className="hover:text-forest transition-colors">
                 Blog
               </Link>
             </li>
@@ -88,7 +94,7 @@ export function Footer() {
               <Link
                 to="/blog/$slug"
                 params={{ slug: "how-to-convert-jpg-to-pdf" }}
-                className="hover:text-primary"
+                className="hover:text-forest transition-colors"
               >
                 JPG to PDF Guide
               </Link>
@@ -97,7 +103,7 @@ export function Footer() {
               <Link
                 to="/blog/$slug"
                 params={{ slug: "how-to-merge-pdf-files" }}
-                className="hover:text-primary"
+                className="hover:text-forest transition-colors"
               >
                 Merge PDF Guide
               </Link>
@@ -106,38 +112,38 @@ export function Footer() {
               <Link
                 to="/blog/$slug"
                 params={{ slug: "how-to-compress-pdf-for-email" }}
-                className="hover:text-primary"
+                className="hover:text-forest transition-colors"
               >
                 Compress PDF Guide
               </Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-primary">
+              <Link to="/about" className="hover:text-forest transition-colors">
                 About Us
               </Link>
             </li>
             <li>
-              <Link to="/security" className="hover:text-primary">
+              <Link to="/security" className="hover:text-forest transition-colors">
                 Security & Privacy
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-primary">
+              <Link to="/contact" className="hover:text-forest transition-colors">
                 Contact
               </Link>
             </li>
             <li>
-              <Link to="/privacy" className="hover:text-primary">
+              <Link to="/privacy" className="hover:text-forest transition-colors">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to="/terms" className="hover:text-primary">
+              <Link to="/terms" className="hover:text-forest transition-colors">
                 Terms of Service
               </Link>
             </li>
             <li>
-              <Link to="/cookies" className="hover:text-primary">
+              <Link to="/cookies" className="hover:text-forest transition-colors">
                 Cookie Policy
               </Link>
             </li>
@@ -145,10 +151,12 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-border">
-        <div className="container-page flex flex-col gap-2 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 MyPDF4U</p>
-          <p>Built for students, freelancers and teams who just need the file done.</p>
+      <div className="border-t border-border/70 bg-card/60">
+        <div className="container-page flex flex-col gap-2.5 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2026 MyPDF4U · All rights reserved.</p>
+          <p className="flex items-center gap-1.5">
+            <span>Built for students, freelancers, and teams who just need the file done.</span>
+          </p>
         </div>
       </div>
     </footer>

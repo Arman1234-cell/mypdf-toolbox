@@ -17,6 +17,7 @@ import { operations, ProcessingError, type ProcessedOutput } from "@/lib/pdf/ope
 import { isImageWorkspace, type ToolDefinition } from "@/lib/tools";
 
 type Status = "empty" | "ready" | "processing" | "success" | "error";
+type RenamedFile = File & { isRenamedByUser?: boolean };
 
 const MAX_FILE_BYTES = 100 * 1024 * 1024;
 
@@ -169,11 +170,15 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
         ...(imageMode ? { rotations: items.map((item) => item.rotation) } : {}),
       });
 
-      // Smart-rename: If the user explicitly renamed a file, we respect their exact name 
+      // Smart-rename: If the user explicitly renamed a file, we respect their exact name
       // instead of appending suffixes like "-rotated", ONLY if the tool produces a 1:1 output.
       const smartResult = result.map((output, i) => {
         const original = target[i];
-        if (result.length === target.length && original && (original as any).isRenamedByUser) {
+        if (
+          result.length === target.length &&
+          original &&
+          (original as RenamedFile).isRenamedByUser
+        ) {
           const outExt = output.name.match(/\.[^.]+$/)?.[0] || "";
           const newBase = original.name.replace(/\.[^.]+$/, "");
           return { ...output, name: `${newBase}${outExt}` };
@@ -232,12 +237,15 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
   }
 
   return (
-    <section aria-labelledby="workspace" className="card-soft border-primary/25 p-4 sm:p-6 lg:p-8">
+    <section
+      aria-labelledby="workspace"
+      className="card-soft border-primary/20 bg-card p-5 sm:p-8 rounded-3xl shadow-soft"
+    >
       <h2 id="workspace" className="sr-only">
         {tool.name} workspace
       </h2>
 
-      <div aria-live="polite" className="space-y-5">
+      <div aria-live="polite" className="space-y-6">
         {status === "empty" && (
           <UploadZone
             accept={tool.accept}
@@ -266,6 +274,13 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                     current.map((item) => ({ ...item, rotation: (item.rotation + 90) % 360 })),
                   )
                 }
+                onSetRotation={(id, angle) =>
+                  setItems((current) =>
+                    current.map((item) =>
+                      item.id === id ? { ...item, rotation: angle % 360 } : item,
+                    ),
+                  )
+                }
                 onClearAll={reset}
                 onRemove={(id) =>
                   setItems((current) => {
@@ -291,15 +306,17 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                         const newFile = new File([item.file], `${newName}${ext}`, {
                           type: item.file.type,
                         });
-                        (newFile as any).isRenamedByUser = true;
+                        (newFile as RenamedFile).isRenamedByUser = true;
                         return { ...item, file: newFile };
                       }
                       return item;
-                    })
+                    }),
                   )
                 }
                 hideBadge={tool.slug === "rotate-pdf"}
                 isPdfMode={tool.slug === "rotate-pdf"}
+                pageSelection={optionValues["pages"] ?? ""}
+                onPageSelectionChange={(pages) => setOptionValues((cur) => ({ ...cur, pages }))}
               />
             ) : (
               <FileList
@@ -322,13 +339,13 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
               />
             )}
 
-            {tool.options && tool.options.length > 0 && (
+            {tool.options && tool.options.length > 0 && tool.slug !== "rotate-pdf" && (
               <div className="grid gap-4 sm:grid-cols-2">
                 {tool.options.map((option) => (
                   <div key={option.key}>
                     <label
                       htmlFor={`option-${option.key}`}
-                      className="mb-1.5 block text-sm font-medium text-foreground"
+                      className="mb-1.5 block text-sm font-semibold text-forest"
                     >
                       {option.label}
                     </label>
@@ -342,7 +359,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                             [option.key]: event.target.value,
                           }))
                         }
-                        className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground"
+                        className="w-full rounded-2xl border border-border/80 bg-card px-3.5 py-2.5 text-sm text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
                       >
                         {option.choices?.map((choice) => (
                           <option key={choice.value} value={choice.value}>
@@ -363,7 +380,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                             [option.key]: event.target.value,
                           }))
                         }
-                        className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground"
+                        className="w-full rounded-2xl border border-border/80 bg-card px-3.5 py-2.5 text-sm text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
                       />
                     )}
                     {option.help && (
@@ -377,28 +394,29 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
             {status === "error" && message && (
               <p
                 role="alert"
-                className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+                className="flex items-start gap-2.5 rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
               >
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
                 {message}
               </p>
             )}
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs text-muted-foreground">{tool.outputHint}</p>
-              <div className="flex flex-col gap-2 sm:flex-row">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-border/70 pt-4">
+              <p className="text-xs font-medium text-muted-foreground">{tool.outputHint}</p>
+              <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={reset}
-                  className="rounded-xl border border-border px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                  className="rounded-2xl border border-border/80 bg-card px-5 py-3 text-sm font-semibold text-muted-foreground transition-all hover:bg-secondary hover:text-forest"
                 >
                   Start over
                 </button>
                 <button
                   type="button"
                   onClick={run}
-                  className="rounded-xl bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-lift transition-colors hover:bg-primary-dark"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-lift transition-all duration-200 hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
                 >
+                  <RefreshCw className="h-4 w-4" />
                   {tool.actionLabel}
                 </button>
               </div>
@@ -421,7 +439,7 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
           <>
             <p
               role="alert"
-              className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+              className="flex items-start gap-2.5 rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
             >
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
               {message}
@@ -437,13 +455,15 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
         )}
 
         {status === "processing" && (
-          <div className="rounded-2xl border border-border/50 bg-slate-100 px-6 py-10 text-center dark:bg-slate-800/50">
-            <Loader2 className="mx-auto h-9 w-9 animate-spin text-primary" aria-hidden="true" />
-            <p className="mt-4 text-base font-bold text-foreground">Processing your files…</p>
+          <div className="rounded-3xl border border-primary/20 bg-gradient-to-b from-mint/50 via-card to-card px-6 py-12 text-center shadow-soft">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-card text-primary shadow-soft ring-1 ring-primary/20">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" aria-hidden="true" />
+            </div>
+            <p className="mt-5 text-lg font-extrabold text-forest">Processing your PDF…</p>
             <p className="mt-1 text-sm text-muted-foreground">
               {stage ?? `${tool.actionLabel} · ${activeFiles.length} file(s)`}
             </p>
-            <div className="mx-auto mt-5 h-2.5 w-full max-w-md overflow-hidden rounded-full bg-card shadow-inner">
+            <div className="mx-auto mt-6 h-2.5 w-full max-w-md overflow-hidden rounded-full bg-mint shadow-inner">
               <div
                 className="h-full rounded-full bg-primary transition-[width] duration-300"
                 style={{ width: `${Math.round(progress * 100)}%` }}
@@ -454,27 +474,56 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                 aria-label="Processing progress"
               />
             </div>
-            <p className="mt-2 text-xs font-semibold text-primary">
+            <p className="mt-2.5 text-xs font-bold text-primary">
               {Math.round(progress * 100)}% completed
             </p>
           </div>
         )}
 
         {status === "success" && (
-          <div className="rounded-2xl border border-border/50 bg-slate-100 px-6 py-10 text-center dark:bg-slate-800/50">
-            <span className="mx-auto flex h-16 w-16 animate-in zoom-in items-center justify-center rounded-2xl bg-card text-primary shadow-soft">
-              <CheckCircle2 className="h-8 w-8" aria-hidden="true" />
-            </span>
-            <p className="mt-4 text-xl font-bold text-foreground">Your file is ready</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {outputs.length} {outputs.length === 1 ? "output" : "outputs"} ·{" "}
-              {formatBytes(totalOutputSize)}
+          <div className="rounded-3xl border border-primary/25 bg-gradient-to-b from-mint/60 via-card to-card p-6 sm:p-10 text-center shadow-soft animate-in zoom-in-95 duration-300">
+            {/* Subtle animated success badge */}
+            <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
+              <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-30" />
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white shadow-lift">
+                <CheckCircle2 className="h-9 w-9" aria-hidden="true" />
+              </span>
+            </div>
+
+            <p className="mt-5 text-2xl font-extrabold text-forest">
+              {tool.slug === "rotate-pdf" ? "Your rotated PDF is ready!" : "Your file is ready!"}
             </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Permanently saved with zero data sent to external servers.
+            </p>
+
+            {/* Clean PDF File Card */}
+            <div className="mx-auto mt-6 max-w-md overflow-hidden rounded-2xl border border-primary/20 bg-card p-4 text-left shadow-soft">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-mint text-primary">
+                  <Download className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-bold text-forest" title={outputs[0]?.name}>
+                    {outputs[0]?.name}
+                  </p>
+                  <div className="mt-0.5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span>{formatBytes(totalOutputSize)}</span>
+                    <span className="inline-flex items-center rounded-md bg-mint px-2 py-0.5 font-bold text-primary">
+                      {tool.slug === "rotate-pdf"
+                        ? `Rotated ${items[0]?.rotation || 90}° · Saved`
+                        : "Processed"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {tool.slug === "compress-pdf" && inputBytes > 0 && (
-              <p className="mt-2 text-sm font-medium text-foreground">
+              <p className="mt-3 text-sm font-semibold text-foreground">
                 {formatBytes(inputBytes)} → {formatBytes(totalOutputSize)}{" "}
                 {savedPercent > 0 ? (
-                  <span className="text-primary font-semibold">({savedPercent}% smaller)</span>
+                  <span className="text-primary font-bold">({savedPercent}% smaller)</span>
                 ) : (
                   <span className="text-muted-foreground">
                     (already well optimised — try a stronger level)
@@ -482,26 +531,26 @@ export function ToolWorkspace({ tool }: { tool: ToolDefinition }) {
                 )}
               </p>
             )}
-            <div className="mt-6 flex flex-col items-center gap-3">
+
+            {/* Prominent Action Buttons */}
+            <div className="mt-7 flex flex-col items-center gap-3">
               {outputs.map((output, index) => (
                 <a
                   key={output.name}
                   href={urls[index]}
                   download={output.name}
                   onClick={() => track("download_clicked", { tool: tool.slug })}
-                  className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-lift transition-colors hover:bg-primary-dark"
+                  className="inline-flex w-full max-w-sm items-center justify-center gap-2.5 rounded-2xl bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-lift transition-all duration-200 hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Download className="h-5 w-5" aria-hidden="true" />
-                  Download {output.name.split(".").pop()?.toUpperCase() || "PDF"}
+                  Download Rotated PDF
                 </a>
               ))}
-              <p className="max-w-sm break-all text-xs text-muted-foreground">
-                {outputs.map((o) => o.name).join(", ")}
-              </p>
+
               <button
                 type="button"
                 onClick={reset}
-                className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                className="mt-1 inline-flex items-center gap-2 rounded-2xl border border-border/80 bg-card px-5 py-2.5 text-sm font-semibold text-muted-foreground transition-all hover:bg-mint hover:text-forest"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 Process another file
