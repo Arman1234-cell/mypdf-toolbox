@@ -370,7 +370,20 @@ export const compressPdf: Operation = async (files, { onProgress, onStage, optio
   };
 
   onStage?.("Compressing pages…");
-  const rasterBytes = await buildRasterDoc(scale, quality, maxDim);
+  let rasterBytes = await buildRasterDoc(scale, quality, maxDim);
+
+  // If the raster candidate is bigger than the original file (very common for small vector/text PDFs),
+  // forcefully crush it further if the user wants compression.
+  if (rasterBytes.length >= originalSize && compressionStrength >= 50) {
+    onStage?.("Applying stronger compression…");
+    const harderMaxDim  = Math.max(250, Math.round(maxDim * 0.6));
+    const harderQuality = Math.max(0.05, quality - 0.20);
+    const harderScale   = Math.max(0.30, scale - 0.40);
+    const harderBytes   = await buildRasterDoc(harderScale, harderQuality, harderMaxDim);
+    if (harderBytes.length < rasterBytes.length) {
+      rasterBytes = harderBytes;
+    }
+  }
 
   // Pick the smallest result — structural is lossless and preferred when smaller
   let bestBytes = rasterBytes;
