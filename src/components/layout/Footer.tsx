@@ -118,6 +118,42 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link
+                to="/blog/$slug"
+                params={{ slug: "rotate-pdf-and-save-it-that-way" }}
+                className="hover:text-forest transition-colors"
+              >
+                Rotate PDF & Save Guide
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/blog/$slug"
+                params={{ slug: "how-to-organize-pdf-pages" }}
+                className="hover:text-forest transition-colors"
+              >
+                Organize PDF Guide
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/blog/$slug"
+                params={{ slug: "how-to-add-watermark-to-pdf" }}
+                className="hover:text-forest transition-colors"
+              >
+                Watermark PDF Guide
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/blog/$slug"
+                params={{ slug: "how-to-remove-pdf-password" }}
+                className="hover:text-forest transition-colors"
+              >
+                Unlock PDF Guide
+              </Link>
+            </li>
+            <li>
               <Link to="/about" className="hover:text-forest transition-colors">
                 About Us
               </Link>

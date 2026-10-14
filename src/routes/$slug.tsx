@@ -73,8 +73,8 @@ const toolGuideMap: Record<string, { slug: string; title: string }> = {
     title: "How to Split a PDF and Extract the Pages You Need",
   },
   "rotate-pdf": {
-    slug: "how-to-rotate-pdf-pages",
-    title: "How to Rotate PDF Pages and Save the Change",
+    slug: "rotate-pdf-and-save-it-that-way",
+    title: "Rotate PDF and Save It That Way (Permanent Online Guide)",
   },
   "organize-pdf": {
     slug: "how-to-organize-pdf-pages",
@@ -99,6 +99,41 @@ export const Route = createFileRoute("/$slug")({
     if (params.slug === "$slug" || params.slug === "%24slug" || params.slug.startsWith("$")) {
       throw redirect({
         to: "/tools",
+        statusCode: 301,
+      });
+    }
+    if (params.slug === "rotate-pdf-and-save-it-that-way") {
+      throw redirect({
+        to: "/blog/$slug",
+        params: { slug: "rotate-pdf-and-save-it-that-way" },
+        statusCode: 301,
+      });
+    }
+    if (params.slug === "how-to-rotate-pdf-pages") {
+      throw redirect({
+        to: "/blog/$slug",
+        params: { slug: "how-to-rotate-pdf-pages" },
+        statusCode: 301,
+      });
+    }
+    if (params.slug === "how-to-organize-pdf-pages") {
+      throw redirect({
+        to: "/blog/$slug",
+        params: { slug: "how-to-organize-pdf-pages" },
+        statusCode: 301,
+      });
+    }
+    if (params.slug === "how-to-add-watermark-to-pdf") {
+      throw redirect({
+        to: "/blog/$slug",
+        params: { slug: "how-to-add-watermark-to-pdf" },
+        statusCode: 301,
+      });
+    }
+    if (params.slug === "how-to-remove-pdf-password") {
+      throw redirect({
+        to: "/blog/$slug",
+        params: { slug: "how-to-remove-pdf-password" },
         statusCode: 301,
       });
     }

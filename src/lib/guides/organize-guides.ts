@@ -241,15 +241,163 @@ export const organizeGuides: Article[] = [
         a: "Run the tool once per angle, listing the relevant pages each time.",
       },
     ],
-    related: ["how-to-organize-pdf-pages", "how-to-split-pdf-pages", "how-to-ocr-scanned-pdf"],
+    related: [
+      "rotate-pdf-and-save-it-that-way",
+      "how-to-organize-pdf-pages",
+      "how-to-split-pdf-pages",
+      "how-to-ocr-scanned-pdf",
+    ],
+  },
+  {
+    slug: "rotate-pdf-and-save-it-that-way",
+    title: "Rotate PDF and Save It That Way: How to Permanently Rotate & Save Online Free",
+    metaTitle: "Rotate PDF and Save It That Way Permanently | Free & Online",
+    description:
+      "Learn how to rotate PDF and save it that way permanently online for free. Fix sideways or upside-down scans in Chrome, Firefox, VS Code, and mobile without Adobe Acrobat.",
+    date: "2026-10-14",
+    readTime: "6 min read",
+    toolSlug: "rotate-pdf",
+    toolName: "Rotate PDF",
+    hero: {
+      desktop: "/blog/rotate-pdf-workflow-desktop.jpg",
+      mobile: "/blog/rotate-pdf-workflow-mobile.jpg",
+      alt: "Rotate PDF and save it that way permanently online free without losing quality",
+      caption: "Write permanent rotation flags directly into your PDF document.",
+      ...heroDims,
+    },
+    intro: [
+      "Have you ever opened a scanned document in Google Chrome, Mozilla Firefox, or Microsoft Edge, clicked the Rotate button to straighten it out, and then saved the file — only to open it later and find it still sideways or upside down? When you rotate a PDF inside most web browsers and free PDF viewers, you are merely changing how the document looks on your screen during that single reading session. The viewer does not rewrite the internal orientation tags stored inside the PDF itself.",
+      "To truly rotate PDF and save it that way permanently, the rotation metadata must be written directly into the file's low-level dictionary structure. Our free [Rotate PDF](/rotate-pdf) tool runs 100% locally in your web browser. You can rotate single pages, multiple selected pages, or entire documents by 90°, 180°, or 270°, and immediately download a file that opens upright everywhere — on Windows, Mac, iPhone, Android, and even when printed.",
+      "Best of all, you don't need an expensive Adobe Acrobat Pro subscription or any third-party desktop software. Because all processing happens directly in your browser with client-side JavaScript, your confidential documents are never uploaded to any cloud server.",
+    ],
+    blocks: [
+      {
+        type: "cta",
+        toolSlug: "rotate-pdf",
+        toolName: "Rotate PDF",
+        text: "Rotate PDF and save it that way online free — instant permanent saving in your browser.",
+      },
+      { type: "h2", text: "How to rotate PDF and save it that way online free (Quick Steps)" },
+      {
+        type: "p",
+        text: "Permanently saving rotated PDF pages takes just a few clicks using our free online tool:",
+      },
+      {
+        type: "steps",
+        items: [
+          "Open the free [Rotate PDF](/rotate-pdf) tool in any desktop or mobile browser.",
+          "Drag and drop your PDF file into the upload zone, or click to choose a document from your device.",
+          "Select your desired angle: 90° clockwise, 180° upside-down flip, or 90° counter-clockwise (270°).",
+          "Specify the pages to rotate (e.g. 2, 4-6) or leave the field blank to rotate every page in the document.",
+          "Click Rotate PDF and instantly download your permanently corrected PDF document.",
+        ],
+      },
+      { type: "h2", text: "Why browser rotate buttons fail to save the rotation" },
+      {
+        type: "p",
+        text: "In the official PDF specification, every individual page object contains an optional rotation attribute known as the /Rotate key. This key can only take four valid degree values: 0, 90, 180, or 270.",
+      },
+      {
+        type: "p",
+        text: "When you view a PDF in Mozilla Firefox, Google Chrome, or Microsoft Edge, pressing the toolbar rotate button only applies a temporary CSS canvas transformation to your browser window. When you hit Save or Download, the browser simply hands you back the original binary byte stream with the original /Rotate flag untouched. As a result, the next person who opens your file sees the exact same sideways orientation.",
+      },
+      {
+        type: "note",
+        text: "MyPDF4U edits the PDF dictionary directly in your device memory. When you save with our tool, the /Rotate tag is permanently embedded into the PDF syntax, ensuring every desktop reader, mobile app, and office printer renders the pages the right way up.",
+      },
+      { type: "h2", text: "How to rotate PDF permanently in Firefox, Chrome, and Edge" },
+      {
+        type: "p",
+        text: "If you frequently read documents inside Firefox or Chrome, you can work around the browser limitation in two ways. The quickest and most reliable approach is to drag the file straight into our [Rotate PDF](/rotate-pdf) tool. Alternatively, if you must use the browser itself, open the PDF in Chrome or Edge, click Rotate until it looks correct, press Ctrl+P (or Cmd+P on Mac) to bring up the Print dialog, set the printer destination to 'Save as PDF', and print to a fresh file. While Print to PDF works in a pinch, it often flattens forms, strips bookmarks, and increases file size. Using [Rotate PDF](/rotate-pdf) preserves all vector text, hyperlinks, and bookmarks losslessly.",
+      },
+      { type: "h2", text: "Rotating selective pages vs. the whole document" },
+      {
+        type: "p",
+        text: "Most multipage PDFs aren't 100% sideways. Typically, a 20-page business report or contract is mostly portrait, with just one or two horizontal spreadsheets or scanned receipts on pages 5 and 12. If you rotate the entire file, you will ruin the 18 pages that were already correct.",
+      },
+      {
+        type: "list",
+        items: [
+          "Rotate all pages: Leave the page selection empty to turn every page in unison.",
+          "Rotate single pages: Type individual numbers such as 3 or 7 to turn only those specific sheets.",
+          "Rotate page ranges: Enter mixed intervals such as 1, 4-6, 9 to correct multiple groups in one pass.",
+          "Different angles for different pages: Run the tool once for pages needing 90° clockwise, and run it a second time for pages needing 180°.",
+        ],
+      },
+      { type: "h2", text: "How to rotate PDF and delete pages or reorder in one pass" },
+      {
+        type: "p",
+        text: "Need to rotate sideways pages and remove blank separator sheets or cover pages at the same time? You don't need multiple separate programs. With our [Organize PDF](/organize-pdf) tool, you can provide an exact list of the pages you wish to keep — e.g. '1-3, 5, 8-12' (omitting page 4 and 6-7 to delete them) — and apply an orientation correction simultaneously. Learn more in our detailed [How to Organize PDF Pages guide](/blog/how-to-organize-pdf-pages).",
+      },
+      { type: "h2", text: "How to rotate PDF and combine multiple files" },
+      {
+        type: "p",
+        text: "When compiling invoices, receipts, and legal exhibits from different coworkers, scanner orientations are often mismatched. Before stitching them together, pass each document through [Rotate PDF](/rotate-pdf) so each component reads cleanly. Once straightened, open the [Merge PDF tool](/merge-pdf) to combine them into one seamless, presentation-ready packet. See our [How to Merge PDF Files tutorial](/blog/how-to-merge-pdf-files) for complete instructions.",
+      },
+      { type: "h2", text: "How to rotate PDF in VS Code" },
+      {
+        type: "p",
+        text: "Software developers, technical writers, and data engineers frequently open generated PDFs in VS Code using popular extensions like 'vscode-pdf'. While the extension allows you to rotate the preview tab, this display setting is not saved back to disk. When your build scripts publish the PDF to production, users still receive sideways pages. To permanently resolve this, run your generated PDF through MyPDF4U or automate your build pipeline to set the /Rotate dictionary flag before committing your documentation.",
+      },
+      { type: "h2", text: "Zero quality loss: Why client-side rotation is superior" },
+      {
+        type: "p",
+        text: "Many online converter sites re-render PDF pages as raster JPEG pictures and repackage them, causing blurry fonts, enlarged file sizes, and unselectable text. MyPDF4U never converts your PDF to raster images during rotation. It modifies only the orientation property in the document tree. Your vector graphics stay crisp, embedded fonts remain selectable, and the process completes in milliseconds.",
+      },
+      { type: "h2", text: "Conclusion" },
+      {
+        type: "p",
+        text: "Fixing a crooked or upside-down PDF shouldn't require installing bulky desktop software or buying an expensive subscription. By using MyPDF4U's browser-based [Rotate PDF](/rotate-pdf) tool, you can rotate PDF and save it that way permanently in seconds — with total privacy, zero watermarks, and guaranteed compatibility across all devices.",
+      },
+    ],
+    faqs: [
+      {
+        q: "How do I rotate a PDF and save it that way permanently?",
+        a: "Upload your document to MyPDF4U's free Rotate PDF tool, choose 90°, 180°, or 270°, and click Rotate PDF. The tool writes the orientation flag directly into the PDF specification so it opens correctly forever in all apps, viewers, and printers.",
+      },
+      {
+        q: "Can I rotate PDF and save online free without Adobe Acrobat?",
+        a: "Yes. MyPDF4U is 100% free with no account signup, no subscription, and no watermark. It runs entirely inside your web browser using client-side JavaScript.",
+      },
+      {
+        q: "Why doesn't Firefox, Chrome, or Edge save my rotated PDF?",
+        a: "The rotate buttons inside Firefox and Chrome only rotate the temporary on-screen viewport for viewing. They do not alter the underlying PDF file header. When you close and reopen the file, it reverts to its original orientation unless processed by a tool that writes the rotation into the file.",
+      },
+      {
+        q: "Can I rotate only one or two specific pages in a PDF document?",
+        a: "Yes. In the Pages field, enter specific numbers or ranges (such as '2, 5-7'). Only the designated pages will be rotated, while all other pages remain in their original orientation.",
+      },
+      {
+        q: "Can I rotate PDF and delete pages in the same session?",
+        a: "Yes. Use our Organize PDF tool (/organize-pdf). It lets you specify exactly which pages to keep (dropping any unwanted pages) and apply rotation in a single fast pass.",
+      },
+      {
+        q: "How do I rotate a PDF and combine it with other files?",
+        a: "First, straighten any sideways documents with Rotate PDF. Next, open our Merge PDF tool (/merge-pdf), add all your files in the desired order, and combine them into one unified PDF.",
+      },
+      {
+        q: "How do I rotate a PDF in VS Code and save it permanently?",
+        a: "VS Code PDF preview extensions only rotate the editor view. To permanently save the rotation in your workspace, open the PDF in MyPDF4U's Rotate PDF tool, download the corrected file, and save it over your project copy.",
+      },
+      {
+        q: "Does rotating a PDF reduce document resolution or image sharpness?",
+        a: "No. Rotation does not re-compress images or re-rasterize text. It simply changes the document's orientation metadata flag, so visual quality remains 100% identical to the source.",
+      },
+    ],
+    related: [
+      "how-to-rotate-pdf-pages",
+      "how-to-organize-pdf-pages",
+      "how-to-split-pdf-pages",
+      "how-to-merge-pdf-files",
+    ],
   },
   {
     slug: "how-to-organize-pdf-pages",
     title: "How to Reorder and Delete Pages in a PDF",
     metaTitle: "How to Organize PDF Pages — Reorder & Delete | MyPDF4U",
     description:
-      "Rebuild a PDF with the pages you want, in the order you want. One page list handles reordering, deleting and even duplicating pages.",
-    date: "2026-09-05",
+      "Rebuild a PDF with the pages you want, in the right order. One simple page list handles reordering, deleting blank sheets, and duplicating pages.",
+    date: "2026-10-14",
     readTime: "5 min read",
     toolSlug: "organize-pdf",
     toolName: "Organize PDF",
@@ -261,9 +409,9 @@ export const organizeGuides: Article[] = [
       ...heroDims,
     },
     intro: [
-      "Scanned packets rarely arrive in the right order. A signature page ends up first, a duplicate sneaks in, and page 2 is a blank sheet from the feeder. Rather than rescanning, rebuild the document.",
-      "[Organize PDF](/organize-pdf) works from a single page list. Type 3, 1, 2, 5-8 and you get a new PDF containing exactly those pages, in that sequence — anything you leave out is simply dropped. You can also rotate the pages you keep in the same pass.",
-      "Your original file is never modified: the tool builds a fresh copy in your browser and hands it to you as a download.",
+      "Scanned packets rarely arrive in the right order. A signature page ends up number 1, a duplicate sneaks in, and page 2 is a blank sheet from the feeder. Now, here's where it gets good: rather than rescanning, rebuild the document.",
+      "Indeed, [Organize PDF](/organize-pdf) works from a single page list. Type 3, 1, 2, 5-8 and you get a new PDF containing exactly those pages, in that sequence — anything you leave out is simply dropped. At the end of the day, you can also rotate the pages you keep in the same pass.",
+      "Your original file is never modified: the tool builds a fresh copy in your browser and hands it to you as an instant download.",
     ],
     blocks: [
       {
@@ -281,7 +429,7 @@ export const organizeGuides: Article[] = [
           "Optionally rotate the kept pages, then click Rebuild PDF and download it.",
         ],
       },
-      { type: "h2", text: "How the page list works" },
+      { type: "h2", text: "Basically, how the page list works" },
       {
         type: "list",
         items: [
@@ -293,17 +441,17 @@ export const organizeGuides: Article[] = [
       },
       {
         type: "note",
-        text: "Numbers refer to positions in the file. Open the PDF alongside the tool and count pages as your reader shows them, ignoring any printed page numbers.",
+        text: "Numbers refer to positions in the file as your reader shows them, ignoring any printed page numbers. Open the PDF alongside the tool and count pages.",
       },
       { type: "h2", text: "Deleting pages by leaving them out" },
       {
         type: "p",
-        text: "There is no separate delete step, which is the point: one list describes the document you want. To drop the blank page 4 from a ten-page scan you write 1-3, 5-10. Because pages are copied rather than re-encoded, the surviving pages keep their exact quality and their text stays selectable.",
+        text: "There's no separate delete step, which is the point: one list describes the pages you want. To drop the blank page 4 from a ten-page scan you write 1-3, 5-10. What we're seeing is: because pages are copied rather than re-encoded, the surviving pages retain their exact quality and their text stays selectable.",
       },
       { type: "h2", text: "Why rebuilding is safer than editing in place" },
       {
         type: "p",
-        text: "The original file stays untouched on your device while you download a new copy. If you get the order wrong, nothing is lost — adjust the list and rebuild. That is particularly reassuring for signed or official documents where you cannot afford to damage the source.",
+        text: "The original file stays untouched on your device while you download a new copy. Interestingly, if you get the order wrong, nothing is lost — adjust the list and rebuild. Look, that's particularly reassuring for signed or official documents where you cannot afford to damage the source.",
       },
       { type: "h2", text: "A typical clean-up pass" },
       {
@@ -315,10 +463,10 @@ export const organizeGuides: Article[] = [
           "Shrink the finished document with [Compress PDF](/compress-pdf) if it has to be emailed.",
         ],
       },
-      { type: "h2", text: "Organize or split?" },
+      { type: "h2", text: "Here's why this matters: organize or split?" },
       {
         type: "p",
-        text: "Use Organize PDF when the outcome is one document. Use [Split PDF](/split-pdf) when you want the selected pages as separate files — for instance a folder of individual payslips rather than a single trimmed statement.",
+        text: "On top of that, use [Organize PDF](/organize-pdf) when the outcome is one document. Use [Split PDF](/split-pdf) when you want the selected pages as separate files — for instance, a folder of individual payslips rather than a single trimmed statement.",
       },
       { type: "h2", text: "Common mistakes" },
       {
@@ -333,17 +481,17 @@ export const organizeGuides: Article[] = [
       { type: "h2", text: "Conclusion" },
       {
         type: "p",
-        text: "Describe the document you want as a page list, and you get it — reordered, trimmed, and lossless, with your original still intact.",
+        text: "Describe the document you want as a page list. What's more, you get it — reordered, trimmed, and lossless, with your original still intact.",
       },
     ],
     faqs: [
       {
-        q: "How do I delete a page from a PDF?",
+        q: "How do I erase a page from a PDF?",
         a: "List every page except the one you want gone. To remove page 2 of a ten-page file, type 1, 3-10 and rebuild.",
       },
       {
         q: "Can I duplicate a page?",
-        a: "Yes — list the same page number twice, for example 1, 1, 2.",
+        a: "Honestly, yes — list the same page number twice, for instance 1, 1, 2.",
       },
       {
         q: "What happens if I leave the page order empty?",
@@ -351,14 +499,19 @@ export const organizeGuides: Article[] = [
       },
       {
         q: "Is the original file changed?",
-        a: "No. A new PDF is built in your browser and downloaded; your source file is untouched.",
+        a: "No doubt, a new PDF is built in your browser and downloaded; your original file is untouched.",
       },
       {
         q: "Can I rotate pages at the same time?",
-        a: "Yes. The rotate option applies to all the pages you keep, so a whole batch of sideways scans can be fixed in one pass.",
+        a: "Yes. The rotate option applies to all the pages you keep. Plus, a whole batch of sideways scans can be fixed in one pass.",
       },
     ],
-    related: ["how-to-split-pdf-pages", "how-to-merge-pdf-files", "how-to-rotate-pdf-pages"],
+    related: [
+      "rotate-pdf-and-save-it-that-way",
+      "how-to-split-pdf-pages",
+      "how-to-merge-pdf-files",
+      "how-to-rotate-pdf-pages",
+    ],
   },
   {
     slug: "how-to-add-watermark-to-pdf",
@@ -366,7 +519,7 @@ export const organizeGuides: Article[] = [
     metaTitle: "How to Add a Watermark to a PDF (DRAFT, CONFIDENTIAL) | MyPDF4U",
     description:
       "Stamp DRAFT, CONFIDENTIAL or a client name across every page of a PDF, with control over position, opacity and size — free and in your browser.",
-    date: "2026-09-05",
+    date: "2026-10-14",
     readTime: "5 min read",
     toolSlug: "watermark-pdf",
     toolName: "Watermark PDF",
@@ -378,8 +531,8 @@ export const organizeGuides: Article[] = [
       ...heroDims,
     },
     intro: [
-      "A watermark sets expectations before anyone reads a word. DRAFT stops a colleague quoting an unfinished figure; CONFIDENTIAL reminds a reader not to forward the file; a client name makes it obvious which copy of a proposal escaped into the wild.",
-      "[Watermark PDF](/watermark-pdf) draws a semi-transparent text stamp on every page. You choose the words, the position — diagonally across the centre or in any corner — the opacity, and the text size. The stamp becomes part of the page content, and the whole thing runs in your browser.",
+      "A watermark sets expectations before anyone reads a word. Definitely, DRAFT stops a colleague quoting an unfinished figure; CONFIDENTIAL reminds a reader not to forward the file; a client name makes it obvious which copy of a proposal escaped into the wild.",
+      "So, what does this mean? To be completely honest, [Watermark PDF](/watermark-pdf) draws a semi-transparent text stamp on every page. You pick the words, the position — diagonally across the centre or in any corner — the opacity, and the text size. Usually, the stamp becomes part of the page content, and the whole thing runs directly in your browser.",
       "Short text works best. Long phrases are scaled down to fit, which makes them harder to read at a glance.",
     ],
     blocks: [
@@ -395,50 +548,50 @@ export const organizeGuides: Article[] = [
         items: [
           "Open [Watermark PDF](/watermark-pdf) and upload the document.",
           "Type your watermark text, such as DRAFT or CONFIDENTIAL.",
-          "Pick a position, an opacity and a text size.",
+          "On top of that, pick a position, an opacity and a text size.",
           "Apply the watermark and download the stamped PDF.",
         ],
       },
-      { type: "h2", text: "Choosing position and opacity" },
+      { type: "h2", text: "Really, choosing position and opacity" },
       {
         type: "list",
         items: [
-          "Centre (diagonal) — the classic status stamp. Unmissable, and hardest to crop away.",
-          "Corners — better when the page is dense and you do not want text obscured.",
+          "Centre (diagonal) — the classic status stamp. Clearly unmissable, and hardest to crop away.",
+          "Corners — better when the page is dense and you don't want text obscured.",
           "Very light (10%) or Light (22%) — readable pages, visible mark. Light is the sensible default.",
           "Medium (40%) or Strong (65%) — for documents that must not be mistaken for a final version.",
         ],
       },
       {
         type: "p",
-        text: "Opacity is the trade-off to think about. Too faint and readers miss it entirely; too strong and the underlying text becomes tiring to read. If the document will be printed on a mono printer, test one page first — a light green tint on screen can almost vanish in greyscale.",
+        text: "Opacity is the real trade-off to think about. Too faint and readers miss it entirely; too strong and the underlying text becomes tiring to read. If the document will be printed on a mono printer, test one page first — a light tint on screen can almost vanish in greyscale.",
       },
       {
         type: "note",
-        text: "Text watermarks are supported today; image or logo watermarks are not yet available.",
+        text: "Text watermarks are supported today; image or logo watermarks aren't yet available.",
       },
       { type: "h2", text: "Good watermark text" },
       {
         type: "list",
         items: [
           "DRAFT — for anything still under review.",
-          "CONFIDENTIAL or INTERNAL ONLY — for documents that should not circulate.",
+          "CONFIDENTIAL or INTERNAL ONLY — for documents that shouldn't circulate.",
           "COPY or SAMPLE — for reference versions of a signed original.",
           "A client or project name — makes each recipient's copy identifiable.",
-          "A date, such as DRAFT 2026-09 — useful when several versions are in flight.",
+          "A date, such as DRAFT 2026-10 — useful when several versions are in flight.",
         ],
       },
       { type: "h2", text: "What a watermark can and cannot do" },
       {
         type: "p",
-        text: "The stamp is drawn into the page content, so it is not a layer a reader can simply switch off, and it travels with the file when it is forwarded or printed. It is not, however, a security control: anyone determined enough can rebuild pages without it. Treat a watermark as clear labelling, and use [password protection](/protect-pdf) or careful distribution when you actually need to restrict access.",
+        text: "The stamp is drawn into the page content, so it is not a layer a reader can simply switch off, and it travels with the file when it is forwarded or printed. Usually, it's not, however, a security control: anyone determined enough can rebuild pages without it. Definitely, treat a watermark as clear labelling, and use [password protection](/protect-pdf) or careful distribution when you actually want to restrict access.",
       },
       { type: "h2", text: "Where it fits in a workflow" },
       {
         type: "steps",
         items: [
           "Assemble the final document first with [Merge PDF](/merge-pdf) or [Organize PDF](/organize-pdf).",
-          "Apply the watermark once, so every page carries the same mark.",
+          "Apply the watermark once, so every page carries the same marker.",
           "Compress with [Compress PDF](/compress-pdf) last if the file needs to be emailed.",
         ],
       },
@@ -447,15 +600,15 @@ export const organizeGuides: Article[] = [
         type: "list",
         items: [
           "Watermarking before the document is final, then having to redo it after adding pages.",
-          "Choosing 65% opacity on a text-heavy report and making it hard to read.",
+          "Generally, choosing 65% opacity on a text-heavy report and making it hard to read.",
           "Writing a long sentence, which shrinks to near-illegibility.",
-          "Assuming a watermark prevents copying — it labels, it does not lock.",
+          "Interestingly, assuming a watermark prevents copying — it labels, it doesn't lock.",
         ],
       },
       { type: "h2", text: "Conclusion" },
       {
         type: "p",
-        text: "Keep the text short, start at Light opacity, and stamp the document only when it is final. That gives you a clear, professional mark on every page in a couple of clicks.",
+        text: "Keep the text short, start at Light opacity, and stamp the document only when it's final. Of course, that gives you a clear, professional mark on every page in a couple of clicks.",
       },
     ],
     faqs: [
@@ -469,18 +622,23 @@ export const organizeGuides: Article[] = [
       },
       {
         q: "Can the watermark be removed later?",
-        a: "It is drawn into the page content, so it is not a simple toggle. Keep an unwatermarked copy of your original if you will need one.",
+        a: "Indeed, it is drawn into the page content, so it's not a simple toggle. Keep an unwatermarked copy of your original if you will need one.",
       },
       {
         q: "Does the watermark appear on every page?",
-        a: "Yes, the same stamp is applied to all pages of the document.",
+        a: "Here's the deal: yes, the same stamp is applied to all pages of the document.",
       },
       {
         q: "Which opacity should I choose?",
-        a: "Light (22%) suits most documents. Increase it if the mark must be impossible to overlook, and test a print if the file will be photocopied.",
+        a: "The truth is: Light (22%) suits most documents. Increase it if the mark must be impossible to overlook, and test a print if the file will be photocopied.",
       },
     ],
-    related: ["how-to-organize-pdf-pages", "how-to-merge-pdf-files", "how-to-remove-pdf-password"],
+    related: [
+      "how-to-organize-pdf-pages",
+      "rotate-pdf-and-save-it-that-way",
+      "how-to-merge-pdf-files",
+      "how-to-remove-pdf-password",
+    ],
   },
   {
     slug: "how-to-remove-pdf-password",
@@ -488,7 +646,7 @@ export const organizeGuides: Article[] = [
     metaTitle: "How to Remove a PDF Password You Know | MyPDF4U",
     description:
       "Save an unlocked copy of a PDF you can already open, so it stops asking for a password every time. What the tool does, and what it deliberately cannot do.",
-    date: "2026-09-05",
+    date: "2026-10-14",
     readTime: "5 min read",
     toolSlug: "unlock-pdf",
     toolName: "Unlock PDF",
@@ -501,8 +659,8 @@ export const organizeGuides: Article[] = [
     },
     intro: [
       "Bank statements and payslips often arrive encrypted, and typing the password every single time gets old — especially when the file has to be attached to a form or read on a phone.",
-      "[Unlock PDF](/unlock-pdf) removes protection from a document you can already open. You supply the password you normally type, and the tool decrypts the file in your browser and rebuilds it as a copy that opens with no prompt. The password is used once, in memory, and is never sent anywhere.",
-      "One important trade-off: pages in the unlocked copy are rebuilt as high-resolution images. It looks the same, but the text is no longer selectable or searchable. Run [OCR](/ocr-pdf) afterwards if you need a text layer back.",
+      "Indeed, [Unlock PDF](/unlock-pdf) removes protection from a document you can already open. You supply the password you normally type, and the tool decrypts the file in your browser and rebuilds it as a copy that opens with no prompt. The password is used once, in memory, and is never sent anywhere.",
+      "One important trade-off: pages in the unlocked copy are rebuilt as high-resolution images. It looks identical, but the text is no longer selectable or searchable. Basically, run [OCR](/ocr-pdf) afterwards if you need a text layer back.",
     ],
     blocks: [
       {
@@ -520,15 +678,15 @@ export const organizeGuides: Article[] = [
           "Click Unlock PDF and download the copy, which opens without any prompt.",
         ],
       },
-      { type: "h2", text: "What this tool will not do" },
+      { type: "h2", text: "What this tool won't do" },
       {
         type: "p",
-        text: "It cannot crack an unknown password, and it is not designed to. You need the password before you start; the tool only removes protection from documents you are entitled to open. Any service promising to break passwords it was never given should be treated with suspicion, and removing protection from someone else's document is not something to attempt.",
+        text: "It cannot crack an unknown password, and it is not designed to. Certainly, you need the password before you start; the tool only removes protection from documents you are entitled to open. Any service promising to break passwords it was never given should be treated with suspicion, and removing protection from someone else's document isn't something to attempt.",
       },
       { type: "h2", text: "Why the text stops being selectable" },
       {
         type: "p",
-        text: "Rather than editing the encryption dictionary of a file whose structure varies between producers, the tool renders each decrypted page at high resolution and assembles those pages into a fresh PDF. The result is visually identical and reliably openable everywhere — but it is a picture of each page, so search and copy no longer work.",
+        text: "Rather than editing the encryption dictionary of a data file whose structure varies between producers, the tool renders each decrypted page at high resolution and assembles those pages into a fresh PDF. Usually, the effect is visually identical and reliably openable everywhere — but it is a picture of each page, so search and copy no longer work.",
       },
       {
         type: "note",
@@ -557,26 +715,26 @@ export const organizeGuides: Article[] = [
       { type: "h2", text: "Keeping the file protected instead" },
       {
         type: "p",
-        text: "If the document genuinely needs to stay restricted, do not unlock it — or unlock a working copy and keep the encrypted original. Password protection for new documents is not available on MyPDF4U yet; the [Protect PDF](/protect-pdf) tool is still in development.",
+        text: "If the document genuinely needs to stay restricted, don't unlock it — or unlock a working copy and keep the encrypted master. Password protection for new documents isn't available on MyPDF4U yet; the [Protect PDF](/protect-pdf) tool is still in development.",
       },
       { type: "h2", text: "Conclusion" },
       {
         type: "p",
-        text: "Unlocking is quick and stays on your device. Just decide first whether you need searchable text — if you do, follow up with OCR, and compress the result if it has grown.",
+        text: "Unlocking is speedy and stays on your device. Notably, just decide first whether you need searchable text — if you do, follow up with OCR, and compress the result if it has grown.",
       },
     ],
     faqs: [
       {
-        q: "Can this open a PDF if I do not know the password?",
+        q: "Can this open a PDF if I don't know the password?",
         a: "No. You must know the password. The tool only removes protection from documents you are entitled to open.",
       },
       {
         q: "Is my password sent to a server?",
-        a: "No. It is used once, in memory, inside your browser tab, and the file is decrypted on your device.",
+        a: "No. It is used once, in memory, inside your browser tab, and the file is decrypted locally on your device.",
       },
       {
         q: "Why can I no longer select text in the unlocked file?",
-        a: "Pages are rebuilt as high-resolution images, so the copy looks identical but is not searchable. Run OCR PDF to add a text layer.",
+        a: "Pages are rebuilt as high-resolution images, so the copy looks identical but isn't searchable. Run OCR PDF to add a text layer.",
       },
       {
         q: "Why is the unlocked file larger than the original?",
@@ -587,6 +745,11 @@ export const organizeGuides: Article[] = [
         a: "Not yet — the Protect PDF tool is still in development.",
       },
     ],
-    related: ["how-to-ocr-scanned-pdf", "how-to-compress-pdf-for-email", "how-to-split-pdf-pages"],
+    related: [
+      "how-to-ocr-scanned-pdf",
+      "how-to-compress-pdf-for-email",
+      "how-to-organize-pdf-pages",
+      "rotate-pdf-and-save-it-that-way",
+    ],
   },
 ];
